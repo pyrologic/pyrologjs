@@ -878,6 +878,7 @@ __metadata:
     "@rollup/plugin-typescript": ^8.3.1
     rollup: ^2.70.1
     rollup-plugin-terser: ^7.0.2
+    tslib: ^2.3.1
     typescript: ^4.6.3
   languageName: unknown
   linkType: soft
@@ -1162,6 +1163,13 @@ __metadata:
   bin:
     terser: bin/terser
   checksum: dd33af5d87a1159bcc38f354707505f1449a33d1491c512e9536f11fea7c3474cdc40e2e5fdf75f58658cfaab8ef47cb7454acd6406b2ce487675cb1978c6275
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "tslib@npm:2.3.1"
+  checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
   languageName: node
   linkType: hard
 

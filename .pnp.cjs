@@ -36,6 +36,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@rollup/plugin-typescript", "virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:8.3.1"],\
             ["rollup", "npm:2.70.1"],\
             ["rollup-plugin-terser", "virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:7.0.2"],\
+            ["tslib", "npm:2.3.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"]\
           ],\
           "linkType": "SOFT"\
@@ -121,7 +122,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/typescript", null],\
             ["resolve", "patch:resolve@npm%3A1.22.0#~builtin<compat/resolve>::version=1.22.0&hash=07638b"],\
             ["rollup", "npm:2.70.1"],\
-            ["tslib", null],\
+            ["tslib", "npm:2.3.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"]\
           ],\
           "packagePeers": [\
@@ -1085,6 +1086,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@rollup/plugin-typescript", "virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:8.3.1"],\
             ["rollup", "npm:2.70.1"],\
             ["rollup-plugin-terser", "virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:7.0.2"],\
+            ["tslib", "npm:2.3.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"]\
           ],\
           "linkType": "SOFT"\
@@ -1387,6 +1389,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["commander", "npm:2.20.3"],\
             ["source-map", "npm:0.7.3"],\
             ["source-map-support", "npm:0.5.21"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["tslib", [\
+        ["npm:2.3.1", {\
+          "packageLocation": "./.yarn/cache/tslib-npm-2.3.1-0e21e18015-de17a98d46.zip/node_modules/tslib/",\
+          "packageDependencies": [\
+            ["tslib", "npm:2.3.1"]\
           ],\
           "linkType": "HARD"\
         }]\
