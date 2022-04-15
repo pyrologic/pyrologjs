@@ -1,7 +1,7 @@
 import { Level } from "./Level";
 import { Logger } from "./Logger";
 
-export class PLogger implements Logger {
+export class PyroLogger implements Logger {
 
     private _level: Level;
     private _name: string;

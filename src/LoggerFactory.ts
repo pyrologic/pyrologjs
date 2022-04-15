@@ -1,20 +1,33 @@
 import { Level } from "./Level";
 import { Logger } from "./Logger";
-import { PLogger } from "./Plogger";
+import { PyroLogger } from "./PyroLogger";
 
 export class LoggerFactory {
 
-    private loggers: Map<string, Logger>;
+    private _defLevel: Level;
+    private _loggers: Map<string, Logger>;
 
     /**
      * constructs the instance
      */
     constructor() {
-        this.loggers = new Map();
+        this._defLevel = Level.INFO;
+        this._loggers = new Map();
     }
 
-    static getInstance() {
+    /**
+     * returns the logger factory instance
+     * @returns {LoggerFactory} the logger factory instance
+     */
+    static getInstance() : LoggerFactory {
         return loggerFactory;
+    }
+
+    /**
+     * the default level for new loggers
+     */
+    get defaultLevel() : Level {
+        return this._defLevel;
     }
 
     /**
@@ -23,11 +36,11 @@ export class LoggerFactory {
      * @returns {Logger} the logger
      */
     getLogger(name: string) : Logger {
-        if ( !this.loggers.has(name) ) {
+        if ( !this._loggers.has(name) ) {
             // time to create it
-            this.loggers.set(name, new PLogger(name, Level.INFO));
+            this._loggers.set(name, new PyroLogger(name, this._defLevel));
         }
-        return this.loggers.get(name);
+        return this._loggers.get(name);
     }
 }
 

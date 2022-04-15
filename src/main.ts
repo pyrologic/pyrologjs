@@ -14,11 +14,11 @@ export class PyroLog {
         this.lf = LoggerFactory.getInstance();
     }
 
-    static getInstance() {
+    static getInstance(): PyroLog {
         return pyroLog;
     }
 
-    get Factory() {
+    get Factory(): LoggerFactory {
         return this.lf;
     }
 }
