@@ -13,6 +13,7 @@
   },
   "types": "dist/pyrolog.d.ts",
   "scripts": {
-    "build": "rollup --config rollup.config.js"
+    "build": "rollup --config rollup.config.js",
+    "build-prod": "rollup --config rollup.config.prod.js"
   }
 }

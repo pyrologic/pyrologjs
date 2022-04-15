@@ -1,7 +1,6 @@
 //@file: rollup.config.js
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
-import { terser } from "rollup-plugin-terser";
 
 const config = [
     {
@@ -10,8 +9,7 @@ const config = [
             file: 'dist/pyrolog.js',
             name: 'pyrolog',
             format: 'umd',
-            sourcemap: true,
-            plugins: [ terser() ]
+            sourcemap: true
         },
         plugins: [ typescript({ tsconfig: './tsconfig.json' }) ]
     },
