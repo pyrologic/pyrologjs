@@ -15,3 +15,25 @@ export enum Level {
     /** ERROR level */
     ERROR
 }
+
+/**
+ * retrieves the name of a logging level
+ * @param level logging level
+ * @returns the corresponding name (string)
+ */
+export function Level2String(level: Level): string {
+    switch ( level ) {
+        case Level.ALL:
+            return "ALL";
+        case Level.TRACE:
+            return "TRACE";
+        case Level.DEBUG:
+            return "DEBUG";
+        case Level.INFO:
+            return "INFO";
+        case Level.WARN:
+            return "WARN";
+        case Level.ERROR:
+            return "ERROR";
+    }
+}

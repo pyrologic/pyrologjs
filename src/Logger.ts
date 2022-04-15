@@ -13,7 +13,37 @@ export interface Logger {
     /**
      * writes a log message at the specified level
      * @param l logging level
-     * @param w object to be logged
+     * @param data data to be logged
      */
-    writeLog(l: Level, w: any): void;
+    writeLog(l: Level, ...data: any[]): void;
+
+    /**
+     * writes a log message at level TRACE
+     * @param data data to be logged
+     */
+    trace(...data: any[]): void;
+
+    /**
+     * writes a log message at level DEBUG
+     * @param data data to be logged
+     */
+    debug(...data: any[]): void;
+
+    /**
+     * writes a log message at level INFO
+     * @param data data to be logged
+     */
+    info(...data: any[]): void;
+
+    /**
+     * writes a log message at level INFO
+     * @param data data to be logged
+     */
+    warn(...data: any[]): void;
+    
+    /**
+     * writes a log message at level INFO
+     * @param data data to be logged
+     */
+    error(...data: any[]): void;
 }

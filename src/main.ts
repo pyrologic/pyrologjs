@@ -1,17 +1,11 @@
 import { LoggerFactory } from "./LoggerFactory";
 
-console.log('Hello PyroLog!');
-
-const lf = LoggerFactory.getInstance();
-lf.getLogger("abc");
-
-
 export class PyroLog {
 
-    private lf: LoggerFactory;
+    private _lf: LoggerFactory;
 
     constructor() {
-        this.lf = LoggerFactory.getInstance();
+        this._lf = LoggerFactory.getInstance();
     }
 
     static getInstance(): PyroLog {
@@ -19,7 +13,7 @@ export class PyroLog {
     }
 
     get Factory(): LoggerFactory {
-        return this.lf;
+        return this._lf;
     }
 }
 
