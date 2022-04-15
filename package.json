@@ -4,10 +4,12 @@
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.3.1",
     "rollup": "^2.70.1",
+    "rollup-plugin-dts": "^4.2.1",
     "rollup-plugin-terser": "^7.0.2",
     "tslib": "^2.3.1",
     "typescript": "^4.6.3"
   },
+  "types": "dist/pyrolog.d.ts",
   "scripts": {
     "build": "rollup --config rollup.config.js"
   }
