@@ -14,6 +14,7 @@
   "types": "dist/pyrolog.d.ts",
   "scripts": {
     "build": "rollup --config rollup.config.js",
+    "watch": "rollup --config rollup.config.js --watch",
     "build-prod": "rollup --config rollup.config.prod.js"
   }
 }
