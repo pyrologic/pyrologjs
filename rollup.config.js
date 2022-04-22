@@ -1,6 +1,7 @@
 //@file: rollup.config.js
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
+import rollupTimeStamp from "./build/rollup-plugin-timestamp";
 
 const config = [
     {
@@ -11,7 +12,10 @@ const config = [
             format: 'umd',
             sourcemap: true
         },
-        plugins: [ typescript({ tsconfig: './tsconfig.json' }) ]
+        plugins: [
+            typescript({ tsconfig: './tsconfig.json' }),
+            rollupTimeStamp()
+        ]
     },
     {
         // path to your declaration files root
