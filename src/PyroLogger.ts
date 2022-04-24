@@ -25,11 +25,15 @@ export class PyroLogger implements Logger {
     };
 
     setLevel(l: Level): void {
+        this._level = l;
+    }
 
+    toString(): string {
+        return `{Logger "${this._name}" [${Level2String(this._level)}]}`;
     }
 
     writeLog(l: Level, ...data: any[]): void {
-        if ( l >= this._level ) {
+        if ( (this._level !== Level.OFF) && (l !== Level.OFF) && (l >= this._level) ) {
             const prefix = `${this._name} [${Level2String(l)}]: `;
             switch ( l ) {
                 case Level.ALL:

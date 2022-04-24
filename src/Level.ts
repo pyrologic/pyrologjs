@@ -13,7 +13,9 @@ export enum Level {
     /** WARN level */
     WARN,
     /** ERROR level */
-    ERROR
+    ERROR,
+    /** loggers at this level do not log at all */
+    OFF
 }
 
 /**
@@ -35,5 +37,7 @@ export function Level2String(level: Level): string {
             return "WARN";
         case Level.ERROR:
             return "ERROR";
+        case Level.OFF:
+            return "OFF";
     }
 }
