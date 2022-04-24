@@ -16,22 +16,38 @@ export class PyroLogger implements Logger {
         this._level = l;
     }
 
+    /**
+     * @returns the name of this logger
+     */
     get name(): string {
         return this._name;
     }
 
+    /**
+     * @returns {Level} the current logging level of this logger
+     */
     get level(): Level {
         return this._level;
     };
 
+    /**
+     * sets a new logging level of this logger
+     * @param {Level} l new logging level of this logger
+     */
     setLevel(l: Level): void {
         this._level = l;
     }
 
+    /**
+     * @returns {String} a short informational string about this logger
+     */
     toString(): string {
         return `{Logger "${this._name}" [${Level2String(this._level)}]}`;
     }
 
+    /**
+     * @override
+     */
     writeLog(l: Level, ...data: any[]): void {
         if ( (this._level !== Level.OFF) && (l !== Level.OFF) && (l >= this._level) ) {
             const prefix = `${this._name} [${Level2String(l)}]: `;
@@ -57,22 +73,37 @@ export class PyroLogger implements Logger {
         }
     }
 
+    /**
+     * @override
+     */
     trace(...data: any[]): void {
         this.writeLog(Level.TRACE, data);
     }
 
+    /**
+     * @override
+     */
     debug(...data: any[]): void {
         this.writeLog(Level.DEBUG, data);
     }
 
+    /**
+     * @override
+     */
     info(...data: any[]): void {
         this.writeLog(Level.INFO, data);
     }
 
+    /**
+     * @override
+     */
     warn(...data: any[]): void {
         this.writeLog(Level.WARN, data);
     }
 
+    /**
+     * @override
+     */
     error(...data: any[]): void {
         this.writeLog(Level.ERROR, data);
     }
