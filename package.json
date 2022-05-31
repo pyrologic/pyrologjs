@@ -18,8 +18,8 @@
     "dist/pyrolog.min.d.ts"
   ],
   "scripts": {
-    "build": "rollup --config rollup.config.js",
-    "watch": "rollup --config rollup.config.js --watch --watch.buildDelay 25",
-    "build-prod": "rollup --config rollup.config.prod.js"
+    "dbgbld": "rollup --config rollup.config.debug.js",
+    "watch": "rollup --config rollup.config.debug.js --watch --watch.buildDelay 25",
+    "build": "rollup --config rollup.config.prod.js"
   }
 }
