@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "build": "rollup --config rollup.config.js",
-    "watch": "rollup --config rollup.config.js --watch",
+    "watch": "rollup --config rollup.config.js --watch --watch.buildDelay 25",
     "build-prod": "rollup --config rollup.config.prod.js"
   }
 }
