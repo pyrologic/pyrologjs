@@ -8,6 +8,7 @@ const DEFAULT_CONFIG = '@default';
 export class LoggerFactory {
 
     private _defLevel: Level;
+    private _usedbg: boolean;
     private _config: Map<string, Level>;
     private _loggers: Map<string, PyroLogger>;
 
@@ -16,6 +17,7 @@ export class LoggerFactory {
      */
     constructor() {
         this._defLevel = Level.INFO;
+        this._usedbg = false;
         this._config = new Map();
         this._loggers = new Map();
     }
@@ -43,6 +45,14 @@ export class LoggerFactory {
     }
 
     /**
+     * use console.debug()
+     * @returns {boolean} true if DEBUG level and below should use console.debug(); false if console.log() should be used instead
+     */
+    get useDebug() : boolean {
+        return this._usedbg;
+    }
+
+    /**
      * returns a logger
      * @param name logger name
      * @returns {Logger} the logger
@@ -50,7 +60,7 @@ export class LoggerFactory {
     getLogger(name: string) : Logger {
         if ( !this._loggers.has(name) ) {
             // time to create it
-            this._loggers.set(name, new PyroLogger(name, this._defLevel));
+            this._loggers.set(name, new PyroLogger(name, this._defLevel, this._usedbg));
         }
         return this._loggers.get(name);
     }
@@ -88,7 +98,7 @@ export class LoggerFactory {
                 // set level for a logger
                 this._config.set(name, level);
                 if ( this._loggers.has(name) ) {
-                    this._loggers.get(name).setLevel(level);
+                    this._loggers.get(name).setLevel(level, this._usedbg);
                 }
             }
         }

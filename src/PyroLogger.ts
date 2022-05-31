@@ -5,15 +5,18 @@ export class PyroLogger implements Logger {
 
     private _level: Level;
     private _name: string;
+    private _usedbg: boolean;
 
     /**
      * constructs a new instance
      * @param n logger name
      * @param l initial logging level
+     * @param d flag whehter to use console.debug() for level DEBUG and below
      */
-    constructor(n: string, l: Level) {
+    constructor(n: string, l: Level, d: boolean) {
         this._name = n;
         this._level = l;
+        this._usedbg = d;
     }
 
     /**
@@ -33,9 +36,11 @@ export class PyroLogger implements Logger {
     /**
      * sets a new logging level of this logger
      * @param {Level} l new logging level of this logger
+     * @param {boolean} d flag whehter to use console.debug() for level DEBUG and below
      */
-    setLevel(l: Level): void {
+    setLevel(l: Level, d: boolean): void {
         this._level = l;
+        this._usedbg = d;
     }
 
     /**
@@ -55,7 +60,11 @@ export class PyroLogger implements Logger {
                 case Level.ALL:
                 case Level.TRACE:
                 case Level.DEBUG:
-                    console.debug(prefix, data);
+                    if ( this._usedbg ) {
+                        console.debug(prefix, data);
+                    } else {
+                        console.log(prefix, data);
+                    }
                     break;
                 case Level.INFO:
                     console.info(prefix, data);
