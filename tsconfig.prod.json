@@ -5,6 +5,7 @@
         "target": "es2016",
         "outDir": "dist",
         "declaration": true,
-        "declarationDir": "dts-prod"
+        "declarationDir": "dts-prod",
+        "noUnusedLocals": true
     }
 }

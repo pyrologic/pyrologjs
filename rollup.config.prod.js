@@ -2,24 +2,10 @@
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
 import { terser } from "rollup-plugin-terser";
+import rollupTimeStamp from "./build/rollup-plugin-timestamp";
+import RollupBuildInfo from './build/rollup-plugin-buildinfo';
 
-let wc = 0;
-
-function ruBuild() {
-    return {
-        name: 'ru-init',
-        buildStart() {
-            wc = 0;
-        },
-        buildEnd() {
-            if ( wc > 0 ) {
-                console.log('\x1b[33m%s\x1b[0m', `Build ended with ${wc} warnings!`);
-            } else {
-                console.log('\x1b[32m%s\x1b[0m', 'Build ended with no warnings.');
-            }
-        }
-    }
-}
+const rbi = RollupBuildInfo.getInstance();
 
 const config = [
     {
@@ -32,18 +18,12 @@ const config = [
             plugins: [ terser() ]
         },
         plugins: [
-            typescript({ tsconfig: './tsconfig-prod.json' }),
-            ruBuild()
+            typescript({ tsconfig: './tsconfig.prod.json' }),
+            rbi.plugin(),
+            rollupTimeStamp()
         ],
         onwarn ( { loc, frame, message } ) {
-            if ( loc ) {
-                console.warn(`#${++wc}: ${loc.file} (${loc.line}:${loc.column}) ${message}`);
-                if ( frame ) {
-                    console.warn(frame);
-                }
-            } else {
-                console.warn(`#${++wc}: ${message}`);
-            }
+            rbi.onwarn( { loc, frame, message } );
         }
     },
     {
