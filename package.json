@@ -1,6 +1,6 @@
 {
   "name": "pyrologjs",
-  "version": "1.0.1",
+  "version": "1.0.5",
   "license": "MIT",
   "packageManager": "yarn@3.2.1",
   "devDependencies": {
@@ -11,15 +11,15 @@
     "tslib": "^2.3.1",
     "typescript": "^4.6.3"
   },
-  "main": "dist/pyrolog.min.js",
-  "types": "dist/pyrolog.min.d.ts",
+  "main": "dist/pyrolog.js",
+  "types": "dist/pyrolog.d.ts",
   "files": [
-    "dist/pyrolog.min.js",
-    "dist/pyrolog.min.d.ts"
+    "dist/pyrolog.js",
+    "dist/pyrolog.d.ts",
+    "dist/pyrolog.js.map"
   ],
   "scripts": {
-    "dbgbld": "rollup --config rollup.config.debug.js",
-    "watch": "rollup --config rollup.config.debug.js --watch --watch.buildDelay 25",
-    "build": "rollup --config rollup.config.prod.js"
+    "watch": "rollup --config rollup.config.js --watch --watch.buildDelay 25",
+    "build": "rollup --config rollup.config.js"
   }
 }

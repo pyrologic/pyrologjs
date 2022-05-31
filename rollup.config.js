@@ -12,11 +12,11 @@ const config = [
         output: {
             file: 'dist/pyrolog.js',
             name: 'pyrolog',
-            format: 'umd',
+            format: 'es',
             sourcemap: true
         },
         plugins: [
-            typescript({ tsconfig: './tsconfig.debug.json' }),
+            typescript({ tsconfig: './tsconfig.json' }),
             rbi.plugin(),
             rollupTimeStamp()
         ],
