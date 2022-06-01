@@ -1,3 +1,4 @@
+import { Appender } from "./Appender";
 import { Level, Level2String } from "./Level";
 import { Logger } from "./Logger";
 
@@ -6,6 +7,7 @@ export class PyroLogger implements Logger {
     private _level: Level;
     private _name: string;
     private _usedbg: boolean;
+    private _appender: Appender | null;
 
     /**
      * constructs a new instance
@@ -13,10 +15,11 @@ export class PyroLogger implements Logger {
      * @param l initial logging level
      * @param d flag whehter to use console.debug() for level DEBUG and below
      */
-    constructor(n: string, l: Level, d: boolean) {
+    constructor(n: string, l: Level, d: boolean, a: Appender | null) {
         this._name = n;
         this._level = l;
         this._usedbg = d;
+        this._appender = a;
     }
 
     /**
@@ -41,6 +44,14 @@ export class PyroLogger implements Logger {
     setLevel(l: Level, d: boolean): void {
         this._level = l;
         this._usedbg = d;
+    }
+
+    /**
+     * sets a new appender
+     * @param a the new appender; may be null
+     */
+    setAppender(a: Appender | null) {
+        this._appender = a;
     }
 
     /**
@@ -78,6 +89,9 @@ export class PyroLogger implements Logger {
                 default:
                     console.log(prefix, ...data);
                     break;
+            }
+            if ( this._appender !== null ) {
+                this._appender.appendLog(prefix, ...data);
             }
         }
     }

@@ -2,6 +2,7 @@ import { Level } from "./Level";
 import { ConfigItem, LevelStrings } from "./ConfigItem";
 import { Logger } from "./Logger";
 import { LoggerFactory } from "./LoggerFactory";
+import { Appender } from "./Appender";
 
 class PyroLog {
 
@@ -55,6 +56,24 @@ class PyroLog {
     }
 
     /**
+     * creates a new callback appender
+     * @param cf callback function
+     * @param set flag whether to set this appender immediately
+     * @returns the created appender
+     */
+    createAppender(cf: Function, set: boolean): Appender {
+        return this._lf.createAppender(cf, set);
+    }
+
+    /**
+     * sets a new appender
+     * @param appender the new appender, may be null
+     */
+    setAppender(appender: Appender | null): void {
+        this._lf.setAppender(appender);
+    }
+
+    /**
      * creates a configuration item
      * @param name logger name
      * @param level logging level
@@ -75,4 +94,4 @@ class PyroLog {
 
 const pyroLog = PyroLog._create();
 
-export { ConfigItem, Logger, PyroLog };
+export { Appender, ConfigItem, Logger, PyroLog };

@@ -1,3 +1,5 @@
+import { Appender } from "./Appender";
+import { CallbackAppender } from "./CallbackAppender";
 import { ConfigItem, LevelStrings } from "./ConfigItem";
 import { Level } from "./Level";
 import { Logger } from "./Logger";
@@ -12,6 +14,7 @@ export class LoggerFactory {
     private _usedbg: boolean;
     private _config: Map<string, Level>;
     private _loggers: Map<string, PyroLogger>;
+    private _appender: Appender | null;
 
     /**
      * constructs the instance
@@ -21,6 +24,7 @@ export class LoggerFactory {
         this._usedbg = false;
         this._config = new Map();
         this._loggers = new Map();
+        this._appender = null;
     }
 
     /**
@@ -80,7 +84,7 @@ export class LoggerFactory {
     getLogger(name: string) : Logger {
         if ( !this._loggers.has(this._verifyName(name)) ) {
             // time to create it
-            this._loggers.set(name, new PyroLogger(name, this.getLevel(name), this._usedbg));
+            this._loggers.set(name, new PyroLogger(name, this.getLevel(name), this._usedbg, this._appender));
         }
         return this._loggers.get(name) as Logger;
     }
@@ -101,6 +105,29 @@ export class LoggerFactory {
      */
     getLevel(name: string): Level {
         return this._config.has(this._verifyName(name)) ? (this._config.get(name) as Level) : this._defLevel;
+    }
+
+    /**
+     * creates a new callback appender
+     * @param cf callback function
+     * @param set flag whether to set this appender immediately
+     * @returns the created appender
+     */
+    createAppender(cf: Function, set: boolean): Appender {
+        const appender = new CallbackAppender(cf);
+        if ( set ) {
+            this.setAppender(appender);
+        }
+        return appender;
+    }
+
+    /**
+     * sets a new appender
+     * @param appender the new appender, may be null
+     */
+    setAppender(appender: Appender | null): void {
+        this._appender = appender;
+        this._loggers.forEach((l) => l.setAppender(appender));
     }
 
     /**
