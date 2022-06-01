@@ -55,28 +55,28 @@ export class PyroLogger implements Logger {
      */
     writeLog(l: Level, ...data: any[]): void {
         if ( (this._level !== Level.OFF) && (l !== Level.OFF) && (l >= this._level) ) {
-            const prefix = `${this._name} [${Level2String(l)}]: `;
+            const prefix = `${this._name} [${Level2String(l)}]:`;
             switch ( l ) {
                 case Level.ALL:
                 case Level.TRACE:
                 case Level.DEBUG:
                     if ( this._usedbg ) {
-                        console.debug(prefix, data);
+                        console.debug(prefix, ...data);
                     } else {
-                        console.log(prefix, data);
+                        console.log(prefix, ...data);
                     }
                     break;
                 case Level.INFO:
-                    console.info(prefix, data);
+                    console.info(prefix, ...data);
                     break;
                 case Level.WARN:
-                    console.warn(prefix, data);
+                    console.warn(prefix, ...data);
                     break;
                 case Level.ERROR:
-                    console.error(prefix, data);
+                    console.error(prefix, ...data);
                     break;
                 default:
-                    console.log(prefix, data);
+                    console.log(prefix, ...data);
                     break;
             }
         }
@@ -86,34 +86,34 @@ export class PyroLogger implements Logger {
      * @override
      */
     trace(...data: any[]): void {
-        this.writeLog(Level.TRACE, data);
+        this.writeLog(Level.TRACE, ...data);
     }
 
     /**
      * @override
      */
     debug(...data: any[]): void {
-        this.writeLog(Level.DEBUG, data);
+        this.writeLog(Level.DEBUG, ...data);
     }
 
     /**
      * @override
      */
     info(...data: any[]): void {
-        this.writeLog(Level.INFO, data);
+        this.writeLog(Level.INFO, ...data);
     }
 
     /**
      * @override
      */
     warn(...data: any[]): void {
-        this.writeLog(Level.WARN, data);
+        this.writeLog(Level.WARN, ...data);
     }
 
     /**
      * @override
      */
     error(...data: any[]): void {
-        this.writeLog(Level.ERROR, data);
+        this.writeLog(Level.ERROR, ...data);
     }
 }
