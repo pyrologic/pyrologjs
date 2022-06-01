@@ -60,12 +60,24 @@ export class LoggerFactory {
     }
 
     /**
+     * verifies whether the given name parameter is a valid string; throws an error if not
+     * @param name a string specifying a name
+     * @returns the given string
+     */
+    _verifyName(name: unknown) : string {
+        if ( (typeof name !== 'string')  || !name.length ) {
+            throw new Error(`Invalid name specified: "${name}" (type: ${typeof name})!`);
+        }
+        return name as string;
+    }
+
+    /**
      * returns a logger
      * @param name logger name
      * @returns {Logger} the logger
      */
     getLogger(name: string) : Logger {
-        if ( !this._loggers.has(name) ) {
+        if ( !this._loggers.has(this._verifyName(name)) ) {
             // time to create it
             this._loggers.set(name, new PyroLogger(name, this.getLevel(name), this._usedbg));
         }
@@ -78,7 +90,7 @@ export class LoggerFactory {
      * @returns true if there's a configuration for the specified logger; false otherwise
      */
     hasConfig(name: string): Boolean {
-        return this._config.has(name);
+        return this._config.has(this._verifyName(name));
     }
 
     /**
@@ -87,7 +99,7 @@ export class LoggerFactory {
      * @returns the level for that logger; if no configuration exists for the specified logger then the default level is returned
      */
     getLevel(name: string): Level {
-        return this._config.has(name) ? this._config.get(name) : this._defLevel;
+        return this._config.has(this._verifyName(name)) ? this._config.get(name) : this._defLevel;
     }
 
     /**
@@ -96,8 +108,11 @@ export class LoggerFactory {
      */
     applyConfiguration(config: ConfigItem[]): void {
         for ( let ci of config) {
+            const name = this._verifyName(ci.name);
             const level = Level[ci.level];
-            const name = ci.name;
+            if ( typeof level === 'undefined' ) {
+                throw new Error(`Invalid level "${ci.level}"!`);
+            }
             if ( DEFAULT_CONFIG === name ) {
                 // new default level
                 this.defaultLevel = level;
