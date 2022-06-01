@@ -31,6 +31,13 @@ export class LoggerFactory {
     }
 
     /**
+     * the name of the default configuration item
+     */
+    get defaultName(): string {
+        return DEFAULT_CONFIG;
+    }
+
+    /**
      * the default level for new loggers
      */
     get defaultLevel() : Level {
