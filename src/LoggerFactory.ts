@@ -81,7 +81,7 @@ export class LoggerFactory {
             // time to create it
             this._loggers.set(name, new PyroLogger(name, this.getLevel(name), this._usedbg));
         }
-        return this._loggers.get(name);
+        return this._loggers.get(name) as Logger;
     }
 
     /**
@@ -99,7 +99,7 @@ export class LoggerFactory {
      * @returns the level for that logger; if no configuration exists for the specified logger then the default level is returned
      */
     getLevel(name: string): Level {
-        return this._config.has(this._verifyName(name)) ? this._config.get(name) : this._defLevel;
+        return this._config.has(this._verifyName(name)) ? (this._config.get(name) as Level) : this._defLevel;
     }
 
     /**
@@ -120,7 +120,7 @@ export class LoggerFactory {
                 // set level for a logger
                 this._config.set(name, level);
                 if ( this._loggers.has(name) ) {
-                    this._loggers.get(name).setLevel(level, this._usedbg);
+                    (this._loggers.get(name) as PyroLogger).setLevel(level, this._usedbg);
                 }
             }
         }

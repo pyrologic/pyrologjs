@@ -6,6 +6,7 @@
         "outDir": "dist",
         "declaration": true,
         "declarationDir": "dts",
-        "noUnusedLocals": true
+        "noUnusedLocals": true,
+        "strict": true
     }
 }
