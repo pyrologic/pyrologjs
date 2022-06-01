@@ -1,6 +1,7 @@
-import { ConfigItem } from "./ConfigItem";
+import { ConfigItem, LevelStrings } from "./ConfigItem";
 import { Level } from "./Level";
 import { Logger } from "./Logger";
+import { PyroConfigItem } from "./PyroConfigItem";
 import { PyroLogger } from "./PyroLogger";
 
 const DEFAULT_CONFIG = '@default';
@@ -64,7 +65,7 @@ export class LoggerFactory {
      * @param name a string specifying a name
      * @returns the given string
      */
-    _verifyName(name: unknown) : string {
+    private _verifyName(name: unknown) : string {
         if ( (typeof name !== 'string')  || !name.length ) {
             throw new Error(`Invalid name specified: "${name}" (type: ${typeof name})!`);
         }
@@ -100,6 +101,16 @@ export class LoggerFactory {
      */
     getLevel(name: string): Level {
         return this._config.has(this._verifyName(name)) ? (this._config.get(name) as Level) : this._defLevel;
+    }
+
+    /**
+     * creates a configuration item
+     * @param name logger name
+     * @param level logging level
+     * @returns the created configuration item
+     */
+    createConfigItem(name: string, level: LevelStrings) : ConfigItem {
+        return new PyroConfigItem(this._verifyName(name), level);
     }
 
     /**
