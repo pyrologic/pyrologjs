@@ -60,7 +60,7 @@ export class LoggerFactory {
     getLogger(name: string) : Logger {
         if ( !this._loggers.has(name) ) {
             // time to create it
-            this._loggers.set(name, new PyroLogger(name, this._defLevel, this._usedbg));
+            this._loggers.set(name, new PyroLogger(name, this.getLevel(name), this._usedbg));
         }
         return this._loggers.get(name);
     }
