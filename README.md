@@ -2,8 +2,8 @@
 
 ## About
 
-**pyrologjs** is small yet powerful logging facility for use in JavaScript and/or TypeScript modules. It can be used on web sites as in code for nodejs or
-similar environments.
+**pyrologjs** is small, lightweight yet powerful logging facility for use in JavaScript and/or TypeScript modules.
+It can be used on web sites as in code for nodejs or similar environments.
 
 **pyrologjs** itself is written entirely in TypeScript and compiled and bundled using [rollup.js](https://rollupjs.org/guide/en/). The preferred package manager is [yarn](https://yarnpkg.com/).
 
@@ -19,7 +19,7 @@ import { PyroLog } from "pyrologjs";
 Then, get the `PyroLog` singleton instance:
 ```
 /**
- * PyroLog  main object
+ * PyroLog singleton instance
  */
 const PL = PyroLog.getInstance();
 ```
@@ -33,10 +33,10 @@ const config = [
     PL.createConfigItem('logger1', 'DEBUG'),        // "logger1" is set to level DEBUG
     PL.createConfigItem('logger2', 'INFO'),         // "logger2" is set to level INFO
     PL.createConfigItem('logger3', 'ERROR'),        // "logger3" is set to level ERROR
-    { name: '42', level: 'ALL' }                    // plain old way to define a logger configuration item
+    { name: '42', level: 'ALL' }                    // plain old way to define a logger configuration item, possible but not recommended
 ];
 ```
-If you want, you can specify a callback function that act as special "appender"
+If you want, you can specify a callback function that acts as special "appender". This function is called each time a log message was written to the console.
 ```
 /**
  * a callback function used as "appender"
@@ -44,6 +44,7 @@ If you want, you can specify a callback function that act as special "appender"
  */
 function myAppender(logs) {
     // every log message goes here
+    // you can do whatever you want to do with these log messages :-)
     console.log('APPENDER', ...logs);
 }
 ```
@@ -64,4 +65,5 @@ function init() {
 }
 ```
 You can change the logger configuraton at any time. And you can set a new appender or just remove the current appender as needed.
+
 t.b.c.
