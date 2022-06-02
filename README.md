@@ -48,7 +48,7 @@ const config = [
 ];
 ```
 
-The last initialization step is to apply the configuration, register the callback function and to create some loggers:
+The last initialization step is to apply the configuration and to create some loggers:
 ```
 /**
  * logger initialization
