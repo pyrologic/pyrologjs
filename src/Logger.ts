@@ -11,6 +11,18 @@ export interface Logger {
     readonly level: Level;
 
     /**
+     * checks whether this logger is enabled for a specific logging level
+     * @param l logging level
+     * @returns true if this logger is enabled for the specified logging level; false otherwise
+     */
+    isEnabledFor(l: Level): boolean;
+
+    /**
+     * @returns true if this logger is enabled for logging at level DEBUG or above; false otherwise
+     */
+    isDebugEnabled(): boolean;
+
+    /**
      * writes a log message at the specified level
      * @param l logging level
      * @param data data to be logged
@@ -46,4 +58,12 @@ export interface Logger {
      * @param data data to be logged
      */
     error(...data: any[]): void;
+
+    /**
+     * logs the current stack trace
+     * @param l logging level
+     * @param skip number of stack entries to skip
+     * @param message optional message text
+     */
+    writeStackTrace(l: Level, skip: number, message?: string): void;
 }

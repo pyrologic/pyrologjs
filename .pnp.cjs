@@ -17,14 +17,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     ],\
     "dependencyTreeRoots": [\
       {\
-        "name": "pyrologjs",\
+        "name": "@pyrologic/pyrologjs",\
         "reference": "workspace:."\
       }\
     ],\
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
-      ["pyrologjs", ["workspace:."]]\
+      ["@pyrologic/pyrologjs", ["workspace:."]]\
     ],\
     "fallbackPool": [\
     ],\
@@ -33,12 +33,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
-            ["@rollup/plugin-typescript", "virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:8.3.1"],\
+            ["@rollup/plugin-typescript", "virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:8.3.1"],\
             ["rollup", "npm:2.70.1"],\
-            ["rollup-plugin-dts", "virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:4.2.1"],\
-            ["rollup-plugin-terser", "virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:7.0.2"],\
+            ["rollup-plugin-dts", "virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:4.2.1"],\
+            ["rollup-plugin-terser", "virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:7.0.2"],\
             ["tslib", "npm:2.3.1"],\
-            ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"]\
+            ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=7ad353"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -105,6 +105,21 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@pyrologic/pyrologjs", [\
+        ["workspace:.", {\
+          "packageLocation": "./",\
+          "packageDependencies": [\
+            ["@pyrologic/pyrologjs", "workspace:."],\
+            ["@rollup/plugin-typescript", "virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:8.3.1"],\
+            ["rollup", "npm:2.70.1"],\
+            ["rollup-plugin-dts", "virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:4.2.1"],\
+            ["rollup-plugin-terser", "virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:7.0.2"],\
+            ["tslib", "npm:2.3.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=7ad353"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@rollup/plugin-typescript", [\
         ["npm:8.3.1", {\
           "packageLocation": "./.yarn/cache/@rollup-plugin-typescript-npm-8.3.1-5b303da7b6-d2672dfdab.zip/node_modules/@rollup/plugin-typescript/",\
@@ -113,18 +128,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:8.3.1", {\
-          "packageLocation": "./.yarn/__virtual__/@rollup-plugin-typescript-virtual-ed98316c2a/0/cache/@rollup-plugin-typescript-npm-8.3.1-5b303da7b6-d2672dfdab.zip/node_modules/@rollup/plugin-typescript/",\
+        ["virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:8.3.1", {\
+          "packageLocation": "./.yarn/__virtual__/@rollup-plugin-typescript-virtual-814cf008b7/0/cache/@rollup-plugin-typescript-npm-8.3.1-5b303da7b6-d2672dfdab.zip/node_modules/@rollup/plugin-typescript/",\
           "packageDependencies": [\
-            ["@rollup/plugin-typescript", "virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:8.3.1"],\
-            ["@rollup/pluginutils", "virtual:ed98316c2a8bf7e9853da21eb1198be00c758b383a332d2eeba26d9b8663e2e355438dd9649e42cf8b1496c8b6aba21d7a0a98f10d815c736770a4ae984e2ca0#npm:3.1.0"],\
+            ["@rollup/plugin-typescript", "virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:8.3.1"],\
+            ["@rollup/pluginutils", "virtual:814cf008b7a440f156c0d87a975b8ae91d60c0ffe723c8ec09cdaa00282e81a45ccc987b0c6d51dbeedff5c9338313c3de9076b1786099c9438bdb515b8b7a7d#npm:3.1.0"],\
             ["@types/rollup", null],\
             ["@types/tslib", null],\
             ["@types/typescript", null],\
             ["resolve", "patch:resolve@npm%3A1.22.0#~builtin<compat/resolve>::version=1.22.0&hash=07638b"],\
             ["rollup", "npm:2.70.1"],\
             ["tslib", "npm:2.3.1"],\
-            ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"]\
+            ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=7ad353"]\
           ],\
           "packagePeers": [\
             "@types/rollup",\
@@ -145,10 +160,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:ed98316c2a8bf7e9853da21eb1198be00c758b383a332d2eeba26d9b8663e2e355438dd9649e42cf8b1496c8b6aba21d7a0a98f10d815c736770a4ae984e2ca0#npm:3.1.0", {\
-          "packageLocation": "./.yarn/__virtual__/@rollup-pluginutils-virtual-ec39abcfb0/0/cache/@rollup-pluginutils-npm-3.1.0-b44b222e7d-8be16e2786.zip/node_modules/@rollup/pluginutils/",\
+        ["virtual:814cf008b7a440f156c0d87a975b8ae91d60c0ffe723c8ec09cdaa00282e81a45ccc987b0c6d51dbeedff5c9338313c3de9076b1786099c9438bdb515b8b7a7d#npm:3.1.0", {\
+          "packageLocation": "./.yarn/__virtual__/@rollup-pluginutils-virtual-338591544f/0/cache/@rollup-pluginutils-npm-3.1.0-b44b222e7d-8be16e2786.zip/node_modules/@rollup/pluginutils/",\
           "packageDependencies": [\
-            ["@rollup/pluginutils", "virtual:ed98316c2a8bf7e9853da21eb1198be00c758b383a332d2eeba26d9b8663e2e355438dd9649e42cf8b1496c8b6aba21d7a0a98f10d815c736770a4ae984e2ca0#npm:3.1.0"],\
+            ["@rollup/pluginutils", "virtual:814cf008b7a440f156c0d87a975b8ae91d60c0ffe723c8ec09cdaa00282e81a45ccc987b0c6d51dbeedff5c9338313c3de9076b1786099c9438bdb515b8b7a7d#npm:3.1.0"],\
             ["@types/estree", "npm:0.0.39"],\
             ["@types/rollup", null],\
             ["estree-walker", "npm:1.0.1"],\
@@ -1089,21 +1104,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["pyrologjs", [\
-        ["workspace:.", {\
-          "packageLocation": "./",\
-          "packageDependencies": [\
-            ["pyrologjs", "workspace:."],\
-            ["@rollup/plugin-typescript", "virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:8.3.1"],\
-            ["rollup", "npm:2.70.1"],\
-            ["rollup-plugin-dts", "virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:4.2.1"],\
-            ["rollup-plugin-terser", "virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:7.0.2"],\
-            ["tslib", "npm:2.3.1"],\
-            ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["randombytes", [\
         ["npm:2.1.0", {\
           "packageLocation": "./.yarn/cache/randombytes-npm-2.1.0-e3da76bccf-d779499376.zip/node_modules/randombytes/",\
@@ -1175,16 +1175,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:4.2.1", {\
-          "packageLocation": "./.yarn/__virtual__/rollup-plugin-dts-virtual-4268ddff10/0/cache/rollup-plugin-dts-npm-4.2.1-4e9cd8a041-70a593db76.zip/node_modules/rollup-plugin-dts/",\
+        ["virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:4.2.1", {\
+          "packageLocation": "./.yarn/__virtual__/rollup-plugin-dts-virtual-e321b6853d/0/cache/rollup-plugin-dts-npm-4.2.1-4e9cd8a041-70a593db76.zip/node_modules/rollup-plugin-dts/",\
           "packageDependencies": [\
-            ["rollup-plugin-dts", "virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:4.2.1"],\
+            ["rollup-plugin-dts", "virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:4.2.1"],\
             ["@babel/code-frame", "npm:7.16.7"],\
             ["@types/rollup", null],\
             ["@types/typescript", null],\
             ["magic-string", "npm:0.26.1"],\
             ["rollup", "npm:2.70.1"],\
-            ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"]\
+            ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=7ad353"]\
           ],\
           "packagePeers": [\
             "@types/rollup",\
@@ -1203,10 +1203,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:7.0.2", {\
-          "packageLocation": "./.yarn/__virtual__/rollup-plugin-terser-virtual-411fe6cd65/0/cache/rollup-plugin-terser-npm-7.0.2-3f55469f5a-af84bb7a7a.zip/node_modules/rollup-plugin-terser/",\
+        ["virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:7.0.2", {\
+          "packageLocation": "./.yarn/__virtual__/rollup-plugin-terser-virtual-d66af74aac/0/cache/rollup-plugin-terser-npm-7.0.2-3f55469f5a-af84bb7a7a.zip/node_modules/rollup-plugin-terser/",\
           "packageDependencies": [\
-            ["rollup-plugin-terser", "virtual:934978b1a836db9d913479ea02f7fda3ecdf1c6631923cec57180f6804b4227bbb14c69dbce9d3f84502689ce8ef206b843bf3053b545e5cad6321e74d424e19#npm:7.0.2"],\
+            ["rollup-plugin-terser", "virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:7.0.2"],\
             ["@babel/code-frame", "npm:7.16.7"],\
             ["@types/rollup", null],\
             ["jest-worker", "npm:26.6.2"],\
@@ -1452,10 +1452,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["typescript", [\
-        ["patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367", {\
-          "packageLocation": "./.yarn/cache/typescript-patch-30b732d1e2-6bf45caf84.zip/node_modules/typescript/",\
+        ["patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=7ad353", {\
+          "packageLocation": "./.yarn/cache/typescript-patch-572cbe385b-6bf45caf84.zip/node_modules/typescript/",\
           "packageDependencies": [\
-            ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"]\
+            ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=7ad353"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -5456,9 +5456,13 @@ function patchFs(patchedFs, fakeFs) {
     }
   }
   {
-    patchedFs.read[nodeUtils.promisify.custom] = async (p, buffer, ...args) => {
-      const res = fakeFs.readPromise(p, buffer, ...args);
+    patchedFs.read[nodeUtils.promisify.custom] = async (fd, buffer, ...args) => {
+      const res = fakeFs.readPromise(fd, buffer, ...args);
       return {bytesRead: await res, buffer};
+    };
+    patchedFs.write[nodeUtils.promisify.custom] = async (fd, buffer, ...args) => {
+      const res = fakeFs.writePromise(fd, buffer, ...args);
+      return {bytesWritten: await res, buffer};
     };
   }
 }
@@ -9915,11 +9919,11 @@ Require stack:
     }
     originalExtensionJSFunction.call(this, module, filename);
   };
-  const originalEmitWarning = process.emitWarning;
-  process.emitWarning = function(warning, name, ctor) {
-    if (name === `ExperimentalWarning` && typeof warning === `string` && warning.includes(`--experimental-loader`))
-      return;
-    originalEmitWarning.apply(process, arguments);
+  const originalEmit = process.emit;
+  process.emit = function(name, data, ...args) {
+    if (name === `warning` && typeof data === `object` && data.name === `ExperimentalWarning` && (data.message.includes(`--experimental-loader`) || data.message.includes(`Custom ESM Loaders is an experimental feature`)))
+      return false;
+    return originalEmit.apply(process, arguments);
   };
   patchFs(fs__default.default, new PosixFS(opts.fakeFs));
 }

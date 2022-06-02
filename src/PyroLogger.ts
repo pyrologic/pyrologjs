@@ -1,6 +1,7 @@
 import { Appender } from "./Appender";
 import { Level, Level2String } from "./Level";
 import { Logger } from "./Logger";
+import { Utils } from "./utils";
 
 export class PyroLogger implements Logger {
 
@@ -64,8 +65,22 @@ export class PyroLogger implements Logger {
     /**
      * @override
      */
+    isEnabledFor(l: Level): boolean {
+        return l >= this.level;        
+    }
+
+    /**
+     * @override
+     */
+    isDebugEnabled(): boolean {
+        return this.isEnabledFor(Level.DEBUG);
+    }
+
+    /**
+     * @override
+     */
     writeLog(l: Level, ...data: any[]): void {
-        if ( (this._level !== Level.OFF) && (l !== Level.OFF) && (l >= this._level) ) {
+        if ( (this._level !== Level.OFF) && (l !== Level.OFF) && this.isEnabledFor(l) ) {
             const prefix = `${this._name} [${Level2String(l)}]:`;
             switch ( l ) {
                 case Level.ALL:
@@ -129,5 +144,14 @@ export class PyroLogger implements Logger {
      */
     error(...data: any[]): void {
         this.writeLog(Level.ERROR, ...data);
+    }
+
+    /**
+     * @override
+     */
+    writeStackTrace(l: Level, skip: number, message?: string): void {
+        if ( this.isEnabledFor(l) ) {
+            this.writeLog(l, (Utils.isString(message) ? message as string : '') + '\n' + Utils.getStack(skip));
+        }
     }
 }

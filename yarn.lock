@@ -59,6 +59,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pyrologic/pyrologjs@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@pyrologic/pyrologjs@workspace:."
+  dependencies:
+    "@rollup/plugin-typescript": ^8.3.1
+    rollup: ^2.70.1
+    rollup-plugin-dts: ^4.2.1
+    rollup-plugin-terser: ^7.0.2
+    tslib: ^2.3.1
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
 "@rollup/plugin-typescript@npm:^8.3.1":
   version: 8.3.1
   resolution: "@rollup/plugin-typescript@npm:8.3.1"
@@ -880,19 +893,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pyrologjs@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "pyrologjs@workspace:."
-  dependencies:
-    "@rollup/plugin-typescript": ^8.3.1
-    rollup: ^2.70.1
-    rollup-plugin-dts: ^4.2.1
-    rollup-plugin-terser: ^7.0.2
-    tslib: ^2.3.1
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
 "randombytes@npm:^2.1.0":
   version: 2.1.0
   resolution: "randombytes@npm:2.1.0"
@@ -1218,7 +1218,7 @@ __metadata:
 
 "typescript@patch:typescript@^4.6.3#~builtin<compat/typescript>":
   version: 4.6.3
-  resolution: "typescript@patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"
+  resolution: "typescript@patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=7ad353"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver

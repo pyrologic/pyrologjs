@@ -3,6 +3,7 @@ import { ConfigItem, LevelStrings } from "./ConfigItem";
 import { Logger } from "./Logger";
 import { LoggerFactory } from "./LoggerFactory";
 import { Appender } from "./Appender";
+import { Utils } from "./utils";
 
 class PyroLog {
 
@@ -44,6 +45,13 @@ class PyroLog {
      */
     get defaultLevel() : Level {
         return this._lf.defaultLevel;
+    }
+
+    /**
+     * the stack trace as string
+     */
+    get stackTrace(): string {
+        return Utils.getStack(2);
     }
 
     /**
@@ -90,8 +98,18 @@ class PyroLog {
     applyConfiguration(config: ConfigItem[]): void {
         this._lf.applyConfiguration(config);
     }
+
+    /**
+     * writes the current stack trace to the specified logger
+     * @param logger target logger
+     * @param level logging level
+     * @param message optional message text
+     */
+    writeStackTrace(logger: Logger, level: LevelStrings, message?: string) {
+        logger.writeStackTrace(Level[level], 3, message);
+    }
 }
 
 const pyroLog = PyroLog._create();
 
-export { Appender, ConfigItem, Logger, PyroLog };
+export { Appender, ConfigItem, Logger, PyroLog, Level };

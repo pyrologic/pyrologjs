@@ -1,13 +1,14 @@
 {
   "name": "@pyrologic/pyrologjs",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "Thomas Hendel",
   "homepage": "https://github.com/pyrologic/pyrologjs",
   "license": "MIT",
   "packageManager": "yarn@3.2.1",
   "description": "Lightweight JavaScript logger",
   "keywords": [
-    "logging", "logger"
+    "logging",
+    "logger"
   ],
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.3.1",

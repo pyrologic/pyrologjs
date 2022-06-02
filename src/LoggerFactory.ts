@@ -5,6 +5,7 @@ import { Level } from "./Level";
 import { Logger } from "./Logger";
 import { PyroConfigItem } from "./PyroConfigItem";
 import { PyroLogger } from "./PyroLogger";
+import { Utils } from "./utils";
 
 const DEFAULT_CONFIG = '@default';
 
@@ -70,7 +71,7 @@ export class LoggerFactory {
      * @returns the given string
      */
     private _verifyName(name: unknown) : string {
-        if ( (typeof name !== 'string')  || !name.length ) {
+        if ( !Utils.isString(name) ) {
             throw new Error(`Invalid name specified: "${name}" (type: ${typeof name})!`);
         }
         return name as string;
