@@ -8,13 +8,24 @@ It can be used on web sites as in code for nodejs or similar environments.
 **pyrologjs** itself is written entirely in TypeScript and compiled and bundled using [rollup.js](https://rollupjs.org/guide/en/). The preferred package manager is [yarn](https://yarnpkg.com/).
 
 ## Installation
-t.b.d.
+
+Use your preferred package manager and install **pyorologjs** as dependency of your project.
+
+yarn example:
+```
+yarn add @pyrologic/pyrologjs
+```
+
+npm example:
+```
+npm install @pyrologic/pyrologjs
+``` 
 
 ## Usage
 
 Just import the main class `PyroLog` as shown below:
 ```
-import { PyroLog } from "pyrologjs";
+import { PyroLog } from "@pyrologic/pyrologjs";
 ```
 Then, get the `PyroLog` singleton instance:
 ```
@@ -36,18 +47,7 @@ const config = [
     { name: '42', level: 'ALL' }                    // plain old way to define a logger configuration item, possible but not recommended
 ];
 ```
-If you want, you can specify a callback function that acts as special "appender". This function is called each time a log message was written to the console.
-```
-/**
- * a callback function used as "appender"
- * @param {*} logs log entries
- */
-function myAppender(logs) {
-    // every log message goes here
-    // you can do whatever you want to do with these log messages :-)
-    console.log('APPENDER', ...logs);
-}
-```
+
 The last initialization step is to apply the configuration, register the callback function and to create some loggers:
 ```
 /**
@@ -56,7 +56,6 @@ The last initialization step is to apply the configuration, register the callbac
 function init() {
     console.log('PyroLog init!');
     PL.applyConfiguration(config);
-    PL.createAppender(myAppender, true);
     const l1 = PL.getLogger('logger1');
     const l2 = PL.getLogger('logger2');
     l1.debug("Hello DEBUG logger!", "How are you?");
@@ -66,4 +65,40 @@ function init() {
 ```
 You can change the logger configuraton at any time. And you can set a new appender or just remove the current appender as needed.
 
+## Advanced features
+
+### Stack Traces
+
+For some diagnostic message it is helpful to get a full stack trace. **pyrologjs** provides an easy way to do so:
+```
+const PL = PyroLog.getInstance();
+const logger = PL.getLogger('logger');
+// method one
+logger.debug('Stack trace:\n' + PL.stackTrace);
+// method two
+ PL.writeStackTrace(logger, 'INFO', 'Call stack:');
+
+```
+
+### Appenders
+
+If you want, you can specify a callback function that acts as special "appender". This function is called each time a log message was written to the console.
+```
+const PL = PyroLog.getInstance();
+
+/**
+ * a callback function used as "appender"
+ * @param {*} logs log entries
+ */
+function myAppender(logs) {
+    // every log message goes here
+    // you can do whatever you want to do with these log messages :-)
+    console.log('APPENDER', ...logs);
+}
+
+// ...
+
+PL.createAppender(myAppender, true);
+
+```
 t.b.c.
