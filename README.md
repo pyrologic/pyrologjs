@@ -73,14 +73,14 @@ You can change the logger configuraton at any time. And you can set a new append
 
 ### TypeScript Example
 
-The whole module is written in TypeScript and be used in other TypeScript projects, of course. One should eplicitly import all relevant types:
+The whole module is written in TypeScript and can be used in other TypeScript projects, of course. One should explicitly import all relevant types:
 ```ts
 import { PyroLog, Logger, Level } from "@pyrologic/pyrologjs";
 ```
 
 The usage of TypeScript benefits from the availablity of all type definitions.
 
-The example code would be the same as above with one exception: It is not possible to use a plain JavaScrip object as configuration item.
+The example code would be the same as above with one exception: It is not possible to use a plain JavaScript object as configuration item.
 
 
 ## Advanced Features
