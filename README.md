@@ -30,18 +30,18 @@ yarn add @pyrologic/pyrologjs
 ### JavaScript Example
 
 Just import the main class `PyroLog` as shown below:
-```
+```js
 import { PyroLog } from "@pyrologic/pyrologjs";
 ```
 Then, get the `PyroLog` singleton instance:
-```
+```js
 /**
  * PyroLog singleton instance
  */
 const PL = PyroLog.getInstance();
 ```
 Create the desired logger configurations. Example:
-```
+```js
 /**
  * a simple configuration
  */
@@ -55,7 +55,7 @@ const config = [
 ```
 
 The last initialization step is to apply the configuration and to create some loggers:
-```
+```js
 /**
  * logger initialization
  */
@@ -74,7 +74,7 @@ You can change the logger configuraton at any time. And you can set a new append
 ### TypeScript Example
 
 The whole module is written in TypeScript and be used in other TypeScript projects, of course. One should eplicitly import all relevant types:
-```
+```ts
 import { PyroLog, Logger, Level } from "@pyrologic/pyrologjs";
 ```
 
@@ -88,12 +88,12 @@ The example code would be the same as above with one exception: It is not possib
 ### Logging Level Enumeration in JavaScript
 
 The symbolic logging level values are not directly available in JavaScript, since the TypeScript enumeration `Level` is resolved by the TypeScript compiler. In order to deal with that, one can use the object `JsLevel` instad, which provides each logging level as a property:
-```
+```js
 import { JsLevel } from "@pyrologic/pyrologjs";
 ```
 
 The object `JsLevel` itself is defined like this:
-```
+```js
 const JsLevel = {
     ALL: Level.ALL,
     TRACE: Level.TRACE,
@@ -108,7 +108,7 @@ const JsLevel = {
 ### Stack Traces
 
 For some diagnostic message it is helpful to get a full stack trace. **pyrologjs** provides an easy way to do so:
-```
+```js
 const PL = PyroLog.getInstance();
 const logger = PL.getLogger('logger');
 // method one
@@ -121,7 +121,7 @@ PL.writeStackTrace(logger, 'INFO', 'Call stack:');
 ### Appenders
 
 If you want, you can specify a callback function that acts as special "appender". This function is called each time a log message was written to the console.
-```
+```js
 const PL = PyroLog.getInstance();
 
 /**
@@ -139,4 +139,3 @@ function myAppender(logs) {
 PL.createAppender(myAppender, true);
 
 ```
-t.b.c.
