@@ -7,6 +7,8 @@ It can be used on web sites as in code for nodejs or similar environments.
 
 **pyrologjs** itself is written entirely in TypeScript and compiled and bundled using [rollup.js](https://rollupjs.org/guide/en/).
 
+**pyrologjs** has no other dependencies.
+
 
 ## Installation
 
