@@ -1,10 +1,9 @@
 //@file: rollup.config.js
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
-import rollupTimeStamp from "./build/rollup-plugin-timestamp";
-import RollupBuildInfo from './build/rollup-plugin-buildinfo';
+import { PyrologicRollupPlugin } from "@pyrologic/rollup-plugin";
 
-const rbi = RollupBuildInfo.getInstance();
+const plugin = PyrologicRollupPlugin.getInstance();
 
 const config = [
     {
@@ -17,11 +16,11 @@ const config = [
         },
         plugins: [
             typescript({ tsconfig: './tsconfig.json' }),
-            rbi.plugin(),
-            rollupTimeStamp('PyroLogJS')
+            plugin.infoPlugin(),
+            plugin.timestampPlugin('PyroLogJS')
         ],
         onwarn ( { loc, frame, message } ) {
-            rbi.onwarn( { loc, frame, message } );
+            plugin.onwarn( { loc, frame, message } );
         }
     },
     {

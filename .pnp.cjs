@@ -33,6 +33,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
+            ["@pyrologic/rollup-plugin", "npm:1.0.1"],\
             ["@rollup/plugin-typescript", "virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:8.3.1"],\
             ["rollup", "npm:2.70.1"],\
             ["rollup-plugin-dts", "virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:4.2.1"],\
@@ -110,6 +111,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["@pyrologic/pyrologjs", "workspace:."],\
+            ["@pyrologic/rollup-plugin", "npm:1.0.1"],\
             ["@rollup/plugin-typescript", "virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:8.3.1"],\
             ["rollup", "npm:2.70.1"],\
             ["rollup-plugin-dts", "virtual:547eb4416bb6443a7baae7072c16dadd3808356d08850a5e48e42640b34df592d41de7d9f7a27219ffe2cd0da0942f15eb1f1e57a39ac7b9a7362302c1ce67e1#npm:4.2.1"],\
@@ -118,6 +120,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=7ad353"]\
           ],\
           "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@pyrologic/rollup-plugin", [\
+        ["npm:1.0.1", {\
+          "packageLocation": "./.yarn/cache/@pyrologic-rollup-plugin-npm-1.0.1-27ea2e279f-4ec9177ddc.zip/node_modules/@pyrologic/rollup-plugin/",\
+          "packageDependencies": [\
+            ["@pyrologic/rollup-plugin", "npm:1.0.1"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@rollup/plugin-typescript", [\

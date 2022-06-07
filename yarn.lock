@@ -63,6 +63,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pyrologic/pyrologjs@workspace:."
   dependencies:
+    "@pyrologic/rollup-plugin": ^1.0.1
     "@rollup/plugin-typescript": ^8.3.1
     rollup: ^2.70.1
     rollup-plugin-dts: ^4.2.1
@@ -71,6 +72,13 @@ __metadata:
     typescript: ^4.6.3
   languageName: unknown
   linkType: soft
+
+"@pyrologic/rollup-plugin@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@pyrologic/rollup-plugin@npm:1.0.1"
+  checksum: 4ec9177ddc7e8c62538fce95a0bdc4e047311917ef1385dc6ce668154f62d94549eed104405fd4d7a181e922d09ad8e67338b1e4e736a0f5071dd7323d10a31b
+  languageName: node
+  linkType: hard
 
 "@rollup/plugin-typescript@npm:^8.3.1":
   version: 8.3.1
