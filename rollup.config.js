@@ -18,7 +18,7 @@ const config = [
         plugins: [
             typescript({ tsconfig: './tsconfig.json' }),
             rbi.plugin(),
-            rollupTimeStamp()
+            rollupTimeStamp('PyroLogJS')
         ],
         onwarn ( { loc, frame, message } ) {
             rbi.onwarn( { loc, frame, message } );
