@@ -110,6 +110,19 @@ class PyroLog {
     }
 }
 
+// create the singleton instance
 const pyroLog = PyroLog._create();
 
-export { Appender, ConfigItem, Logger, PyroLog, Level };
+// create Level enumeration as JS object
+const JsLevel = {
+    ALL: Level.ALL,
+    TRACE: Level.TRACE,
+    DEBUG: Level.DEBUG,
+    INFO: Level.INFO,
+    WARN: Level.WARN,
+    ERROR: Level.ERROR,
+    OFF: Level.OFF
+};
+
+// export everything that should be exported
+export { Appender, ConfigItem, Logger, PyroLog, Level, JsLevel };
