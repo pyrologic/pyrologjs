@@ -87,6 +87,11 @@ The example code would be the same as above with one exception: It is not possib
 
 The symbolic logging level values are not directly available in JavaScript, since the TypeScript enumeration `Level` is resolved by the TypeScript compiler. In order to deal with that, one can use the object `JsLevel` instad, which provides each logging level as a property:
 ```
+import { JsLevel } from "@pyrologic/pyrologjs";
+```
+
+The object `JsLevel` itself is defined like this:
+```
 const JsLevel = {
     ALL: Level.ALL,
     TRACE: Level.TRACE,
