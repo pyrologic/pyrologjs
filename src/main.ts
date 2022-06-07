@@ -114,7 +114,7 @@ class PyroLog {
 const pyroLog = PyroLog._create();
 
 // create Level enumeration as JS object
-const JsLevel = {
+const JsLevel = Object.freeze({
     ALL: Level.ALL,
     TRACE: Level.TRACE,
     DEBUG: Level.DEBUG,
@@ -122,7 +122,7 @@ const JsLevel = {
     WARN: Level.WARN,
     ERROR: Level.ERROR,
     OFF: Level.OFF
-};
+});
 
 // export everything that should be exported
 export { Appender, ConfigItem, Logger, PyroLog, Level, JsLevel };
