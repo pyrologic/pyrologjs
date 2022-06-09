@@ -12,7 +12,7 @@ It can be used on web sites as in code for nodejs or similar environments.
 
 ## Installation
 
-Use your preferred package manager and install **pyorologjs** as dependency of your project.
+Use your preferred package manager and install **pyrologjs** as dependency of your project.
 
 npm example:
 ```
@@ -69,7 +69,7 @@ function init() {
     l2.debug("This text should not be logged!");
 }
 ```
-You can change the logger configuraton at any time. And you can set a new appender or just remove the current appender as needed.
+You can change the logger configuration at any time. And you can set a new appender or just remove the current appender as needed.
 
 ### TypeScript Example
 
@@ -78,7 +78,7 @@ The whole module is written in TypeScript and can be used in other TypeScript pr
 import { PyroLog, Logger, Level } from "@pyrologic/pyrologjs";
 ```
 
-The usage of TypeScript benefits from the availablity of all type definitions.
+The usage of TypeScript benefits from the availability of all type definitions.
 
 The example code would be the same as above with one exception: It is not possible to use a plain JavaScript object as configuration item.
 
@@ -87,7 +87,7 @@ The example code would be the same as above with one exception: It is not possib
 
 ### Logging Level Enumeration in JavaScript
 
-The symbolic logging level values are not directly available in JavaScript, since the TypeScript enumeration `Level` is resolved by the TypeScript compiler. In order to deal with that, one can use the object `JsLevel` instad, which provides each logging level as a property:
+The symbolic logging level values are not directly available in JavaScript, since the TypeScript enumeration `Level` is resolved by the TypeScript compiler. In order to deal with that, one can use the object `JsLevel` instead, which provides each logging level as a property:
 ```js
 import { JsLevel } from "@pyrologic/pyrologjs";
 ```
@@ -139,3 +139,10 @@ function myAppender(logs) {
 PL.createAppender(myAppender, true);
 
 ```
+
+## ToDos
+1. hierarchical logger configuration (similar to Java loggers)
+2. better location logging
+3. more comprehensive documentation
+
+more to come
