@@ -55,6 +55,13 @@ class PyroLog {
     }
 
     /**
+     * the name of the calling function as string
+     */
+    get functionName(): string {
+        return Utils.getFunctionName(1, '#');
+    }
+
+    /**
      * returns a logger
      * @param name logger name
      * @returns {Logger} the logger
@@ -92,7 +99,7 @@ class PyroLog {
     }
 
     /**
-     * appplies a logger configuration
+     * applies a logger configuration
      * @param config array of configuration items
      */
     applyConfiguration(config: ConfigItem[]): void {
