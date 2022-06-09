@@ -92,10 +92,11 @@ class PyroLog {
      * creates a configuration item
      * @param name logger name
      * @param level logging level
+     * @param wf flag whether to write the name of the calling function / method
      * @returns the created configuration item
      */
-    createConfigItem(name: string, level: LevelStrings) : ConfigItem {
-        return this._lf.createConfigItem(name, level);
+    createConfigItem(name: string, level: LevelStrings, wf = false) : ConfigItem {
+        return this._lf.createConfigItem(name, level, wf);
     }
 
     /**

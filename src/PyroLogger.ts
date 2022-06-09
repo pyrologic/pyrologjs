@@ -7,19 +7,23 @@ export class PyroLogger implements Logger {
 
     private _level: Level;
     private _name: string;
-    private _usedbg: boolean;
+    private _useDebug: boolean;
+    private _writeFnc: boolean;
     private _appender: Appender | null;
 
     /**
      * constructs a new instance
      * @param n logger name
      * @param l initial logging level
-     * @param d flag whehter to use console.debug() for level DEBUG and below
+     * @param d flag whether to use console.debug() for level DEBUG and below
+     * @param wf flag whether to write the name of the calling function / method
+     * @param a the optional appender
      */
-    constructor(n: string, l: Level, d: boolean, a: Appender | null) {
+    constructor(n: string, l: Level, d: boolean, wf: boolean, a: Appender | null) {
         this._name = n;
         this._level = l;
-        this._usedbg = d;
+        this._useDebug = !!d;
+        this._writeFnc = !!wf;
         this._appender = a;
     }
 
@@ -40,11 +44,11 @@ export class PyroLogger implements Logger {
     /**
      * sets a new logging level of this logger
      * @param {Level} l new logging level of this logger
-     * @param {boolean} d flag whehter to use console.debug() for level DEBUG and below
+     * @param {boolean} d flag whether to use console.debug() for level DEBUG and below
      */
     setLevel(l: Level, d: boolean): void {
         this._level = l;
-        this._usedbg = d;
+        this._useDebug = d;
     }
 
     /**
@@ -53,6 +57,14 @@ export class PyroLogger implements Logger {
      */
     setAppender(a: Appender | null) {
         this._appender = a;
+    }
+
+    /**
+     * sets the flag whether to write the name of the calling function / method along with each logging output
+     * @param wf new value
+     */
+    setWriteFnc(wf: boolean): void {
+        this._writeFnc = !!wf;
     }
 
     /**
@@ -81,12 +93,12 @@ export class PyroLogger implements Logger {
      */
     writeLog(l: Level, ...data: any[]): void {
         if ( (this._level !== Level.OFF) && (l !== Level.OFF) && this.isEnabledFor(l) ) {
-            const prefix = `${this._name} [${Level2String(l)}]:`;
+            const prefix = `${this._name} [${Level2String(l)}]` + (this._writeFnc ? ` (${Utils.getFunctionName(2)})` : '') + ':';
             switch ( l ) {
                 case Level.ALL:
                 case Level.TRACE:
                 case Level.DEBUG:
-                    if ( this._usedbg ) {
+                    if ( this._useDebug ) {
                         console.debug(prefix, ...data);
                     } else {
                         console.log(prefix, ...data);

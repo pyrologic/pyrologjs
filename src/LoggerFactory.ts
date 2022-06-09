@@ -12,8 +12,9 @@ const DEFAULT_CONFIG = '@default';
 export class LoggerFactory {
 
     private _defLevel: Level;
-    private _usedbg: boolean;
-    private _config: Map<string, Level>;
+    private _useDebug: boolean;
+    private _writeFnc: boolean;
+    private _config: Map<string, ConfigItem>;
     private _loggers: Map<string, PyroLogger>;
     private _appender: Appender | null;
 
@@ -22,7 +23,8 @@ export class LoggerFactory {
      */
     constructor() {
         this._defLevel = Level.INFO;
-        this._usedbg = false;
+        this._useDebug = false;
+        this._writeFnc = false;
         this._config = new Map();
         this._loggers = new Map();
         this._appender = null;
@@ -62,7 +64,29 @@ export class LoggerFactory {
      * @returns {boolean} true if DEBUG level and below should use console.debug(); false if console.log() should be used instead
      */
     get useDebug() : boolean {
-        return this._usedbg;
+        return this._useDebug;
+    }
+
+    /**
+     * sets the "use console.debug()" flag
+     */
+    set useDebug(d: boolean) {
+        this._useDebug = !!d;
+    }
+
+    /**
+     * flag whether to write the name of the calling function / method along with each output
+     * @returns {boolean} true if new loggers should write the function name along with each log output; false otherwise
+     */
+    get writeFnc(): boolean {
+        return this._writeFnc;
+    }
+
+    /**
+     * sets the "write function name" flag
+     */
+    set writeFnc(wf: boolean) {
+        this._writeFnc = !!wf;
     }
 
     /**
@@ -85,7 +109,7 @@ export class LoggerFactory {
     getLogger(name: string) : Logger {
         if ( !this._loggers.has(this._verifyName(name)) ) {
             // time to create it
-            this._loggers.set(name, new PyroLogger(name, this.getLevel(name), this._usedbg, this._appender));
+            this._loggers.set(name, new PyroLogger(name, this.getLevel(name), this.useDebug, this.getWriteFnc(name), this._appender));
         }
         return this._loggers.get(name) as Logger;
     }
@@ -105,7 +129,16 @@ export class LoggerFactory {
      * @returns the level for that logger; if no configuration exists for the specified logger then the default level is returned
      */
     getLevel(name: string): Level {
-        return this._config.has(this._verifyName(name)) ? (this._config.get(name) as Level) : this._defLevel;
+        return this._config.has(this._verifyName(name)) ? Level[(this._config.get(name) as ConfigItem).level] : this._defLevel;
+    }
+
+    /**
+     * retrieves the "write function name" flag for the specified logger
+     * @param name logger name
+     * @returns true if the specified logger should write the function name along with each log output; false otherwise
+     */
+    getWriteFnc(name: string): boolean {
+        return this._config.has(this._verifyName(name)) ? !!((this._config.get(name) as ConfigItem).writeFnc) : this.writeFnc;
     }
 
     /**
@@ -135,14 +168,15 @@ export class LoggerFactory {
      * creates a configuration item
      * @param name logger name
      * @param level logging level
+     * @param wf flag whether to write the name of the calling function / method
      * @returns the created configuration item
      */
-    createConfigItem(name: string, level: LevelStrings) : ConfigItem {
-        return new PyroConfigItem(this._verifyName(name), level);
+    createConfigItem(name: string, level: LevelStrings, wf: boolean) : ConfigItem {
+        return new PyroConfigItem(this._verifyName(name), level, wf);
     }
 
     /**
-     * appplies a logger configuration
+     * applies a logger configuration
      * @param config array of configuration items
      */
     applyConfiguration(config: ConfigItem[]): void {
@@ -154,12 +188,15 @@ export class LoggerFactory {
             }
             if ( DEFAULT_CONFIG === name ) {
                 // new default level
-                this.defaultLevel = level;
+                this._defLevel = level;
+                this._writeFnc = !!ci.writeFnc;
             } else {
                 // set level for a logger
-                this._config.set(name, level);
+                this._config.set(name, ci);
                 if ( this._loggers.has(name) ) {
-                    (this._loggers.get(name) as PyroLogger).setLevel(level, this._usedbg);
+                    const pl = (this._loggers.get(name) as PyroLogger);
+                    pl.setLevel(level, this._useDebug);
+                    pl.setWriteFnc(!!ci.writeFnc);
                 }
             }
         }
