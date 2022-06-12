@@ -129,6 +129,12 @@ const config = [
 ```
 This will work properly only if you use the common logging methods, such as `Logger.debug()`, `Logger.warn()` etc.
 
+In order to deal with another approaches such as some own utility methods for logging, you can set an offset value that's used to examine the call stack for the calling function / method. This way, you can easily achieve that the real calling function / method appears in the logs.
+```ts
+// set the offset to 1 if you have an utility method in class that's used for logging
+logger.setFncOffset(1);
+```
+
 
 ### Appenders
 
@@ -302,6 +308,12 @@ interface Logger {
      * @param message optional message text
      */
     writeStackTrace(l: Level, skip: number, message?: string): void;
+
+    /**
+     * sets an offset for the call stack used to get the name of the calling function
+     * @param offs the offset use to get the name of the calling function
+     */
+    setFncOffset(offs: number): void;
 }
 ```
 

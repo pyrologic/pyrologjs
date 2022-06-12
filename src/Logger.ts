@@ -66,4 +66,10 @@ export interface Logger {
      * @param message optional message text
      */
     writeStackTrace(l: Level, skip: number, message?: string): void;
+
+    /**
+     * sets an offset for the call stack used to get the name of the calling function
+     * @param offs the offset use to get the name of the calling function
+     */
+    setFncOffset(offs: number): void;
 }

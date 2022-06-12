@@ -9,6 +9,7 @@ export class PyroLogger implements Logger {
     private _name: string;
     private _useDebug: boolean;
     private _writeFnc: boolean;
+    private _fncOffset: number;
     private _appender: Appender | null;
 
     /**
@@ -24,6 +25,7 @@ export class PyroLogger implements Logger {
         this._level = l;
         this._useDebug = !!d;
         this._writeFnc = !!wf;
+        this._fncOffset = 0;
         this._appender = a;
     }
 
@@ -93,7 +95,7 @@ export class PyroLogger implements Logger {
      */
     writeLog(l: Level, ...data: any[]): void {
         if ( (this._level !== Level.OFF) && (l !== Level.OFF) && this.isEnabledFor(l) ) {
-            const prefix = `${this._name} [${Level2String(l)}]` + (this._writeFnc ? ` (${Utils.getFunctionName(2)})` : '') + ':';
+            const prefix = `${this._name} [${Level2String(l)}]` + (this._writeFnc ? ` (${Utils.getFunctionName(this._fncOffset + 2)})` : '') + ':';
             switch ( l ) {
                 case Level.ALL:
                 case Level.TRACE:
@@ -165,5 +167,12 @@ export class PyroLogger implements Logger {
         if ( this.isEnabledFor(l) ) {
             this.writeLog(l, (Utils.isString(message) ? message as string : '') + '\n' + Utils.getStack(skip));
         }
+    }
+
+    /**
+     * @override
+     */
+    setFncOffset(offs: number): void {
+        this._fncOffset = offs;
     }
 }
