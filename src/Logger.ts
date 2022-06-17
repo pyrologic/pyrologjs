@@ -25,7 +25,7 @@ export interface Logger {
     /**
      * @returns true if this logger is enabled for logging at level TRACE or above; false otherwise
      */
-    isTraceEnable(): boolean;
+    isTraceEnabled(): boolean;
 
     /**
      * writes a log message at the specified level

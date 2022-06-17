@@ -93,7 +93,7 @@ export class PyroLogger implements Logger {
     /**
      * @override
      */
-    isTraceEnable(): boolean {
+    isTraceEnabled(): boolean {
         return this.isEnabledFor(Level.TRACE);
     }
 
