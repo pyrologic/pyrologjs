@@ -23,6 +23,11 @@ export interface Logger {
     isDebugEnabled(): boolean;
 
     /**
+     * @returns true if this logger is enabled for logging at level TRACE or above; false otherwise
+     */
+    isTraceEnable(): boolean;
+
+    /**
      * writes a log message at the specified level
      * @param l logging level
      * @param data data to be logged

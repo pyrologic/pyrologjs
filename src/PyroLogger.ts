@@ -91,6 +91,13 @@ export class PyroLogger implements Logger {
     }
 
     /**
+     * @override
+     */
+    isTraceEnable(): boolean {
+        return this.isEnabledFor(Level.TRACE);
+    }
+
+    /**
      * creates the prefix text that's prepended to each logging output
      * @param l logging level
      * @returns the prefix text
