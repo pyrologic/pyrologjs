@@ -91,11 +91,20 @@ export class PyroLogger implements Logger {
     }
 
     /**
+     * creates the prefix text that's prepended to each logging output
+     * @param l logging level
+     * @returns the prefix text
+     */
+    private _getPrefix(l: Level): string {
+        return `${(new Date()).toISOString()} ${this._name} [${Level2String(l)}]` + (this._writeFnc ? ` (${Utils.getFunctionName(this._fncOffset + 3)})` : '') + ':';
+    }
+
+    /**
      * @override
      */
     writeLog(l: Level, ...data: any[]): void {
         if ( (this._level !== Level.OFF) && (l !== Level.OFF) && this.isEnabledFor(l) ) {
-            const prefix = `${this._name} [${Level2String(l)}]` + (this._writeFnc ? ` (${Utils.getFunctionName(this._fncOffset + 2)})` : '') + ':';
+            const prefix = this._getPrefix(l);
             switch ( l ) {
                 case Level.ALL:
                 case Level.TRACE:
