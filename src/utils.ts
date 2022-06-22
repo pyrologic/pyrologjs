@@ -13,6 +13,18 @@ export class Utils {
     }
 
     /**
+     * verifies whether the given name parameter is a valid string; throws an error if not
+     * @param name a string specifying a name
+     * @returns the given string
+     */
+     static verifyName(name: unknown) : string {
+        if ( !Utils.isString(name) ) {
+            throw new Error(`Invalid name specified: "${name}" (type: ${typeof name})!`);
+        }
+        return name as string;
+    }
+
+    /**
      * retrieves the stack trace
      * @param skip number of stack entries to skip
      * @returns the stack trace as string
