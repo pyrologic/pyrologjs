@@ -13,15 +13,31 @@ export class Utils {
     }
 
     /**
-     * verifies whether the given name parameter is a valid string; throws an error if not
+     * checks whether the given name parameter is a valid string; throws an error if not
      * @param name a string specifying a name
      * @returns the given string
      */
-     static verifyName(name: unknown) : string {
+    static ensureName(name: unknown) : string {
         if ( !Utils.isString(name) ) {
             throw new Error(`Invalid name specified: "${name}" (type: ${typeof name})!`);
         }
         return name as string;
+    }
+
+    /**
+     * checks whether all elements of the give array are valid strings; throws an error if not
+     * @param names array of strings to be 
+     * @param errmsg optional error message that's thrown in the case of an error
+     */
+    static checkNames(names: any[], errmsg: string=""): void {
+        const cnt = names.length;
+        for ( let i=0 ; i < cnt ; ++i ) {
+            const n = names[i];
+            if ( !Utils.isString(n) ) {
+                const msg = Utils.isString(errmsg) ? errmsg : `Invalid element at index #${i}: "${n}"!`;
+                throw new Error(msg);
+            }
+        }
     }
 
     /**

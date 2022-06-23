@@ -8,6 +8,9 @@ import { DEFAULT_CONFIG } from "./LoggerFactory";
 import { Level } from "./Level";
 import { PyroConfigItem } from "./PyroConfigItem";
 
+/**
+ * a tree node class
+ */
 class Node {
     private nodeCfg: ConfigItem | null;
     private readonly childNodes: Map<String, Node>;
@@ -39,40 +42,59 @@ class Node {
 
     addChild(name: string, child: Node): void {
         if ( !this.hasChild(name) ) {
-            this.childNodes.set(Utils.verifyName(name), child);
+            this.childNodes.set(Utils.ensureName(name), child);
         }
     }
 }
 
-
+/**
+ * the class ConfigTree holds the hierarchical logger configuration
+ */
 export class ConfigTree {
     private readonly _rootNode: Node;
 
-    constructor(rc: ConfigItem) {
+    /**
+     * constructs a new instance
+     * @param {ConfigItem} rc root configuration item; provides the default configuration
+     */
+    private constructor(rc: ConfigItem) {
         this._rootNode = new Node(rc);
     }
 
+    /**
+     * @returns {Node} the root node
+     */
     get rootNode(): Node {
         return this._rootNode;
     }
 
+    /**
+     * @returns {ConfigItem} the default configurations
+     */
     get defaultConfig(): ConfigItem {
         return this._rootNode.config as ConfigItem;
     }
 
+    /**
+     * applies a logger configuration
+     * @param config array of configuration items
+     */
     private _applyConfiguration(config: ConfigItem[]): void {
         for ( let ci of config ) {
             const names = ci.name.split('.');
-            names.forEach((n) => {
-                if ( !Utils.verifyName(n) ) {
-                    throw new Error(`Invalid logger path "${ci.name}"!`);
-                }
-            });
+            Utils.checkNames(names, `Invalid logger path "${ci.name}"!`);
             const node = this._ensureNode(this._rootNode, names, 1);
             node.setConfig(ci);
         }
     }
 
+    /**
+     * ensures that a tree node exists for a given path
+     * @param {Node} node parent node
+     * @param {string[]} names node path
+     * @param {Number} level current recursion level
+     * @returns {Node} the child node referred by the path
+     */
     private _ensureNode(node: Node, names: string[], level: number): Node {
         const name = names[level-1];
         if ( !node.hasChild(name) ) {
@@ -90,7 +112,7 @@ export class ConfigTree {
         let nci: Array<ConfigItem> = [];
         let dci: ConfigItem|null = null;
         for ( let ci of config ) {
-            const name = Utils.verifyName(ci.name);
+            const name = Utils.ensureName(ci.name);
             const level = Level[ci.level];
             if ( typeof level === 'undefined' ) {
                 throw new Error(`Invalid level "${ci.level}"!`);
@@ -104,7 +126,7 @@ export class ConfigTree {
             }
         }
         if ( dci === null ) {
-            // create default
+            // create default configuration
             dci = new PyroConfigItem(DEFAULT_CONFIG, 'ERROR', false);
         }
         const tree = new ConfigTree(dci);

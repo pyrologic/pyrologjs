@@ -95,7 +95,7 @@ export class LoggerFactory {
      * @returns {Logger} the logger
      */
     getLogger(name: string) : Logger {
-        if ( !this._loggers.has(Utils.verifyName(name)) ) {
+        if ( !this._loggers.has(Utils.ensureName(name)) ) {
             // time to create it
             this._loggers.set(name, new PyroLogger(name, this.getLevel(name), this.useDebug, this.getWriteFnc(name), this._appender));
         }
@@ -108,7 +108,7 @@ export class LoggerFactory {
      * @returns true if there's a configuration for the specified logger; false otherwise
      */
     hasConfig(name: string): Boolean {
-        return this._config.has(Utils.verifyName(name));
+        return this._config.has(Utils.ensureName(name));
     }
 
     /**
@@ -117,7 +117,7 @@ export class LoggerFactory {
      * @returns the level for that logger; if no configuration exists for the specified logger then the default level is returned
      */
     getLevel(name: string): Level {
-        return this._config.has(Utils.verifyName(name)) ? Level[(this._config.get(name) as ConfigItem).level] : this._defLevel;
+        return this._config.has(Utils.ensureName(name)) ? Level[(this._config.get(name) as ConfigItem).level] : this._defLevel;
     }
 
     /**
@@ -126,7 +126,7 @@ export class LoggerFactory {
      * @returns true if the specified logger should write the function name along with each log output; false otherwise
      */
     getWriteFnc(name: string): boolean {
-        return this._config.has(Utils.verifyName(name)) ? !!((this._config.get(name) as ConfigItem).writeFnc) : this.writeFnc;
+        return this._config.has(Utils.ensureName(name)) ? !!((this._config.get(name) as ConfigItem).writeFnc) : this.writeFnc;
     }
 
     /**
@@ -160,7 +160,7 @@ export class LoggerFactory {
      * @returns the created configuration item
      */
     createConfigItem(name: string, level: LevelStrings, wf: boolean) : ConfigItem {
-        return new PyroConfigItem(Utils.verifyName(name), level, wf);
+        return new PyroConfigItem(Utils.ensureName(name), level, wf);
     }
 
     /**
@@ -169,7 +169,7 @@ export class LoggerFactory {
      */
     applyConfiguration(config: ConfigItem[]): void {
         for ( let ci of config) {
-            const name = Utils.verifyName(ci.name);
+            const name = Utils.ensureName(ci.name);
             const level = Level[ci.level];
             if ( typeof level === 'undefined' ) {
                 throw new Error(`Invalid level "${ci.level}"!`);
