@@ -29,7 +29,7 @@ export class Utils {
      * @param names array of strings to be 
      * @param errmsg optional error message that's thrown in the case of an error
      */
-    static checkNames(names: any[], errmsg: string=""): void {
+    static checkNames(names: any[], errmsg: string=""): string[] {
         const cnt = names.length;
         for ( let i=0 ; i < cnt ; ++i ) {
             const n = names[i];
@@ -38,6 +38,7 @@ export class Utils {
                 throw new Error(msg);
             }
         }
+        return names as string[];
     }
 
     /**
