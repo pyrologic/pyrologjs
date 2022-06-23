@@ -46,10 +46,18 @@ class Node {
 
 
 export class ConfigTree {
-    private readonly rootNode: Node;
+    private readonly _rootNode: Node;
 
     constructor(rc: ConfigItem) {
-        this.rootNode = new Node(rc);
+        this._rootNode = new Node(rc);
+    }
+
+    get rootNode(): Node {
+        return this._rootNode;
+    }
+
+    get defaultConfig(): ConfigItem {
+        return this._rootNode.config as ConfigItem;
     }
 
     private _applyConfiguration(config: ConfigItem[]): void {
@@ -60,7 +68,7 @@ export class ConfigTree {
                     throw new Error(`Invalid logger path "${ci.name}"!`);
                 }
             });
-            const node = this._ensureNode(this.rootNode, names, 1);
+            const node = this._ensureNode(this._rootNode, names, 1);
             node.setConfig(ci);
         }
     }
