@@ -11,3 +11,5 @@
 #.pnp.*
 
 dist
+.yarn/cache/fsevents*
+
