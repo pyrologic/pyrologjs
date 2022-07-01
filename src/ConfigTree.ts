@@ -10,7 +10,7 @@ import { PyroConfigItem } from "./PyroConfigItem";
 
 
 /**
- * a tree node class
+ * an internal tree node class
  */
 class Node {
     private readonly _name: string;
@@ -60,6 +60,9 @@ class Node {
     }
 
     private _addChild(child: Node): void {
+        if ( child._parent !== this ) {
+            throw new Error('Invalid child node with different parent node!');
+        }
         if ( !this.hasChild(child.name) ) {
             this._children.set(Utils.ensureName(child.name), child);
         } else {
@@ -73,6 +76,8 @@ class Node {
  * the class ConfigTree holds the hierarchical logger configuration
  */
 export class ConfigTree {
+
+    /** tree's root node */
     private readonly _rootNode: Node;
 
     /**
