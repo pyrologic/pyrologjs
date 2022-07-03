@@ -58,6 +58,16 @@ class Node {
     getChild(name: string): Node | undefined {
         return this._children.get(name);
     }
+    
+    clear() {
+        if ( this._children.size > 0 ) {
+            try {
+                this._children.forEach((c) => c.clear());
+            } finally {
+                this._children.clear();
+            }
+        }
+    }
 
     private _addChild(child: Node): void {
         if ( child._parent !== this ) {
@@ -93,6 +103,13 @@ export class ConfigTree {
      */
     get defaultConfig(): ConfigItem {
         return this._rootNode.config as ConfigItem;
+    }
+
+    /**
+     * clears the configuration tree, drops all configuration nodes
+     */
+    clear() {
+        this._rootNode.clear();
     }
 
     /**
