@@ -170,11 +170,23 @@ export class LoggerFactory {
      * @param config array of configuration items
      */
     applyConfiguration(config: ConfigItem[]): void {
+        if ( this._config !== null ) {
+            // drop old configuration
+            this._config.clear();
+            this._config = null;
+        }
+        // read and evaluate configuration items
         const cfg = ConfigTree.applyConfiguration(config)
         this._config = cfg;
         this._defLevel = Level[cfg.defaultConfig.level];
         this._writeFnc = cfg.defaultConfig.writeFnc;
-        // TODO: update existing loggers
+        if ( this._loggers.size > 0 ) {
+            // update existing loggers
+            this._loggers.forEach((pl) => {
+                pl.setLevel(this.getLevel(pl.name), this.useDebug);
+                pl.setWriteFnc(this.getWriteFnc(pl.name));
+            });
+        }
     }
 }
 
