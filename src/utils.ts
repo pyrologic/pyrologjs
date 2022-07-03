@@ -42,6 +42,36 @@ export class Utils {
     }
 
     /**
+     * splits a path string into parts
+     * @param path the path string
+     * @returns {string[]} the configuration path
+     */
+    static splitPath(path: string): string[] {
+        const p: string[] = [];
+        path.split('.').forEach((s) => p.push(s.trim()));
+        return p;
+    }
+
+    /**
+     * splits a logger name into a configuration path
+     * @param {string} name logger name 
+     * @returns {string[]} the configuration path
+     */
+    static getPath(name: string): string[] {
+        return Utils.checkNames(Utils.splitPath(name), `Invalid logger path "${name}"!`);
+    }
+
+    /**
+     * normalizes a logger name or path
+     * @param name the logger name or path
+     * @returns the normalized logger path
+     */
+    static normalizePath(name: string): string {
+        const path = Utils.getPath(name);
+        return path.join('.');
+    }
+
+    /**
      * retrieves the stack trace
      * @param skip number of stack entries to skip
      * @returns the stack trace as string

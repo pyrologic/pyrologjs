@@ -95,11 +95,12 @@ export class LoggerFactory {
      * @returns {Logger} the logger
      */
     getLogger(name: string) : Logger {
-        if ( !this._loggers.has(Utils.ensureName(name)) ) {
+        const path = Utils.normalizePath(name);
+        if ( !this._loggers.has(path) ) {
             // time to create it
-            this._loggers.set(name, new PyroLogger(name, this.getLevel(name), this.useDebug, this.getWriteFnc(name), this._appender));
+            this._loggers.set(path, new PyroLogger(path, this.getLevel(path), this.useDebug, this.getWriteFnc(path), this._appender));
         }
-        return this._loggers.get(name) as Logger;
+        return this._loggers.get(path) as Logger;
     }
 
     private _getConfig(name: string): ConfigItem | null {
@@ -161,7 +162,7 @@ export class LoggerFactory {
      * @returns the created configuration item
      */
     createConfigItem(name: string, level: LevelStrings, wf: boolean) : ConfigItem {
-        return new PyroConfigItem(Utils.ensureName(name), level, wf);
+        return new PyroConfigItem(Utils.normalizePath(name), level, wf);
     }
 
     /**

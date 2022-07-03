@@ -101,20 +101,11 @@ export class ConfigTree {
      * @returns {ConfigItem} the matching logger configuration or null if something went wrong
      */
     findConfig(name: string): ConfigItem | null {
-        let node: Node | null = this._findNode(this._rootNode, this._getPath(name), 1);
+        let node: Node | null = this._findNode(this._rootNode, Utils.getPath(name), 1);
         while ( (node !== null) && (node.config === null) ) {
             node = node.parent;
         }
         return (node !== null) ? node.config : this._rootNode.config;
-    }
-
-    /**
-     * splits a logger name into a configuration path
-     * @param {string} name logger name 
-     * @returns {string[]} the configuration path
-     */
-    private _getPath(name: string): string[] {
-        return Utils.checkNames(name.split('.'), `Invalid logger path "${name}"!`);
     }
 
     /**
@@ -142,9 +133,13 @@ export class ConfigTree {
      */
     private _applyConfiguration(config: ConfigItem[]): void {
         for ( let ci of config ) {
-            const names = this._getPath(ci.name);
-            const node = this._ensureNode(this._rootNode, names, 1);
-            node.setConfig(ci);
+            try {
+                const names = Utils.getPath(ci.name);
+                const node = this._ensureNode(this._rootNode, names, 1);
+                node.setConfig(ci);
+            } catch ( error ) {
+                console.error('Skipping invalid configuration item.', error);
+            }
         }
     }
 
@@ -172,7 +167,7 @@ export class ConfigTree {
         let nci: Array<ConfigItem> = [];
         let dci: ConfigItem|null = null;
         for ( let ci of config ) {
-            const name = Utils.ensureName(ci.name);
+            const name = Utils.normalizePath(ci.name);
             const level = Level[ci.level];
             if ( typeof level === 'undefined' ) {
                 throw new Error(`Invalid level "${ci.level}"!`);
