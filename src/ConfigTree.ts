@@ -137,6 +137,7 @@ export class ConfigTree {
                 const names = Utils.getPath(ci.name);
                 const node = this._ensureNode(this._rootNode, names, 1);
                 node.setConfig(ci);
+                console.debug(`Configuration node "${names.join('.')}" is set to level "${ci.level}."`);
             } catch ( error ) {
                 console.error('Skipping invalid configuration item.', error);
             }
