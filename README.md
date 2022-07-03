@@ -83,7 +83,43 @@ The usage of TypeScript benefits from the availability of all type definitions.
 The example code would be the same as above with one exception: It is not possible to use a plain JavaScript object as configuration item.
 
 
+## Hierarchical Logger Configuration
+
+**pyrologjs** supports a hierarchical logger configuration so one can easily apply some settings to a bunch of loggers. See the following
+example how to create such a logger configuration:
+```ts
+/**
+ * hierarchical logger configuration
+ */
+ const config = [
+    PL.createConfigItem(PL.defaultName, 'WARN'),                        // sets the default logging level to WARN
+    PL.createConfigItem('main.sub1', 'WARN'),                           // set "main.sub1" to level WARN
+    PL.createConfigItem('main.sub2', 'INFO'),                           // set "main.sub2" to level INFO
+    PL.createConfigItem('main', 'ERROR'),                               // set "main" to level ERROR
+    PL.createConfigItem('main.sub1.detail', 'DEBUG'),                   // set "main.sub1.detail" to DEBUG
+    PL.createConfigItem('main.sub2.mute', 'OFF'),                       // set "main.sub2.mute" to OFF
+    // PL.createConfigItem('an.invalid.name', 'ERROR'),                 // ERROR: logger names must not begin with a period
+    // PL.createConfigItem('also.an.invalid.name.', 'ERROR'),           // ERROR: logger names must not end with a period
+    PL.createConfigItem('this.is . an . acceptable . name', 'DEBUG'),   // white spaces are trimmed
+];
+```
+
+If subsequently a logger is created then it gets the best matching configuration. In the example above the following configurations would apply:
+1. logger `main.sub1.MyClass1` -> level WARN from `main.sub1`
+2. logger `main.sub2.mute.OldCode` -> level OFF from `main.sub2.mute`
+3. logger `main.anything.not.configured` -> level ERROR from `main`
+4. logger `anything.else` -> level WARN from default configuration
+
+If you have experience with some Java logging libraries such as [Log4j](https://logging.apache.org/log4j/2.x/) then you should be familiar with that principle.
+
+
 ## Advanced Features
+
+### Change Logger Configuration
+
+You can apply a new logger configuration at any time calling `PyroLog.getInstance().applyConfiguration()` with the new logger configuration.
+In this case, the previous configuration is dropped, the new configuration is checked and parsed and then all existing loggers are re-configured
+withe the new settings.
 
 ### Logging Level Enumeration in JavaScript
 
@@ -265,6 +301,11 @@ interface Logger {
     isDebugEnabled(): boolean;
 
     /**
+     * @returns true if this logger is enabled for logging at level TRACE or above; false otherwise
+     */
+    isTraceEnabled(): boolean;
+
+    /**
      * writes a log message at the specified level
      * @param l logging level
      * @param data data to be logged
@@ -368,8 +409,7 @@ LevelStrings = "ALL" | "TRACE" | "DEBUG" | "INFO" | "WARN" | "ERROR" | "OFF"
 
 
 ## ToDos
-1. hierarchical logger configuration (similar to Java loggers)
-2. more comprehensive documentation
-3. ...
+1. more comprehensive documentation
+2. ...
 
 more to come
