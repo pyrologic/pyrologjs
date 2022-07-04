@@ -1,13 +1,27 @@
 # pyrologjs
 
+## Contents
+
+1. [About](#about)
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [Hierarchical Logger Configuration](#hierarchical-logger-configuration)
+5. [Advanced Features](#advanced-features)
+6. [API Details](#api-details)
+
+
 ## About
 
-**pyrologjs** is small, lightweight yet powerful logging facility for use in JavaScript and/or TypeScript modules.
+- **pyrologjs** is small, lightweight yet powerful logging facility for use in JavaScript and/or TypeScript modules.
 It can be used on web sites as in code for nodejs or similar environments.
 
-**pyrologjs** itself is written entirely in TypeScript and compiled and bundled using [rollup.js](https://rollupjs.org/guide/en/).
+- **pyrologjs** itself is written entirely in TypeScript and compiled and bundled using [rollup.js](https://rollupjs.org/guide/en/).
+The code provided by this package is neither minimized nor mangled nor compressed. This allows you to bundle the package along
+with your code using your preferred way how to minimize, mangle and compress your code distribution.
 
-**pyrologjs** has no other dependencies.
+- **pyrologjs** has no other dependencies.
+
+- **pyrologjs** is licensed under a MIT license. See [LICENSE.txt](LICENSE.txt) for details.
 
 
 ## Installation
@@ -61,15 +75,18 @@ The last initialization step is to apply the configuration and to create some lo
  */
 function init() {
     console.log('PyroLog init!');
+    // apply configuration
     PL.applyConfiguration(config);
+    // create some loggers
     const l1 = PL.getLogger('logger1');
     const l2 = PL.getLogger('logger2');
+    // use the loggers
     l1.debug("Hello DEBUG logger!", "How are you?");
     l2.info("Hello INFO logger!", config);
     l2.debug("This text should not be logged!");
 }
 ```
-You can change the logger configuration at any time. And you can set a new appender or just remove the current appender as needed.
+You can change the logger configuration at any time
 
 ### TypeScript Example
 
@@ -185,6 +202,8 @@ const PL = PyroLog.getInstance();
 function myAppender(logs) {
     // every log message goes here
     // you can do whatever you want to do with these log messages :-)
+    // you could write them to a DOM element or whatever else
+    // this code below causes all logger messages to appear twice in the console
     console.log('APPENDER', ...logs);
 }
 
@@ -194,12 +213,16 @@ PL.createAppender(myAppender, true);
 
 ```
 
+You can set a new appender or just remove the current appender as needed at any time calling `PyroLog.getInstance().setAppender()`. Pass `null` as
+parameter to remove the current appender.
+
+
 ## API Details
 
 
 ### The Main PyroLog Class
 
-All use of **pyrologjs** start using the class `PyroLog`. Its public interface is:
+All use of **pyrologjs** starts using the class `PyroLog`. Its public interface is:
 ```ts
 class PyroLog {
     /**
@@ -273,6 +296,8 @@ class PyroLog {
     writeStackTrace(logger: Logger, level: LevelStrings, message?: string): void;
 }
 ```
+
+This class is a singleton. To get the one and only instance, call `PyroLog.getInstance()`.
 
 
 ### The Logger Interface
@@ -361,7 +386,7 @@ interface Logger {
 
 ### The Logging Level Enumeration
 
-All logging levels are items of the `Level`enumeration:
+All logging levels are elements of the `Level` enumeration:
 ```ts
 /**
  * logging levels
@@ -407,9 +432,7 @@ Note, that `LevelStrings` is the string representation of the `Level` enumeratio
 LevelStrings = "ALL" | "TRACE" | "DEBUG" | "INFO" | "WARN" | "ERROR" | "OFF"
 ```
 
+The best way to create configuration items is by using `PyroLog.getInstance().createConfigItem()`.
 
-## ToDos
-1. more comprehensive documentation
-2. ...
 
-more to come
+<sub>_End Of Document_</sub>
