@@ -86,7 +86,7 @@ The example code would be the same as above with one exception: It is not possib
 ## Hierarchical Logger Configuration
 
 **pyrologjs** supports a hierarchical logger configuration so one can easily apply some settings to a bunch of loggers. See the following
-example how to create such a logger configuration:
+example shows how to create such a logger configuration:
 ```ts
 /**
  * hierarchical logger configuration
