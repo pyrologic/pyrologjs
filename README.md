@@ -64,7 +64,7 @@ const config = [
     PL.createConfigItem('logger1', 'DEBUG'),        // "logger1" is set to level DEBUG
     PL.createConfigItem('logger2', 'INFO'),         // "logger2" is set to level INFO
     PL.createConfigItem('logger3', 'ERROR'),        // "logger3" is set to level ERROR
-    { name: '42', level: 'ALL' }                    // plain old way to define a logger configuration item, possible in JavaScript but not recommended
+    { name: '42', level: 'ALL' }                    // deprecated: plain old way to define a logger configuration item, possible in JavaScript only and not recommended
 ];
 ```
 
@@ -86,7 +86,7 @@ function init() {
     l2.debug("This text should not be logged!");
 }
 ```
-You can change the logger configuration at any time
+You can change the logger configuration at any time.
 
 ### TypeScript Example
 
@@ -97,13 +97,13 @@ import { PyroLog, Logger, Level } from "@pyrologic/pyrologjs";
 
 The usage of TypeScript benefits from the availability of all type definitions.
 
-The example code would be the same as above with one exception: It is not possible to use a plain JavaScript object as configuration item.
+The example code would be the same as above with one exception: It is not possible to use a plain JavaScript object as configuration item (it's deprecated anyway).
 
 
 ## Hierarchical Logger Configuration
 
 **pyrologjs** supports a hierarchical logger configuration so one can easily apply some settings to a bunch of loggers. See the following
-example shows how to create such a logger configuration:
+example how to create such a logger configuration:
 ```ts
 /**
  * hierarchical logger configuration
@@ -136,7 +136,7 @@ If you have experience with some Java logging libraries such as [Log4j](https://
 
 You can apply a new logger configuration at any time calling `PyroLog.getInstance().applyConfiguration()` with the new logger configuration.
 In this case, the previous configuration is dropped, the new configuration is checked and parsed and then all existing loggers are re-configured
-withe the new settings.
+with the new settings.
 
 ### Logging Level Enumeration in JavaScript
 
@@ -206,9 +206,7 @@ function myAppender(logs) {
     // this code below causes all logger messages to appear twice in the console
     console.log('APPENDER', ...logs);
 }
-
 // ...
-
 PL.createAppender(myAppender, true);
 
 ```
@@ -412,7 +410,7 @@ enum Level {
 
 ### The ConfigItem Interface
 
-Each logger gets its configuration by an instance if `ConfigItem`:
+Each logger gets its configuration by an instance of `ConfigItem`:
 ```ts
 /**
  * configuration item
