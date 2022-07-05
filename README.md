@@ -12,8 +12,8 @@
 
 ## About
 
-- **pyrologjs** is small, lightweight yet powerful logging facility for use in JavaScript and/or TypeScript modules.
-It can be used on web sites as in code for nodejs or similar environments.
+- **pyrologjs** is a small, lightweight yet powerful logging facility for use in JavaScript and/or TypeScript modules.
+It can be used for web sites as well as in code for nodejs or similar environments.
 
 - **pyrologjs** itself is written entirely in TypeScript and compiled and bundled using [rollup.js](https://rollupjs.org/guide/en/).
 The code provided by this package is neither minimized nor mangled nor compressed. This allows you to bundle the package along
@@ -68,7 +68,7 @@ const config = [
 ];
 ```
 
-The last initialization step is to apply the configuration and to create some loggers:
+The last step of the initialization is to apply the configuration and to create some loggers:
 ```js
 /**
  * logger initialization
@@ -90,19 +90,19 @@ You can change the logger configuration at any time.
 
 ### TypeScript Example
 
-The whole module is written in TypeScript and can be used in other TypeScript projects, of course. One should explicitly import all relevant types:
+The whole module is written in TypeScript and can be used in other TypeScript projects, of course. In order to do so, you should explicitly import all relevant types:
 ```ts
 import { PyroLog, Logger, Level } from "@pyrologic/pyrologjs";
 ```
 
 The usage of TypeScript benefits from the availability of all type definitions.
 
-The example code would be the same as above with one exception: It is not possible to use a plain JavaScript object as configuration item (it's deprecated anyway).
+The example code would be the same as in the JavaScript example above with one exception: It is not possible to use a plain JavaScript object as configuration item (and it's deprecated anyway).
 
 
 ## Hierarchical Logger Configuration
 
-**pyrologjs** supports a hierarchical logger configuration so one can easily apply some settings to a bunch of loggers. See the following
+**pyrologjs** supports a hierarchical logger configurations so one can easily apply some settings to a bunch of loggers. See the following
 example how to create such a logger configuration:
 ```ts
 /**
@@ -134,13 +134,13 @@ If you have experience with some Java logging libraries such as [Log4j](https://
 
 ### Change Logger Configuration
 
-You can apply a new logger configuration at any time calling `PyroLog.getInstance().applyConfiguration()` with the new logger configuration.
-In this case, the previous configuration is dropped, the new configuration is checked and parsed and then all existing loggers are re-configured
+You can apply a new logger configuration at any time by calling `PyroLog.getInstance().applyConfiguration()` with the new logger configuration.
+In this case, the previous configuration is dropped, the new configuration is checked and parsed and all existing loggers are re-configured
 with the new settings.
 
 ### Logging Level Enumeration in JavaScript
 
-The symbolic logging level values are not directly available in JavaScript, since the TypeScript enumeration `Level` is resolved by the TypeScript compiler. In order to deal with that, one can use the object `JsLevel` instead, which provides each logging level as a property:
+The symbolic logging level values are not directly available in JavaScript, since the TypeScript enumeration `Level` is resolved by the TypeScript compiler. In order to deal with that, you can use the object `JsLevel` instead, which provides each logging level as a property:
 ```js
 import { JsLevel } from "@pyrologic/pyrologjs";
 ```
@@ -182,7 +182,7 @@ const config = [
 ```
 This will work properly only if you use the common logging methods, such as `Logger.debug()`, `Logger.warn()` etc.
 
-In order to deal with another approaches such as some own utility methods for logging, you can set an offset value that's used to examine the call stack for the calling function / method. This way, you can easily achieve that the real calling function / method appears in the logs.
+In order to deal with other approaches such as using your own utility methods for logging, you can set an offset value that's used to examine the call stack for the calling function / method. This way, you can easily achieve that the real calling function / method appears in the logs.
 ```ts
 // set the offset to 1 if you have an utility method in class that's used for logging
 logger.setFncOffset(1);
@@ -191,7 +191,7 @@ logger.setFncOffset(1);
 
 ### Appenders
 
-If you want, you can specify a callback function that acts as special "appender". This function is called each time a log message was written to the console.
+If you want, you can specify a callback function that acts as special "appender". This function is called each time a log message is written to the console.
 ```js
 const PL = PyroLog.getInstance();
 
@@ -300,7 +300,7 @@ This class is a singleton. To get the one and only instance, call `PyroLog.getIn
 
 ### The Logger Interface
 
-Each logger that you create provides the following public interface:
+Each logger you create provides the following public interface:
 ```ts
 /**
  * the main logger interface
