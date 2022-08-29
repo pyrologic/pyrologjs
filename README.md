@@ -229,7 +229,7 @@ This will produce prefixes as shown bellow:
 2022-08-29T15:35:52.073Z logger1 [TRACE] (MyClass#myMethod):
 ```
 
-You can set our own prefix creator instance and thus create the log prefix you want. All you need is a class that implements the interface `PrefixGenerator`.
+You can set our own prefix creator instance and thus create the log prefix you want. All you need is to write a class that implements the interface `PrefixGenerator`.
 ```ts
 const PL = PyroLog.getInstance();
 //...
