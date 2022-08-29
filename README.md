@@ -347,6 +347,10 @@ interface Logger {
     readonly name: string;
     /** logging level of this instance */
     readonly level: Level;
+    /** "write function name" flag */
+    readonly writeFnc: boolean;
+    /** the offset for the call stack used to get the name of the calling function */
+    readonly fncOffset: number;
 
     /**
      * checks whether this logger is enabled for a specific logging level
