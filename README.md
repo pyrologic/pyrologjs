@@ -214,6 +214,37 @@ PL.createAppender(myAppender, true);
 You can set a new appender or just remove the current appender as needed at any time calling `PyroLog.getInstance().setAppender()`. Pass `null` as
 parameter to remove the current appender.
 
+The appender is used for all loggers.
+
+
+### Custom Prefix Generator
+
+PyroLog creates a prefix string for each log message it writes to the console.
+The code looks like this:
+```ts
+return ${(new Date()).toISOString()} ${logger.name} [${Level2String(level)}]` + (logger.writeFnc ? ` (${Utils.getFunctionName(logger.fncOffset)})` : '') + ':';
+```
+This will produce prefixes as shown bellow:
+```
+2022-08-29T15:35:52.073Z logger1 [TRACE] (MyClass#myMethod):
+```
+
+You can set our own prefix creator instance and thus create the log prefix you want. All you need is a class that implements the interface `PrefixGenerator`.
+```ts
+const PL = PyroLog.getInstance();
+//...
+class MyPrefixGenerator implements PrefixGenerator {
+    createPrefix(logger: Logger, level: Level): string {
+        return `MyPrefix / ${logger.name} / ${Level2String(level)}:`;
+    }
+}
+//...
+// set our prefix generator
+PL.setPrefixGenerator(new MyPrefixGenerator());
+```
+The prefix generator is used for all loggers.
+
+
 
 ## API Details
 
@@ -269,6 +300,12 @@ class PyroLog {
      * @param appender the new appender, may be null
      */
     setAppender(appender: Appender | null): void;
+
+    /**
+     * sets a new prefix generator
+     * @param generator new prefix generator
+     */
+    setPrefixGenerator(generator: PrefixGenerator | null): void;
 
     /**
      * creates a configuration item
