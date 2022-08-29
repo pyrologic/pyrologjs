@@ -93,9 +93,9 @@ class PyroLog {
      * sets a new prefix generator
      * @param generator new prefix generator
      */
-     setPrefixGenerator(generator: PrefixGenerator | null): void {
+    setPrefixGenerator(generator: PrefixGenerator | null): void {
         this._lf.setPrefixGenerator(generator);
-     }
+    }
 
     /**
      * creates a configuration item
