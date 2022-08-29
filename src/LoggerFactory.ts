@@ -8,6 +8,8 @@ import { PyroLogger } from "./PyroLogger";
 import { Utils } from "./utils";
 import { ConfigTree } from "./ConfigTree";
 import { DEFAULT_CONFIG } from "./Const";
+import { PrefixGenerator } from "./PrefixGenerator";
+import { PyroPrefixGenerator } from "./PyroPrefixGenerator";
 
 export class LoggerFactory {
 
@@ -17,6 +19,7 @@ export class LoggerFactory {
     private _config: ConfigTree | null;
     private _loggers: Map<string, PyroLogger>;
     private _appender: Appender | null;
+    private _pfxGenerator: PrefixGenerator | null;
 
     /**
      * constructs the instance
@@ -28,6 +31,7 @@ export class LoggerFactory {
         this._config = null;
         this._loggers = new Map();
         this._appender = null;
+        this._pfxGenerator = null;
     }
 
     /**
@@ -98,7 +102,7 @@ export class LoggerFactory {
         const path = Utils.normalizePath(name);
         if ( !this._loggers.has(path) ) {
             // time to create it
-            this._loggers.set(path, new PyroLogger(path, this.getLevel(path), this.useDebug, this.getWriteFnc(path), this._appender));
+            this._loggers.set(path, new PyroLogger(path, this.getLevel(path), this.useDebug, this.getWriteFnc(path), this.prefixGenerator, this._appender));
         }
         return this._loggers.get(path) as Logger;
     }
@@ -152,6 +156,20 @@ export class LoggerFactory {
     setAppender(appender: Appender | null): void {
         this._appender = appender;
         this._loggers.forEach((l) => l.setAppender(appender));
+    }
+
+    /**
+     * sets a new prefix generator
+     * @param generator new prefix generator
+     */
+    setPrefixGenerator(generator: PrefixGenerator | null): void {
+        this._pfxGenerator = generator;
+        const pg = this.prefixGenerator;
+        this._loggers.forEach((l) => l.setPrefixGenerator(pg));
+    }
+
+    get prefixGenerator(): PrefixGenerator {
+        return this._pfxGenerator !== null ? this._pfxGenerator : PyroPrefixGenerator.getInstance();
     }
 
     /**

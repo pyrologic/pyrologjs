@@ -3,6 +3,7 @@ import { ConfigItem, LevelStrings } from "./ConfigItem";
 import { Logger } from "./Logger";
 import { LoggerFactory } from "./LoggerFactory";
 import { Appender } from "./Appender";
+import { PrefixGenerator } from "./PrefixGenerator";
 import { Utils } from "./utils";
 
 class PyroLog {
@@ -89,6 +90,14 @@ class PyroLog {
     }
 
     /**
+     * sets a new prefix generator
+     * @param generator new prefix generator
+     */
+     setPrefixGenerator(generator: PrefixGenerator | null): void {
+        this._lf.setPrefixGenerator(generator);
+     }
+
+    /**
      * creates a configuration item
      * @param name logger name
      * @param level logging level
@@ -133,4 +142,4 @@ const JsLevel = Object.freeze({
 });
 
 // export everything that should be exported
-export { Appender, ConfigItem, Logger, PyroLog, Level, Level2String, JsLevel };
+export { Appender, ConfigItem, Logger, PyroLog, Level, PrefixGenerator, Level2String, JsLevel };

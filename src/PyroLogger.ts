@@ -1,6 +1,7 @@
 import { Appender } from "./Appender";
 import { Level, Level2String } from "./Level";
 import { Logger } from "./Logger";
+import { PrefixGenerator } from "./PrefixGenerator";
 import { Utils } from "./utils";
 
 export class PyroLogger implements Logger {
@@ -10,6 +11,7 @@ export class PyroLogger implements Logger {
     private _useDebug: boolean;
     private _writeFnc: boolean;
     private _fncOffset: number;
+    private _pfxGenerator: PrefixGenerator;
     private _appender: Appender | null;
 
     /**
@@ -20,12 +22,13 @@ export class PyroLogger implements Logger {
      * @param wf flag whether to write the name of the calling function / method
      * @param a the optional appender
      */
-    constructor(n: string, l: Level, d: boolean, wf: boolean, a: Appender | null) {
+    constructor(n: string, l: Level, d: boolean, wf: boolean, pg: PrefixGenerator, a: Appender | null) {
         this._name = n;
         this._level = l;
         this._useDebug = !!d;
         this._writeFnc = !!wf;
         this._fncOffset = 0;
+        this._pfxGenerator = pg;
         this._appender = a;
     }
 
@@ -44,6 +47,20 @@ export class PyroLogger implements Logger {
     };
 
     /**
+     * @returns the flag whether to write the name of the calling function / method along with each logging output
+     */
+    get writeFnc(): boolean {
+        return this._writeFnc;
+    }
+
+    /**
+     * @returns the offset for the call stack used to get the name of the calling function
+     */
+    get fncOffset(): number {
+        return this._fncOffset;
+    }
+
+    /**
      * sets a new logging level of this logger
      * @param {Level} l new logging level of this logger
      * @param {boolean} d flag whether to use console.debug() for level DEBUG and below
@@ -59,6 +76,14 @@ export class PyroLogger implements Logger {
      */
     setAppender(a: Appender | null) {
         this._appender = a;
+    }
+
+    /**
+     * sets a new prefix generator
+     * @param pg the new prefix generator; must not be noll
+     */
+    setPrefixGenerator(pg: PrefixGenerator) {
+        this._pfxGenerator = pg;
     }
 
     /**
@@ -103,7 +128,12 @@ export class PyroLogger implements Logger {
      * @returns the prefix text
      */
     private _getPrefix(l: Level): string {
-        return `${(new Date()).toISOString()} ${this._name} [${Level2String(l)}]` + (this._writeFnc ? ` (${Utils.getFunctionName(this._fncOffset + 3)})` : '') + ':';
+        try {
+            this._fncOffset += 4;
+            return this._pfxGenerator.createPrefix(this, l);
+        } finally {
+            this._fncOffset -= 4;
+        }
     }
 
     /**
