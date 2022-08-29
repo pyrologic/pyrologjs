@@ -1,7 +1,6 @@
 import { Level, Level2String } from "./Level";
 import { Logger } from "./Logger";
 import { PrefixGenerator } from "./PrefixGenerator";
-import { PyroLogger } from "./PyroLogger";
 import { Utils } from "./utils";
 
 export class PyroPrefixGenerator implements PrefixGenerator {
@@ -24,8 +23,7 @@ export class PyroPrefixGenerator implements PrefixGenerator {
      * @override
      */
     createPrefix(logger: Logger, level: Level): string {
-        const pl: PyroLogger = logger as PyroLogger;
-        return `${(new Date()).toISOString()} ${pl.name} [${Level2String(level)}]` + (pl.writeFnc ? ` (${Utils.getFunctionName(pl.fncOffset + 3)})` : '') + ':';
+        return `${(new Date()).toISOString()} ${logger.name} [${Level2String(level)}]` + (logger.writeFnc ? ` (${Utils.getFunctionName(logger.fncOffset)})` : '') + ':';
     }
 }
 
