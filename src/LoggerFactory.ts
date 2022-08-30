@@ -10,6 +10,7 @@ import { ConfigTree } from "./ConfigTree";
 import { DEFAULT_CONFIG } from "./Const";
 import { PrefixGenerator } from "./PrefixGenerator";
 import { PyroPrefixGenerator } from "./PyroPrefixGenerator";
+import { CallbackPrefixGenerator } from "./CallbackPrefixGenerator";
 
 export class LoggerFactory {
 
@@ -166,6 +167,20 @@ export class LoggerFactory {
         this._pfxGenerator = generator;
         const pg = this.prefixGenerator;
         this._loggers.forEach((l) => l.setPrefixGenerator(pg));
+    }
+
+    /**
+     * creates a prefix generator
+     * @param fn actual prefix generator function
+     * @param set flag whether to set this prefix generator immediately as current prefix generator
+     * @returns the created prefix generator instance
+     */
+    createPrefixGenerator(fn: (logger:Logger, level:Level) => string, set: boolean) : PrefixGenerator {
+        const pg: PrefixGenerator = new CallbackPrefixGenerator(fn);
+        if ( set ) {
+            this.setPrefixGenerator(pg);
+        }
+        return pg;
     }
 
     get prefixGenerator(): PrefixGenerator {

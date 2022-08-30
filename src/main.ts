@@ -98,6 +98,16 @@ class PyroLog {
     }
 
     /**
+     * creates a prefix generator
+     * @param fn actual prefix generator function
+     * @param set flag whether to set this prefix generator immediately as current prefix generator
+     * @returns the created prefix generator instance
+     */
+    createPrefixGenerator(fn: (logger:Logger, level:Level) => string, set: boolean) : PrefixGenerator {
+        return this._lf.createPrefixGenerator(fn, set);
+    }
+
+    /**
      * creates a configuration item
      * @param name logger name
      * @param level logging level

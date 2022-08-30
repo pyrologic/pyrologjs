@@ -242,6 +242,16 @@ class MyPrefixGenerator implements PrefixGenerator {
 // set our prefix generator
 PL.setPrefixGenerator(new MyPrefixGenerator());
 ```
+It is possible tu use a callback function as prefix generator:
+```ts
+const PL = PyroLog.getInstance();
+//...
+// another way to set a prefix generator using a callback function
+PL.createPrefixGenerator((logger, level) => {
+    return `Look at this "${logger.name}[${Level2String(level)}]": `;
+}, true);
+```
+
 The prefix generator is used for all loggers.
 
 
@@ -306,6 +316,14 @@ class PyroLog {
      * @param generator new prefix generator
      */
     setPrefixGenerator(generator: PrefixGenerator | null): void;
+
+    /**
+     * creates a prefix generator
+     * @param fn actual prefix generator function
+     * @param set flag whether to set this prefix generator immediately as current prefix generator
+     * @returns the created prefix generator instance
+     */
+    createPrefixGenerator(fn: (logger:Logger, level:Level) => string, set: boolean) : PrefixGenerator;
 
     /**
      * creates a configuration item
