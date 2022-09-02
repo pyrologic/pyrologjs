@@ -14,11 +14,10 @@ import { CallbackPrefixGenerator } from "./CallbackPrefixGenerator";
 
 export class LoggerFactory {
 
+    private readonly _loggers: Map<string, PyroLogger>;
     private _defLevel: Level;
-
     private _writeFnc: boolean;
     private _config: ConfigTree | null;
-    private _loggers: Map<string, PyroLogger>;
     private _appender: Appender | null;
     private _pfxGenerator: PrefixGenerator | null;
 
@@ -26,10 +25,10 @@ export class LoggerFactory {
      * constructs the instance
      */
     constructor() {
+        this._loggers = new Map();
         this._defLevel = Level.INFO;
         this._writeFnc = false;
         this._config = null;
-        this._loggers = new Map();
         this._appender = null;
         this._pfxGenerator = null;
     }
