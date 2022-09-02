@@ -8,7 +8,12 @@
   "description": "Lightweight JavaScript logger",
   "keywords": [
     "logging",
-    "logger"
+    "logger",
+    "log",
+    "logging-library",
+    "javascript",
+    "typescript",
+    "pyrologic"
   ],
   "devDependencies": {
     "@pyrologic/rollup-plugin": "^1.0.1",
