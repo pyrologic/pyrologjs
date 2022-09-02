@@ -1,3 +1,7 @@
+/**
+ * Global options for all loggers
+ * this class is a singleton
+ */
 export class GlobalOptions {
 
     private _useDebug: boolean;
@@ -12,7 +16,7 @@ export class GlobalOptions {
     }
 
     /**
-     * 
+     * returns the singleton instance
      * @returns the singleton instance
      */
     static getInstance(): GlobalOptions {
