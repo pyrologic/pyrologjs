@@ -15,7 +15,7 @@ import { CallbackPrefixGenerator } from "./CallbackPrefixGenerator";
 export class LoggerFactory {
 
     private _defLevel: Level;
-    private _useDebug: boolean;
+
     private _writeFnc: boolean;
     private _config: ConfigTree | null;
     private _loggers: Map<string, PyroLogger>;
@@ -27,7 +27,6 @@ export class LoggerFactory {
      */
     constructor() {
         this._defLevel = Level.INFO;
-        this._useDebug = false;
         this._writeFnc = false;
         this._config = null;
         this._loggers = new Map();
@@ -65,21 +64,6 @@ export class LoggerFactory {
     }
 
     /**
-     * use console.debug()
-     * @returns {boolean} true if DEBUG level and below should use console.debug(); false if console.log() should be used instead
-     */
-    get useDebug() : boolean {
-        return this._useDebug;
-    }
-
-    /**
-     * sets the "use console.debug()" flag
-     */
-    set useDebug(d: boolean) {
-        this._useDebug = !!d;
-    }
-
-    /**
      * flag whether to write the name of the calling function / method along with each output
      * @returns {boolean} true if new loggers should write the function name along with each log output; false otherwise
      */
@@ -103,7 +87,7 @@ export class LoggerFactory {
         const path = Utils.normalizePath(name);
         if ( !this._loggers.has(path) ) {
             // time to create it
-            this._loggers.set(path, new PyroLogger(path, this.getLevel(path), this.useDebug, this.getWriteFnc(path), this.prefixGenerator, this._appender));
+            this._loggers.set(path, new PyroLogger(path, this.getLevel(path), this.getWriteFnc(path), this.prefixGenerator, this._appender));
         }
         return this._loggers.get(path) as Logger;
     }
@@ -216,7 +200,7 @@ export class LoggerFactory {
         if ( this._loggers.size > 0 ) {
             // update existing loggers
             this._loggers.forEach((pl) => {
-                pl.setLevel(this.getLevel(pl.name), this.useDebug);
+                pl.setLevel(this.getLevel(pl.name));
                 pl.setWriteFnc(this.getWriteFnc(pl.name));
             });
         }

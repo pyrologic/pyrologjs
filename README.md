@@ -132,6 +132,21 @@ If you have experience with some Java logging libraries such as [Log4j](https://
 
 ## Advanced Features
 
+### Global Options
+
+PyroLog supports several global options that apply to all currently available loggers. They cannot be set by a logger configuration. Instead, there's an API:
+```ts
+const PL = PyroLog.getInstance();
+// set global options
+PL.setGlobalOptions({ useDebug: true, suspended: false });
+```
+The following global options are supported:
+| Option Name | Type       | Default value | Description                     |
+| ----------- | ---------- | ------------- | ------------------------------- |
+| useDebug    | boolean    | `false`       | if **true** then logging levels of DEBUG or below will use `console.debug()`;<br/> otherwise `console.log()` is used |
+| suspended   | boolean    | `false`       | if **true** the all loggers will not write any log message;<br/> otherwise the common level based rules apply |
+
+
 ### Change Logger Configuration
 
 You can apply a new logger configuration at any time by calling `PyroLog.getInstance().applyConfiguration()` with the new logger configuration.
@@ -296,6 +311,12 @@ class PyroLog {
      * @returns {Logger} the logger
      */
     getLogger(name: string): Logger;
+
+    /**
+     * sets global options
+     * @param o an object providing one or more global options
+     */
+    setGlobalOptions(o: any): void;
 
     /**
      * creates a new callback appender

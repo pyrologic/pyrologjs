@@ -1,4 +1,5 @@
 import { Appender } from "./Appender";
+import { GlobalOptions } from "./GlobalOptions";
 import { Level, Level2String } from "./Level";
 import { Logger } from "./Logger";
 import { PrefixGenerator } from "./PrefixGenerator";
@@ -6,9 +7,9 @@ import { Utils } from "./utils";
 
 export class PyroLogger implements Logger {
 
+    private readonly _options: GlobalOptions;
     private _level: Level;
     private _name: string;
-    private _useDebug: boolean;
     private _writeFnc: boolean;
     private _fncOffset: number;
     private _pfxGenerator: PrefixGenerator;
@@ -18,14 +19,13 @@ export class PyroLogger implements Logger {
      * constructs a new instance
      * @param n logger name
      * @param l initial logging level
-     * @param d flag whether to use console.debug() for level DEBUG and below
      * @param wf flag whether to write the name of the calling function / method
      * @param a the optional appender
      */
-    constructor(n: string, l: Level, d: boolean, wf: boolean, pg: PrefixGenerator, a: Appender | null) {
+    constructor(n: string, l: Level, wf: boolean, pg: PrefixGenerator, a: Appender | null) {
+        this._options = GlobalOptions.getInstance();
         this._name = n;
         this._level = l;
-        this._useDebug = !!d;
         this._writeFnc = !!wf;
         this._fncOffset = 0;
         this._pfxGenerator = pg;
@@ -63,11 +63,9 @@ export class PyroLogger implements Logger {
     /**
      * sets a new logging level of this logger
      * @param {Level} l new logging level of this logger
-     * @param {boolean} d flag whether to use console.debug() for level DEBUG and below
      */
-    setLevel(l: Level, d: boolean): void {
+    setLevel(l: Level): void {
         this._level = l;
-        this._useDebug = d;
     }
 
     /**
@@ -80,7 +78,7 @@ export class PyroLogger implements Logger {
 
     /**
      * sets a new prefix generator
-     * @param pg the new prefix generator; must not be noll
+     * @param pg the new prefix generator; must not be null
      */
     setPrefixGenerator(pg: PrefixGenerator) {
         this._pfxGenerator = pg;
@@ -105,7 +103,7 @@ export class PyroLogger implements Logger {
      * @override
      */
     isEnabledFor(l: Level): boolean {
-        return l >= this.level;        
+        return !this._options.suspended && (l >= this.level);
     }
 
     /**
@@ -140,13 +138,13 @@ export class PyroLogger implements Logger {
      * @override
      */
     writeLog(l: Level, ...data: any[]): void {
-        if ( (this._level !== Level.OFF) && (l !== Level.OFF) && this.isEnabledFor(l) ) {
+        if ( !this._options.suspended && (this._level !== Level.OFF) && (l !== Level.OFF) && this.isEnabledFor(l) ) {
             const prefix = this._getPrefix(l);
             switch ( l ) {
                 case Level.ALL:
                 case Level.TRACE:
                 case Level.DEBUG:
-                    if ( this._useDebug ) {
+                    if ( this._options.useDebug ) {
                         console.debug(prefix, ...data);
                     } else {
                         console.log(prefix, ...data);

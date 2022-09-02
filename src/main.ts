@@ -5,6 +5,7 @@ import { LoggerFactory } from "./LoggerFactory";
 import { Appender } from "./Appender";
 import { PrefixGenerator } from "./PrefixGenerator";
 import { Utils } from "./utils";
+import { GlobalOptions } from "./GlobalOptions";
 
 class PyroLog {
 
@@ -67,8 +68,16 @@ class PyroLog {
      * @param name logger name
      * @returns {Logger} the logger
      */
-    getLogger(name: string) : Logger {
+    getLogger(name: string): Logger {
         return this._lf.getLogger(name);
+    }
+
+    /**
+     * sets global options
+     * @param o an object providing one or more global options
+     */
+     setGlobalOptions(o: any): void {
+        GlobalOptions.getInstance().setOptions(o);
     }
 
     /**
