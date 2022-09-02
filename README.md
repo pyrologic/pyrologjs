@@ -143,8 +143,10 @@ PL.setGlobalOptions({ useDebug: true, suspended: false });
 The following global options are supported:
 | Option Name | Type       | Default value | Description                     |
 | ----------- | ---------- | ------------- | ------------------------------- |
-| useDebug    | boolean    | `false`       | if **true** then logging levels of DEBUG or below will use `console.debug()`;<br/> otherwise `console.log()` is used |
-| suspended   | boolean    | `false`       | if **true** the all loggers will not write any log message;<br/> otherwise the common level based rules apply |
+| useDebug    | boolean    | `false`       | if **true** then logging levels of DEBUG or below will use `console.debug()` to write the log message;<br/> otherwise `console.log()` is used |
+| suspended   | boolean    | `false`       | if **true** then all loggers will **not** write any log message, regardless of the logging level;<br/> otherwise the common level based rules apply |
+
+You can set the `suspended` option to `true` to temporarily stop all logging output without having to change the logger configuration. Setting it back to `false` will resume normal logging behavior.
 
 
 ### Change Logger Configuration
