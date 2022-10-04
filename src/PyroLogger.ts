@@ -12,6 +12,7 @@ export class PyroLogger implements Logger {
     private _name: string;
     private _writeFnc: boolean;
     private _fncOffset: number;
+    private _suspended: boolean;
     private _pfxGenerator: PrefixGenerator;
     private _appender: Appender | null;
 
@@ -28,6 +29,7 @@ export class PyroLogger implements Logger {
         this._level = l;
         this._writeFnc = !!wf;
         this._fncOffset = 0;
+        this._suspended = false;
         this._pfxGenerator = pg;
         this._appender = a;
     }
@@ -58,6 +60,13 @@ export class PyroLogger implements Logger {
      */
     get fncOffset(): number {
         return this._fncOffset;
+    }
+
+    /**
+     * @returns the "suspended" state of this logger
+     */
+    get suspended(): boolean {
+        return this._suspended;
     }
 
     /**
@@ -135,10 +144,17 @@ export class PyroLogger implements Logger {
     }
 
     /**
+     * @returns true if this logger is currently suspended; false otherwise
+     */
+    private get _isSuspended(): boolean {
+        return this.suspended || this._options.suspended;
+    }
+
+    /**
      * @override
      */
     writeLog(l: Level, ...data: any[]): void {
-        if ( !this._options.suspended && (this._level !== Level.OFF) && (l !== Level.OFF) && this.isEnabledFor(l) ) {
+        if ( !this._isSuspended && (this._level !== Level.OFF) && (l !== Level.OFF) && this.isEnabledFor(l) ) {
             const prefix = this._getPrefix(l);
             switch ( l ) {
                 case Level.ALL:
@@ -218,5 +234,12 @@ export class PyroLogger implements Logger {
      */
     setFncOffset(offs: number): void {
         this._fncOffset = offs;
+    }
+
+    /**
+     * @override
+     */
+    setSuspended(suspended: boolean): void {
+        this._suspended = suspended;
     }
 }

@@ -148,12 +148,22 @@ The following global options are supported:
 
 You can set the global `suspended` option to `true` to temporarily stop **all** logging output without having to change the logger configuration. Setting it back to `false` will resume normal logging behavior.
 
+See below how to suspend an individual logger.
+
 
 ### Change Logger Configuration
 
 You can apply a new logger configuration at any time by calling `PyroLog.getInstance().applyConfiguration()` with the new logger configuration.
 In this case, the previous configuration is dropped, the new configuration is checked and parsed and all existing loggers are re-configured
 with the new settings.
+
+
+### Suspend An Individual Logger
+
+Each logger has a property called `suspended`. If this property is set to `true` for a particular logger using the API method
+`Logger.setSuspended(boolean)` then only this logger is suspended, while all other loggers operate normally. See above how to suspend all
+logger at once.
+
 
 ### Logging Level Enumeration in JavaScript
 
@@ -392,6 +402,8 @@ interface Logger {
     readonly writeFnc: boolean;
     /** the offset for the call stack used to get the name of the calling function */
     readonly fncOffset: number;
+    /** the current "suspended" state of this logger */
+    readonly suspended: boolean;
 
     /**
      * checks whether this logger is enabled for a specific logging level
@@ -460,6 +472,12 @@ interface Logger {
      * @param offs the offset use to get the name of the calling function
      */
     setFncOffset(offs: number): void;
+
+    /**
+     * sets the "suspended" state for this logger
+     * @param suspended the "suspended" state for this logger
+     */
+    setSuspended(suspended: boolean): void;
 }
 ```
 

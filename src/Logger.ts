@@ -13,6 +13,8 @@ export interface Logger {
     readonly writeFnc: boolean;
     /** the offset for the call stack used to get the name of the calling function */
     readonly fncOffset: number;
+    /** the current "suspended" state of this logger */
+    readonly suspended: boolean;
 
     /**
      * checks whether this logger is enabled for a specific logging level
@@ -81,4 +83,10 @@ export interface Logger {
      * @param offs the offset use to get the name of the calling function
      */
     setFncOffset(offs: number): void;
+
+    /**
+     * sets the "suspended" state for this logger
+     * @param suspended the "suspended" state for this logger
+     */
+    setSuspended(suspended: boolean): void;
 }
