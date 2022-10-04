@@ -6,6 +6,10 @@
   "license": "MIT",
   "packageManager": "yarn@3.2.1",
   "description": "Lightweight JavaScript logger",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pyrologic/pyrologjs.git"
+  },
   "keywords": [
     "logging",
     "logger",
