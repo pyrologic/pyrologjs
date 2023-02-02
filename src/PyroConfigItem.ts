@@ -3,12 +3,12 @@ import { ConfigItem, LevelStrings } from "./ConfigItem";
 export class PyroConfigItem implements ConfigItem {
     private readonly _name: string;
     private readonly _level: LevelStrings;
-    private readonly _writeFnc: boolean;
+    private readonly _writeFnc: Boolean | null;
 
-    constructor(name: string, level: LevelStrings, wf: boolean) {
+    constructor(name: string, level: LevelStrings, wf: Boolean | null) {
         this._name = name;
         this._level = level;
-        this._writeFnc = !!wf;
+        this._writeFnc = wf;
         Object.freeze(this);
     }
 
@@ -20,7 +20,7 @@ export class PyroConfigItem implements ConfigItem {
         return this._level;
     }
 
-    get writeFnc(): boolean {
+    get writeFnc(): Boolean | null {
         return this._writeFnc;
     }
 }

@@ -16,7 +16,7 @@ export class LoggerFactory {
 
     private readonly _loggers: Map<string, PyroLogger>;
     private _defLevel: Level;
-    private _writeFnc: boolean;
+    private _writeFnc: Boolean | null;
     private _config: ConfigTree | null;
     private _appender: Appender | null;
     private _pfxGenerator: PrefixGenerator | null;
@@ -27,7 +27,7 @@ export class LoggerFactory {
     constructor() {
         this._loggers = new Map();
         this._defLevel = Level.INFO;
-        this._writeFnc = false;
+        this._writeFnc = null;
         this._config = null;
         this._appender = null;
         this._pfxGenerator = null;
@@ -64,17 +64,17 @@ export class LoggerFactory {
 
     /**
      * flag whether to write the name of the calling function / method along with each output
-     * @returns {boolean} true if new loggers should write the function name along with each log output; false otherwise
+     * @returns {Boolean | null} true if new loggers should write the function name along with each log output; false if not; null if not specified
      */
-    get writeFnc(): boolean {
+    get writeFnc(): Boolean | null {
         return this._writeFnc;
     }
 
     /**
      * sets the "write function name" flag
      */
-    set writeFnc(wf: boolean) {
-        this._writeFnc = !!wf;
+    set writeFnc(wf: Boolean | null) {
+        this._writeFnc = wf;
     }
 
     /**
@@ -86,7 +86,7 @@ export class LoggerFactory {
         const path = Utils.normalizePath(name);
         if ( !this._loggers.has(path) ) {
             // time to create it
-            this._loggers.set(path, new PyroLogger(path, this.getLevel(path), this.getWriteFnc(path), this.prefixGenerator, this._appender));
+            this._loggers.set(path, new PyroLogger(path, this.getLevel(path), this._getEffWriteFnc(this.getWriteFnc(path)), this.prefixGenerator, this._appender));
         }
         return this._loggers.get(path) as Logger;
     }
@@ -97,6 +97,10 @@ export class LoggerFactory {
         } else {
             return null;
         }
+    }
+
+    private _getEffWriteFnc(wf: Boolean | null): boolean {
+        return (wf !== null) ? wf.valueOf() : ((this._writeFnc !== null) ? this._writeFnc.valueOf() : false);
     }
 
     /**
@@ -112,9 +116,9 @@ export class LoggerFactory {
     /**
      * retrieves the "write function name" flag for the specified logger
      * @param name logger name
-     * @returns true if the specified logger should write the function name along with each log output; false otherwise
+     * @returns true if the specified logger should write the function name along with each log output; false if not; null if not specified
      */
-    getWriteFnc(name: string): boolean {
+    getWriteFnc(name: string): Boolean | null {
         const config = this._getConfig(name);
         return config !== null ? config.writeFnc : this.writeFnc;
     }
@@ -200,7 +204,7 @@ export class LoggerFactory {
             // update existing loggers
             this._loggers.forEach((pl) => {
                 pl.setLevel(this.getLevel(pl.name));
-                pl.setWriteFnc(this.getWriteFnc(pl.name));
+                pl.setWriteFnc(this._getEffWriteFnc(this.getWriteFnc(pl.name)));
             });
         }
     }

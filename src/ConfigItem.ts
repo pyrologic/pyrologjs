@@ -14,5 +14,5 @@ export interface ConfigItem {
     /** logging level */
     readonly level: LevelStrings;
     /** flag whether to write the name of the calling function / method along with each output */
-    readonly writeFnc: boolean;
+    readonly writeFnc: Boolean | null;
 }
