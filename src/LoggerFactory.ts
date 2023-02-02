@@ -181,7 +181,7 @@ export class LoggerFactory {
      * @param wf flag whether to write the name of the calling function / method
      * @returns the created configuration item
      */
-    createConfigItem(name: string, level: LevelStrings, wf: boolean) : ConfigItem {
+    createConfigItem(name: string, level: LevelStrings, wf: Boolean | null) : ConfigItem {
         return new PyroConfigItem(Utils.normalizePath(name), level, wf);
     }
 
