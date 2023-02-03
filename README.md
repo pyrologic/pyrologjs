@@ -215,6 +215,18 @@ In order to deal with other approaches such as using your own utility methods fo
 logger.setFncOffset(1);
 ```
 
+The default behavior is specified at default logger. If a logger configuration does not set the "write function name" parameter at all, then the logger will take its
+setting from default logger.
+```ts
+const config = [
+    PL.createConfigItem(PL.defaultName, 'INFO', true), // sets the default logging level to INFO and activates the "write function name"
+    PL.createConfigItem('logger1', 'WARN', false),     // "logger1" is set to level WARN and NOT to write the name of the calling function / method
+    PL.createConfigItem('logger2', 'DEBUG'),           // "logger2" is set to level DEBUG and takes the default setting for the "write function name" flag
+                                                       // it will be set to true in this case here
+    //...
+];
+
+```
 
 ### Appenders
 
@@ -280,6 +292,9 @@ PL.createPrefixGenerator((logger, level) => {
 ```
 
 The prefix generator is used for all loggers.
+
+If you want to use the "write function name" feature then your prefix generator must check logger's setting and retrieve the name of the calling function.
+See above for an example.
 
 
 
@@ -521,7 +536,7 @@ interface ConfigItem {
     /** logging level */
     readonly level: LevelStrings;
     /** flag whether to write the name of the calling function / method along with each output */
-    readonly writeFnc: boolean;
+    readonly writeFnc: Boolean | null;
 }
 ```
 
