@@ -13,6 +13,15 @@ export class Utils {
     }
 
     /**
+     * ensures that a string is returned
+     * @param str the object supposed to be a string
+     * @returns the given string if it is a valid string; an empty string otherwise
+     */
+    static ensureString(str: unknown): string {
+        return Utils.isString(str) ? (str as string) : '';
+    }
+
+    /**
      * checks whether the given name parameter is a valid string; throws an error if not
      * @param name a string specifying a name
      * @returns the given string
@@ -25,7 +34,7 @@ export class Utils {
     }
 
     /**
-     * checks whether all elements of the give array are valid strings; throws an error if not
+     * checks whether all elements of the given array are valid strings; throws an error if not
      * @param names array of strings to be 
      * @param errmsg optional error message that's thrown in the case of an error
      */
@@ -78,10 +87,14 @@ export class Utils {
      */
     static getStack( skip = 1 ): string {
         const err = new Error();
-        const stack = err.stack;
+        const stack = Utils.ensureString(err.stack);
         if ( Utils.isString(stack) ) {
             let s = stack as string;
             let c = skip;
+            if ( !stack.startsWith('Error') ) {
+                // Chromium has an additional line beginning with "Error\n" - Firefox and Safari do not!
+                --c;
+            }
             while ( c >= 0 ) {
                 const index = s.indexOf('\n');
                 if ( (index < 0) || ((s.length - 1) < (index + 1)) ) {
@@ -110,14 +123,24 @@ export class Utils {
             if ( s.startsWith('at ') ) {
                 s = s.substring(3);
             }
-            const si = s.indexOf(' ');
-            if ( (si < 0) || ((s.length - 1) < (si + 1)) ) {
-                return s;
+            const si = s.indexOf(' (');
+            if ( (si !== -1) && ((si + 1) < (s.length - 1)) ) {
+                s = s.substring(0, si);
             }
-            s = s.substring(0, si);
             const ai = s.indexOf('@');
             if ( (ai >= 0) && ((s.length - 1) >= (ai + 1)) ) {
                 s = s.substring(0, ai);
+            }
+            const pi = s.indexOf('/<');     // that's sometimes the case in Firefox
+            if ( pi !== -1 ) {
+                s = s.substring(0, pi);
+            }
+            let hi = s.indexOf('https://');
+            if ( hi === -1 ) {
+                hi = s.indexOf('http://');
+            }
+            if ( hi !== -1 ) {
+                s = (hi > 0) ? s.substring(0, hi) : '<anonymous>';
             }
             if ( (s.length > 0) && Utils.isString(separator) ) {
                 s = s.replace('.', separator);
