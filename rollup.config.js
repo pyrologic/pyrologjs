@@ -1,5 +1,5 @@
 //@file: rollup.config.js
-import typescript from "@rollup/plugin-typescript";
+import typescript from "rollup-plugin-typescript2";
 import dts from "rollup-plugin-dts";
 import { PyrologicRollupPlugin } from "@pyrologic/rollup-plugin";
 
