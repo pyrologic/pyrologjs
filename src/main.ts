@@ -6,13 +6,16 @@ import { Appender } from "./Appender";
 import { PrefixGenerator } from "./PrefixGenerator";
 import { Utils } from "./utils";
 import { GlobalOptions } from "./GlobalOptions";
+import WebWorker from 'web-worker:./Worker.ts';
 
 class PyroLog {
 
     private _lf: LoggerFactory;
+    private _ww: WebWorker;
 
     private constructor() {
         this._lf = LoggerFactory.getInstance();
+        this._ww = new WebWorker();
         Object.freeze(this);
     }
 
@@ -33,6 +36,10 @@ class PyroLog {
      */
     get Factory(): LoggerFactory {
         return this._lf;
+    }
+
+    get worker(): WebWorker {
+        return this._ww;
     }
 
     /**
