@@ -13,3 +13,4 @@
 dist
 .yarn/cache/fsevents*
 
+node_modules/
