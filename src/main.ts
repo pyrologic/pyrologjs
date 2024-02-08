@@ -6,6 +6,7 @@ import { Appender } from "./Appender";
 import { PrefixGenerator } from "./PrefixGenerator";
 import { Utils } from "./utils";
 import { GlobalOptions } from "./GlobalOptions";
+import { PyroLogger } from "./PyroLogger";
 
 class PyroLog {
 
@@ -161,4 +162,4 @@ const JsLevel = Object.freeze({
 });
 
 // export everything that should be exported
-export { Appender, ConfigItem, Logger, PyroLog, Level, PrefixGenerator, Utils, Level2String, JsLevel };
+export { Appender, ConfigItem, Logger, PyroLog, Level, PrefixGenerator, Utils, Level2String, JsLevel, PyroLogger };
