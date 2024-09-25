@@ -1,14 +1,14 @@
 {
   "name": "@pyrologic/pyrologjs",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "author": "Thomas Hendel",
   "homepage": "https://github.com/pyrologic/pyrologjs",
   "license": "MIT",
-  "packageManager": "yarn@3.2.1",
+  "packageManager": "yarn@4.5.0",
   "description": "Lightweight JavaScript logger",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pyrologic/pyrologjs.git"
+    "url": "git+https://github.com/pyrologic/pyrologjs.git"
   },
   "keywords": [
     "logging",
@@ -19,14 +19,6 @@
     "typescript",
     "pyrologic"
   ],
-  "devDependencies": {
-    "@pyrologic/rollup-plugin": "^1.0.1",
-    "@rollup/plugin-typescript": "^8.3.1",
-    "rollup": "^2.70.1",
-    "rollup-plugin-dts": "^4.2.1",
-    "tslib": "^2.3.1",
-    "typescript": "^4.6.3"
-  },
   "main": "dist/pyrolog.js",
   "types": "dist/pyrolog.d.ts",
   "files": [
@@ -35,7 +27,15 @@
     "dist/pyrolog.js.map"
   ],
   "scripts": {
-    "watch": "rollup --config rollup.config.js --watch --watch.buildDelay 25",
-    "build": "rollup --config rollup.config.js"
+    "watch": "rollup --config rollup.config.mjs --watch --watch.buildDelay 25",
+    "build": "rollup --config rollup.config.mjs"
+  },
+  "devDependencies": {
+    "@pyrologic/rollup-plugin": "^1.1.2",
+    "@rollup/plugin-typescript": "^12.1.0",
+    "rollup": "^4.22.4",
+    "rollup-plugin-dts": "^6.1.1",
+    "tslib": "^2.7.0",
+    "typescript": "^5.6.2"
   }
 }
