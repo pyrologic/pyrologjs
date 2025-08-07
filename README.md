@@ -261,7 +261,7 @@ The appender is used for all loggers.
 PyroLog creates a prefix string for each log message it writes to the console.
 The code looks like this:
 ```ts
-return ${(new Date()).toISOString()} ${logger.name} [${Level2String(level)}]` + (logger.writeFnc ? ` (${Utils.getFunctionName(logger.fncOffset)})` : '') + ':';
+return ${(new Date()).toISOString()} ${logger.name} [${Level2String(level)}]` + (logger.writeFnc ? ` (${PyroLogUtils.getFunctionName(logger.fncOffset)})` : '') + ':';
 ```
 This will produce prefixes as shown bellow:
 ```
@@ -270,6 +270,8 @@ This will produce prefixes as shown bellow:
 
 You can set our own prefix creator instance and thus create the log prefix you want. All you need is to write a class that implements the interface `PrefixGenerator`.
 ```ts
+import { PyroLog, Logger, Level, PrefixGenerator, Level2String, PyroLogUtils, String2Level } from "@pyrologic/pyrologjs";
+// ...
 const PL = PyroLog.getInstance();
 //...
 class MyPrefixGenerator implements PrefixGenerator {
