@@ -181,6 +181,7 @@ const JsLevel = {
     INFO: Level.INFO,
     WARN: Level.WARN,
     ERROR: Level.ERROR,
+    FATAL: Level.FATAL,
     OFF: Level.OFF
 };
 ```
@@ -261,7 +262,7 @@ The appender is used for all loggers.
 PyroLog creates a prefix string for each log message it writes to the console.
 The code looks like this:
 ```ts
-return ${(new Date()).toISOString()} ${logger.name} [${Level2String(level)}]` + (logger.writeFnc ? ` (${Utils.getFunctionName(logger.fncOffset)})` : '') + ':';
+return ${(new Date()).toISOString()} ${logger.name} [${Level2String(level)}]` + (logger.writeFnc ? ` (${PyroLogUtils.getFunctionName(logger.fncOffset)})` : '') + ':';
 ```
 This will produce prefixes as shown bellow:
 ```
@@ -270,6 +271,8 @@ This will produce prefixes as shown bellow:
 
 You can set our own prefix creator instance and thus create the log prefix you want. All you need is to write a class that implements the interface `PrefixGenerator`.
 ```ts
+import { PyroLog, Logger, Level, PrefixGenerator, Level2String, PyroLogUtils, String2Level } from "@pyrologic/pyrologjs";
+// ...
 const PL = PyroLog.getInstance();
 //...
 class MyPrefixGenerator implements PrefixGenerator {
@@ -463,16 +466,22 @@ interface Logger {
     info(...data: any[]): void;
 
     /**
-     * writes a log message at level INFO
+     * writes a log message at level WARN
      * @param data data to be logged
      */
     warn(...data: any[]): void;
 
     /**
-     * writes a log message at level INFO
+     * writes a log message at level ERROR
      * @param data data to be logged
      */
     error(...data: any[]): void;
+
+    /**
+     * writes a log message at level FATAL
+     * @param data data to be logged
+     */
+    fatal(...data: any[]): void;
 
     /**
      * logs the current stack trace
@@ -517,6 +526,8 @@ enum Level {
     WARN,
     /** ERROR level */
     ERROR,
+    /** FATAL level */
+    FATAL,
     /** loggers at this level do not log at all */
     OFF
 }
@@ -542,7 +553,7 @@ interface ConfigItem {
 
 Note, that `LevelStrings` is the string representation of the `Level` enumeration:
 ```ts
-LevelStrings = "ALL" | "TRACE" | "DEBUG" | "INFO" | "WARN" | "ERROR" | "OFF"
+LevelStrings = "ALL" | "TRACE" | "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL" | "OFF"
 ```
 
 The best way to create configuration items is by using `PyroLog.getInstance().createConfigItem()`.

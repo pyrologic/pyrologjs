@@ -59,16 +59,22 @@ export interface Logger {
     info(...data: any[]): void;
 
     /**
-     * writes a log message at level INFO
+     * writes a log message at level WARN
      * @param data data to be logged
      */
     warn(...data: any[]): void;
     
     /**
-     * writes a log message at level INFO
+     * writes a log message at level ERROR
      * @param data data to be logged
      */
     error(...data: any[]): void;
+
+    /**
+     * writes a log message at level FATAL
+     * @param data data to be logged
+     */
+    fatal(...data: any[]): void;
 
     /**
      * logs the current stack trace

@@ -1,6 +1,7 @@
 import { Appender } from "./Appender";
 import { CallbackAppender } from "./CallbackAppender";
-import { ConfigItem, LevelStrings } from "./ConfigItem";
+import { ConfigItem } from "./ConfigItem";
+import { LevelStrings } from "./Level";
 import { Level } from "./Level";
 import { Logger } from "./Logger";
 import { PyroConfigItem } from "./PyroConfigItem";

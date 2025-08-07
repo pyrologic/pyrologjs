@@ -1,4 +1,5 @@
-import { ConfigItem, LevelStrings } from "./ConfigItem";
+import { ConfigItem } from "./ConfigItem";
+import { LevelStrings } from "./Level";
 
 export class PyroConfigItem implements ConfigItem {
     private readonly _name: string;
