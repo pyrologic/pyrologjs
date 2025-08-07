@@ -174,5 +174,6 @@ export {
     String2LevelString, 
     String2Level, 
     JsLevel, 
-    PyroLogger
+    PyroLogger,
+    Utils as PyroLogUtils
 };
