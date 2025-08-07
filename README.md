@@ -181,6 +181,7 @@ const JsLevel = {
     INFO: Level.INFO,
     WARN: Level.WARN,
     ERROR: Level.ERROR,
+    FATAL: Level.FATAL,
     OFF: Level.OFF
 };
 ```
@@ -477,6 +478,12 @@ interface Logger {
     error(...data: any[]): void;
 
     /**
+     * writes a log message at level FATAL
+     * @param data data to be logged
+     */
+    fatal(...data: any[]): void;
+
+    /**
      * logs the current stack trace
      * @param l logging level
      * @param skip number of stack entries to skip
@@ -519,6 +526,8 @@ enum Level {
     WARN,
     /** ERROR level */
     ERROR,
+    /** FATAL level */
+    FATAL,
     /** loggers at this level do not log at all */
     OFF
 }
@@ -544,7 +553,7 @@ interface ConfigItem {
 
 Note, that `LevelStrings` is the string representation of the `Level` enumeration:
 ```ts
-LevelStrings = "ALL" | "TRACE" | "DEBUG" | "INFO" | "WARN" | "ERROR" | "OFF"
+LevelStrings = "ALL" | "TRACE" | "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL" | "OFF"
 ```
 
 The best way to create configuration items is by using `PyroLog.getInstance().createConfigItem()`.
