@@ -1,5 +1,5 @@
-import { Level, Level2String } from "./Level";
-import { ConfigItem, LevelStrings } from "./ConfigItem";
+import { Level, LevelStrings, Level2String, String2LevelString, String2Level } from "./Level";
+import { ConfigItem } from "./ConfigItem";
 import { Logger } from "./Logger";
 import { LoggerFactory } from "./LoggerFactory";
 import { Appender } from "./Appender";
@@ -162,4 +162,18 @@ const JsLevel = Object.freeze({
 });
 
 // export everything that should be exported
-export { Appender, ConfigItem, Logger, PyroLog, Level, PrefixGenerator, Utils, Level2String, JsLevel, PyroLogger };
+export { 
+    Appender, 
+    ConfigItem, 
+    Logger, 
+    PyroLog, 
+    Level, 
+    PrefixGenerator, 
+    LevelStrings, 
+    Level2String, 
+    String2LevelString, 
+    String2Level, 
+    JsLevel, 
+    PyroLogger,
+    Utils as PyroLogUtils
+};

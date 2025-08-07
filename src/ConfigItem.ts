@@ -1,9 +1,4 @@
-import { Level } from "./Level";
-
-/**
- * a string collection of all supported logging levels
- */
-export type LevelStrings = keyof typeof Level;
+import { LevelStrings } from "./Level";
 
 /**
  * configuration item
