@@ -14,6 +14,8 @@ export enum Level {
     WARN,
     /** ERROR level */
     ERROR,
+    /** FATAL level */
+    FATAL,
     /** loggers at this level do not log at all */
     OFF
 }
@@ -42,6 +44,8 @@ export function Level2String(level: Level): string {
             return "WARN";
         case Level.ERROR:
             return "ERROR";
+        case Level.FATAL:
+            return "FATAL";
         case Level.OFF:
             return "OFF";
     }
@@ -66,6 +70,8 @@ export function String2LevelString(s: string): LevelStrings {
             return "WARN";
         case "ERROR":
             return "ERROR";
+        case "FATAL":
+            return "FATAL";
         case "OFF":
             return "OFF";
         default:
