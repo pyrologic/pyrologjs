@@ -173,6 +173,7 @@ export class PyroLogger implements Logger {
                     console.warn(prefix, ...data);
                     break;
                 case Level.ERROR:
+                case Level.FATAL:
                     console.error(prefix, ...data);
                     break;
                 default:
@@ -218,6 +219,13 @@ export class PyroLogger implements Logger {
      */
     error(...data: any[]): void {
         this.writeLog(Level.ERROR, ...data);
+    }
+
+    /**
+     * @override
+     */
+    fatal(...data: any[]): void {
+        this.writeLog(Level.FATAL, ...data);       
     }
 
     /**
