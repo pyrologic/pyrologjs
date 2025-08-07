@@ -71,6 +71,12 @@ export interface Logger {
     error(...data: any[]): void;
 
     /**
+     * writes a log message at level FATAL
+     * @param data data to be logged
+     */
+    fatal(...data: any[]): void;
+
+    /**
      * logs the current stack trace
      * @param l logging level
      * @param skip number of stack entries to skip
