@@ -158,6 +158,7 @@ const JsLevel = Object.freeze({
     INFO: Level.INFO,
     WARN: Level.WARN,
     ERROR: Level.ERROR,
+    FATAL: Level.FATAL,
     OFF: Level.OFF
 });
 
