@@ -112,7 +112,7 @@ export class PyroLogger implements Logger {
      * @override
      */
     isEnabledFor(l: Level): boolean {
-        return !this._options.suspended && (l >= this.level);
+        return !this._options.suspended && (l >= this.level) && (l !== Level.OFF);
     }
 
     /**
