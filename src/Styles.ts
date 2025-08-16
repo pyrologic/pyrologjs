@@ -3,6 +3,8 @@
  * see https://developer.chrome.com/docs/devtools/console/format-style
  */
 
+import { LevelStrings } from "./Level";
+
 /**
  * color reference
  */
@@ -47,7 +49,21 @@ export interface TextStyle {
     readonly linethrough: boolean;
 }
 
-export const NO_STYLES: TextStyle = { bold: false, italic: false, underline: false, linethrough: false};
+/** "simple text style" constant */
+export const SIMPLE_TEXT: TextStyle = {
+    bold: false,
+    italic: false,
+    underline: false,
+    linethrough: false
+};
+
+/** "bold text style" constant */
+export const BOLD_TEXT: TextStyle = {
+    bold: true,
+    italic: false,
+    underline: false,
+    linethrough: false
+};
 
 
 /**
@@ -61,3 +77,14 @@ export interface StyleDef {
     /** additional text style attributes */
     readonly styles: TextStyle;
 }
+
+/** "empty style" constant */
+export const EMPTY_STYLE: StyleDef = {
+    color: Colors.NONE,
+    background: Colors.NONE,
+    styles: SIMPLE_TEXT
+};
+
+/** a map providing style definitions for logging levels */
+export type LevelStyles = Map<LevelStrings, StyleDef>;
+
