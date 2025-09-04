@@ -1,13 +1,17 @@
 import { Appender } from "./Appender";
 import { GlobalOptions } from "./GlobalOptions";
-import { Level, Level2String } from "./Level";
+import { Level, Level2String, String2Level } from "./Level";
 import { Logger } from "./Logger";
 import { PrefixGenerator } from "./PrefixGenerator";
+import { StyleProvider } from "./StyleProvider";
+import { StyleDef } from "./Styles";
 import { Utils } from "./utils";
 
 export class PyroLogger implements Logger {
 
     private readonly _options: GlobalOptions;
+    private readonly _styles: Map<Level, StyleDef>;
+    private readonly _styleProvider: StyleProvider;
     private _level: Level;
     private _name: string;
     private _writeFnc: boolean;
@@ -23,8 +27,10 @@ export class PyroLogger implements Logger {
      * @param wf flag whether to write the name of the calling function / method
      * @param a the optional appender
      */
-    constructor(n: string, l: Level, wf: boolean, pg: PrefixGenerator, a: Appender | null) {
+    constructor(n: string, l: Level, wf: boolean, pg: PrefixGenerator, sp: StyleProvider, a: Appender | null) {
+        this._styleProvider = sp;
         this._options = GlobalOptions.getInstance();
+        this._styles = new Map<Level, StyleDef>();
         this._name = n;
         this._level = l;
         this._writeFnc = !!wf;
@@ -32,6 +38,7 @@ export class PyroLogger implements Logger {
         this._suspended = false;
         this._pfxGenerator = pg;
         this._appender = a;
+        this.updateStyles();
     }
 
     /**
@@ -99,6 +106,23 @@ export class PyroLogger implements Logger {
      */
     setWriteFnc(wf: boolean): void {
         this._writeFnc = !!wf;
+    }
+
+    /**
+     * updates the style definitions for this logger
+     */
+    updateStyles() : void {
+        this._styles.clear();
+        const styleProvider = this._styleProvider;
+        const levels = Object.keys(Level);
+        const self = this;
+        levels.forEach(ls => {
+            const level = String2Level(ls);
+            const sd = styleProvider.getStyleDef(self.name, level);
+            if ( sd !== undefined ) {
+                self._styles.set(level, sd);
+            }
+        });
     }
 
     /**

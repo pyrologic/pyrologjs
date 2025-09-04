@@ -1,7 +1,7 @@
 import { Appender } from "./Appender";
 import { CallbackAppender } from "./CallbackAppender";
 import { ConfigItem } from "./ConfigItem";
-import { LevelStrings } from "./Level";
+import { Level2LevelString, LevelStrings } from "./Level";
 import { Level } from "./Level";
 import { Logger } from "./Logger";
 import { PyroConfigItem } from "./PyroConfigItem";
@@ -12,8 +12,11 @@ import { DEFAULT_CONFIG } from "./Const";
 import { PrefixGenerator } from "./PrefixGenerator";
 import { PyroPrefixGenerator } from "./PyroPrefixGenerator";
 import { CallbackPrefixGenerator } from "./CallbackPrefixGenerator";
+import { Colors, StyleDef } from "./Styles";
+import { GlobalOptions } from "./GlobalOptions";
+import { StyleProvider } from "./StyleProvider";
 
-export class LoggerFactory {
+export class LoggerFactory implements StyleProvider {
 
     private readonly _loggers: Map<string, PyroLogger>;
     private _defLevel: Level;
@@ -87,7 +90,7 @@ export class LoggerFactory {
         const path = Utils.normalizePath(name);
         if ( !this._loggers.has(path) ) {
             // time to create it
-            this._loggers.set(path, new PyroLogger(path, this.getLevel(path), this._getEffWriteFnc(this.getWriteFnc(path)), this.prefixGenerator, this._appender));
+            this._loggers.set(path, new PyroLogger(path, this.getLevel(path), this._getEffWriteFnc(this.getWriteFnc(path)), this.prefixGenerator, this, this._appender));
         }
         return this._loggers.get(path) as Logger;
     }
@@ -122,6 +125,19 @@ export class LoggerFactory {
     getWriteFnc(name: string): Boolean | null {
         const config = this._getConfig(name);
         return config !== null ? config.writeFnc : this.writeFnc;
+    }
+
+    /**
+     * @override
+     * @inheritdoc
+     */
+    getStyleDef(name: string, level: Level): StyleDef | undefined {
+        const config = this._getConfig(name);
+        let style: StyleDef | undefined = undefined;
+        if ( config !== null ) {
+            style = config.levelStyles.get(Level2LevelString(level));
+        }
+        return style !== undefined ? style : GlobalOptions.getInstance().getLevelStyle(level);
     }
 
     /**
@@ -171,8 +187,38 @@ export class LoggerFactory {
         return pg;
     }
 
+    /**
+     * @returns the default prefix generator
+     */
     get prefixGenerator(): PrefixGenerator {
         return this._pfxGenerator !== null ? this._pfxGenerator : PyroPrefixGenerator.getInstance();
+    }
+
+    /**
+     * creates a level style descriptor
+     * @param param0 
+     * @returns the level style descriptor
+     */
+    createLevelStyle({
+        color = Colors.NONE,
+        background = Colors.NONE,
+        bold = false,
+        italic = false,
+        underline = false,
+        linethrough = false
+    }) : StyleDef {
+        const textStyle = {
+            bold: bold,
+            italic: italic,
+            underline: underline,
+            linethrough: linethrough
+        };
+        const styleDef = {
+            color: color,
+            background: background,
+            styles: textStyle
+        };
+        return styleDef;
     }
 
     /**
@@ -203,9 +249,11 @@ export class LoggerFactory {
         this._writeFnc = cfg.defaultConfig.writeFnc;
         if ( this._loggers.size > 0 ) {
             // update existing loggers
+            const self = this;
             this._loggers.forEach((pl) => {
-                pl.setLevel(this.getLevel(pl.name));
-                pl.setWriteFnc(this._getEffWriteFnc(this.getWriteFnc(pl.name)));
+                pl.setLevel(self.getLevel(pl.name));
+                pl.setWriteFnc(self._getEffWriteFnc(self.getWriteFnc(pl.name)));
+                pl.updateStyles();
             });
         }
     }
