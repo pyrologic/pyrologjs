@@ -7,7 +7,7 @@ import { PrefixGenerator } from "./PrefixGenerator";
 import { Utils } from "./utils";
 import { GlobalOptions } from "./GlobalOptions";
 import { PyroLogger } from "./PyroLogger";
-import { BOLD_TEXT, ColorRef, Colors, EMPTY_STYLE, LevelStyles, SIMPLE_TEXT, StyleDef, TextStyle } from "./Styles";
+import { ColorRef, Colors, LevelStyles, StyleDef, TextStyle } from "./Styles";
 
 class PyroLog {
 
@@ -191,11 +191,9 @@ const JsLevel = Object.freeze({
 // export everything that should be exported
 export { 
     Appender, 
-    BOLD_TEXT,
     ColorRef,
     Colors,
     ConfigItem, 
-    EMPTY_STYLE,
     forEachLevel,
     Logger, 
     PyroLog, 
@@ -209,7 +207,6 @@ export {
     PyroLogger,
     String2LevelString, 
     String2Level, 
-    SIMPLE_TEXT,
     StyleDef,
     TextStyle,
     Utils as PyroLogUtils
