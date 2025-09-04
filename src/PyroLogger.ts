@@ -4,7 +4,7 @@ import { forEachLevel, Level, Level2String } from "./Level";
 import { Logger } from "./Logger";
 import { PrefixGenerator } from "./PrefixGenerator";
 import { StyleProvider } from "./StyleProvider";
-import { StyleDef } from "./Styles";
+import { Colors, StyleDef } from "./Styles";
 import { Utils } from "./utils";
 
 export class PyroLogger implements Logger {
@@ -173,33 +173,104 @@ export class PyroLogger implements Logger {
     }
 
     /**
+     * adds a style value to the given style descriptor
+     * @param dsc the current style descriptor
+     * @param value the style value
+     * @returns the new style descriptor
+     */
+    private _addStyleDsc(dsc: string, value: number): string {
+        return `${dsc}${dsc.length ? ';' : ''}${value}`;
+    }
+
+    /**
+     * creates a style descriptor from a style definition
+     * @param style the style definition
+     * @returns the style descriptor
+     */
+    private _createStyleDescriptor(style: StyleDef): string {
+        let dsc = '';
+        if ( style.color && style.color !== Colors.NONE ) {
+            dsc = this._addStyleDsc(dsc, style.color.fgRef);
+        }
+        if ( style.background && style.background !== Colors.NONE ) {
+            dsc = this._addStyleDsc(dsc, style.background.bgRef);
+        }
+        if ( style.styles.bold ) {
+            dsc = this._addStyleDsc(dsc, 1);
+        }
+        if ( style.styles.italic ) {
+            dsc = this._addStyleDsc(dsc, 3);
+        }
+        if ( style.styles.underline ) {
+            dsc = this._addStyleDsc(dsc, 4);
+        }
+        if ( style.styles.linethrough ) {
+            dsc = this._addStyleDsc(dsc, 9);
+        }
+        return dsc;
+    }
+
+    /**
+     * applies the style definition to the data to be logged
+     * @param style the style definition
+     * @param prefix the prefix text
+     * @param data data to be logged
+     * @returns the styled data to be logged
+     */
+    private _applyStyle(style: StyleDef | undefined, prefix: string, data: any[]): any[] {
+        if ( style !== undefined ) {
+            const dsc = this._createStyleDescriptor(style);
+            if ( Utils.isString(dsc) ) {
+                const styled_data: string[] = [];
+                let text: string = `\x1B[${dsc}m`;
+                if ( Utils.isString(prefix) ) {
+                    text += `${prefix} `;
+                }
+                for ( let i=0 ; i < data.length ; ++i ) {
+                    if ( i > 0 ) {
+                        text += ', ';
+                    }
+                    const value: any = data[i];
+                    text += Utils.isString(value) ? (value as string) : JSON.stringify(value);
+                }
+                text += '\x1B[0m'
+                styled_data.push(text);
+                return styled_data;
+            }
+        }
+        return data;
+    }
+
+    /**
      * @override
      */
     writeLog(l: Level, ...data: any[]): void {
         if ( !this._isSuspended && (this._level !== Level.OFF) && (l !== Level.OFF) && this.isEnabledFor(l) ) {
             const prefix = this._getPrefix(l);
+            const style = this._styles.get(l);
+            const styled_data = this._applyStyle(style, prefix, data);
             switch ( l ) {
                 case Level.ALL:
                 case Level.TRACE:
                 case Level.DEBUG:
                     if ( this._options.useDebug ) {
-                        console.debug(prefix, ...data);
+                        console.debug(...styled_data);
                     } else {
-                        console.log(prefix, ...data);
+                        console.log(...styled_data);
                     }
                     break;
                 case Level.INFO:
-                    console.info(prefix, ...data);
+                    console.info(...styled_data);
                     break;
                 case Level.WARN:
-                    console.warn(prefix, ...data);
+                    console.warn(...styled_data);
                     break;
                 case Level.ERROR:
                 case Level.FATAL:
-                    console.error(prefix, ...data);
+                    console.error(...styled_data);
                     break;
                 default:
-                    console.log(prefix, ...data);
+                    console.log(...styled_data);
                     break;
             }
             if ( this._appender !== null ) {
