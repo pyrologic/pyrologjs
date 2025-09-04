@@ -52,6 +52,15 @@ export function Level2String(level: Level): string {
 }
 
 /**
+ * converts a logging level into the matching level identifier
+ * @param level the logging level
+ * @returns the matching level identifier
+ */
+export function Level2LevelString(level: Level): LevelStrings {
+    return Level2String(level) as LevelStrings;
+}
+
+/**
  * converts an arbitrary string into a valid level identifier
  * @param s arbitrary string
  * @returns the corresponding level identifier
