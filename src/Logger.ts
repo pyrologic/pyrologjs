@@ -1,4 +1,5 @@
 import { Level } from "./Level";
+import { StyleDef } from "./Styles";
 
 /**
  * the main logger interface
@@ -95,4 +96,11 @@ export interface Logger {
      * @param suspended the "suspended" state for this logger
      */
     setSuspended(suspended: boolean): void;
+
+    /**
+     * adds a style definition for a logging level
+     * @param level the logging level
+     * @param style the style definition for this level
+     */
+    addStyle(level: Level, style: StyleDef): void;
 }

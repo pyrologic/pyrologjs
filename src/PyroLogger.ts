@@ -343,4 +343,11 @@ export class PyroLogger implements Logger {
     setSuspended(suspended: boolean): void {
         this._suspended = suspended;
     }
+
+    /**
+     * @override
+     */
+    addStyle(level: Level, style: StyleDef): void {
+        this._styles.set(level, style);
+    }
 }
