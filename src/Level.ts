@@ -97,3 +97,13 @@ export function String2Level(s: string): Level {
     const level = Level[String2LevelString(s)];
     return level !== undefined ? level : Level.INFO;
 }
+
+/**
+ * executes a callback function for each logging level
+ * @param f the callback function
+ */
+export function forEachLevel( f: (level: Level) => void ): void {
+    for ( let l = Level.ALL ; l <= Level.OFF ; ++l ) {
+        f(l);
+    }
+}

@@ -1,4 +1,4 @@
-import { Level, LevelStrings, Level2String, String2LevelString, String2Level, Level2LevelString } from "./Level";
+import { Level, LevelStrings, Level2String, String2LevelString, String2Level, Level2LevelString, forEachLevel } from "./Level";
 import { ConfigItem } from "./ConfigItem";
 import { Logger } from "./Logger";
 import { LoggerFactory } from "./LoggerFactory";
@@ -196,6 +196,7 @@ export {
     Colors,
     ConfigItem, 
     EMPTY_STYLE,
+    forEachLevel,
     Logger, 
     PyroLog, 
     Level, 

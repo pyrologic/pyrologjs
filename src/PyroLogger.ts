@@ -1,6 +1,6 @@
 import { Appender } from "./Appender";
 import { GlobalOptions } from "./GlobalOptions";
-import { Level, Level2String, String2Level } from "./Level";
+import { forEachLevel, Level, Level2String } from "./Level";
 import { Logger } from "./Logger";
 import { PrefixGenerator } from "./PrefixGenerator";
 import { StyleProvider } from "./StyleProvider";
@@ -114,15 +114,13 @@ export class PyroLogger implements Logger {
     updateStyles() : void {
         this._styles.clear();
         const styleProvider = this._styleProvider;
-        const levels = Object.keys(Level);
         const self = this;
-        levels.forEach(ls => {
-            const level = String2Level(ls);
+        forEachLevel((level) => {
             const sd = styleProvider.getStyleDef(self.name, level);
             if ( sd !== undefined ) {
                 self._styles.set(level, sd);
             }
-        });
+        })
     }
 
     /**
