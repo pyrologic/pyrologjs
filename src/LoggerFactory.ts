@@ -208,15 +208,15 @@ export class LoggerFactory implements StyleProvider {
         linethrough = false
     }) : StyleDef {
         const textStyle = {
-            bold: bold,
-            italic: italic,
-            underline: underline,
-            linethrough: linethrough
+            bold: !!bold,
+            italic: !!italic,
+            underline: !!underline,
+            linethrough: !!linethrough,
         };
         const styleDef = {
-            color: color,
-            background: background,
-            styles: textStyle
+            color: color ? color : Colors.NONE,
+            background: background ? background : Colors.NONE,
+            styles: textStyle,
         };
         return styleDef;
     }
