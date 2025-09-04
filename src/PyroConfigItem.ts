@@ -33,7 +33,6 @@ export class PyroConfigItem implements ConfigItem {
     }
 
     /**
-     * @inheritdoc
      * @override
      */
     addLevelStyle(level: LevelStrings, style: StyleDef): void {

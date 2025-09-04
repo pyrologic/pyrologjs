@@ -129,7 +129,6 @@ export class LoggerFactory implements StyleProvider {
 
     /**
      * @override
-     * @inheritdoc
      */
     getStyleDef(name: string, level: Level): StyleDef | undefined {
         const config = this._getConfig(name);
