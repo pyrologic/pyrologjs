@@ -189,23 +189,26 @@ export class PyroLogger implements Logger {
      */
     private _createStyleDescriptor(style: StyleDef): string {
         let dsc = '';
-        if ( style.color && style.color !== Colors.NONE ) {
-            dsc = this._addStyleDsc(dsc, style.color.fgRef);
-        }
-        if ( style.background && style.background !== Colors.NONE ) {
-            dsc = this._addStyleDsc(dsc, style.background.bgRef);
-        }
-        if ( style.styles.bold ) {
-            dsc = this._addStyleDsc(dsc, 1);
-        }
-        if ( style.styles.italic ) {
-            dsc = this._addStyleDsc(dsc, 3);
-        }
-        if ( style.styles.underline ) {
-            dsc = this._addStyleDsc(dsc, 4);
-        }
-        if ( style.styles.linethrough ) {
-            dsc = this._addStyleDsc(dsc, 9);
+        if ( Utils.canConsoleStyles() ) {
+            // the environment supports this
+            if ( style.color && style.color !== Colors.NONE ) {
+                dsc = this._addStyleDsc(dsc, style.color.fgRef);
+            }
+            if ( style.background && style.background !== Colors.NONE ) {
+                dsc = this._addStyleDsc(dsc, style.background.bgRef);
+            }
+            if ( style.styles.bold ) {
+                dsc = this._addStyleDsc(dsc, 1);
+            }
+            if ( style.styles.italic ) {
+                dsc = this._addStyleDsc(dsc, 3);
+            }
+            if ( style.styles.underline ) {
+                dsc = this._addStyleDsc(dsc, 4);
+            }
+            if ( style.styles.linethrough ) {
+                dsc = this._addStyleDsc(dsc, 9);
+            }
         }
         return dsc;
     }
