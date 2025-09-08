@@ -221,24 +221,48 @@ export class PyroLogger implements Logger {
         if ( style !== undefined ) {
             const dsc = this._createStyleDescriptor(style);
             if ( Utils.isString(dsc) ) {
-                const styled_data: string[] = [];
+                // we've got a valid, non-empty style descriptor
+                const styled_data: any[] = [];
                 let text: string = `\x1B[${dsc}m`;
+                // add prefix text if present
                 if ( Utils.isString(prefix) ) {
                     text += `${prefix} `;
                 }
+                // add placeholders for each value according to its type
                 for ( let i=0 ; i < data.length ; ++i ) {
                     if ( i > 0 ) {
-                        text += ', ';
+                        text += ' ';
                     }
                     const value: any = data[i];
-                    text += Utils.isString(value) ? (value as string) : JSON.stringify(value);
+                    if ( Utils.isString(value) ) {
+                        text += '%s';
+                    } else if ( typeof value === 'number' ) {
+                        text += Number.isInteger(value) ? '%d' : '%f';
+                    } else if ( value instanceof HTMLElement ) {
+                        text += '%o';
+                    } else {
+                        text += '%O';
+                    }
                 }
-                text += '\x1B[0m'
+                // reset formatting
+                text += '\x1B[0m';
+                // first item is the prefix text with styling and all placeholders
                 styled_data.push(text);
+                // all other items are the actual data to be logged
+                styled_data.push(...data);
+                // done
                 return styled_data;
             }
         }
-        return data;
+        // use data "as is" but consider the prefix
+        if ( Utils.isString(prefix) ) {
+            const all_data: any[] = [];
+            all_data.push(prefix, ...data);
+            return all_data;
+        } else {
+            // no prefix, nothing to do
+            return data;
+        }
     }
 
     /**
