@@ -13,7 +13,14 @@
 ## About
 
 - **pyrologjs** is a small, lightweight yet powerful logging facility for use in JavaScript and/or TypeScript modules.
-It can be used for web sites as well as in code for nodejs or similar environments.
+It can be used for web sites as well as in code for nodejs, deno or similar environments.
+
+- **pyrologjs** provides a [hierarchical logger model](#hierarchical-logger-configuration) with the possibility of individual logger configuration. This way, each logger has a configured [logging level](#the-logging-level-enumeration) that acts as threshold which decides whether an actual logging message is written to the console. Example: If a logger's level is set to `INFO`, then it will write logging
+messages at level `INFO` or above to the console, while logging messages at level `DEBUG` or `TRACE` will be ignored.
+
+- **pyrologjs** provides an easy way to [style the logging output](#styling-the-output).
+
+- **pyrologjs** supports [dynamic logger configuration changes](#change-logger-configuration) at runtime. You can re-configure existing loggers and add new logger configurations at any time.
 
 - **pyrologjs** itself is written entirely in TypeScript and compiled and bundled using [rollup.js](https://rollupjs.org/guide/en/).
 The code provided by this package is neither minimized nor mangled nor compressed. This allows you to bundle the package along
@@ -337,6 +344,8 @@ If you assign style definitions to configuration items, then the [same rules](#h
 for the logging levels.
 If there's a style definition in a higher hierarchy level then this is applied unless a the logger has its own style definition for
 the given logging level.
+
+See also the [Styling API](#the-style-definition-types-constants-and-interfaces) for further details.
 
 
 ## API Details
