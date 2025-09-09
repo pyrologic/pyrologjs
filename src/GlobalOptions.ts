@@ -1,9 +1,13 @@
+import { Level } from "./Level";
+import { StyleDef } from "./Styles";
+
 /**
  * Global options for all loggers
  * this class is a singleton
  */
 export class GlobalOptions {
 
+    private readonly _globalStyles: Map<Level, StyleDef>;
     private _useDebug: boolean;
     private _suspended: boolean;
 
@@ -11,6 +15,7 @@ export class GlobalOptions {
      * constructs a new instance
      */
     constructor() {
+        this._globalStyles = new Map<Level, StyleDef>();
         this._useDebug = false;
         this._suspended = false;
     }
@@ -65,6 +70,24 @@ export class GlobalOptions {
                 this._suspended = !!o.suspended;
             }
         }
+    }
+
+    /**
+     * 
+     * @param level the logging level
+     * @returns the global style definition for the given level or undefined if there's no matching global style definition
+     */
+    getLevelStyle(level: Level): StyleDef | undefined {
+        return this._globalStyles.get(level);
+    }
+
+    /**
+     * sets the global style definition for a logging level
+     * @param level the logging level
+     * @param style the global style definition
+     */
+    setLevelStyle(level: Level, style: StyleDef) {
+        this._globalStyles.set(level, style);
     }
 }
 

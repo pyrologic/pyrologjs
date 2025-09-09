@@ -3,6 +3,35 @@
  */
 export class Utils {
 
+    private static _can_console_styles: boolean | undefined = undefined;
+
+    /**
+     * indicates whether styled console output is possible 
+     * @returns true if styled console output is possible; false otherwise
+     */
+    static canConsoleStyles(): boolean {
+        if ( Utils._can_console_styles === undefined) {
+            let webkit: boolean = false;
+            let nodejs: boolean = false;
+            try {
+                // check for WebKit / Chromium based browser
+                webkit = typeof navigator !== "undefined" && !!(navigator.userAgent) && navigator.userAgent.includes("AppleWebKit");
+            } catch ( e ) {
+                webkit = false;
+            }
+            if ( !webkit ) {
+                // check for nodejs / deno
+                try {
+                    nodejs = typeof process !== "undefined";
+                } catch ( e ) {
+                    nodejs = false;
+                }
+            }
+            Utils._can_console_styles = nodejs || webkit;
+        }
+        return Utils._can_console_styles;
+    }
+
     /**
      * checks whether the specified object is a real, non-empty string
      * @param str the object supposed to be a string
