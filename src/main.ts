@@ -1,4 +1,4 @@
-import { Level, LevelStrings, Level2String, String2LevelString, String2Level } from "./Level";
+import { Level, LevelStrings, Level2String, String2LevelString, String2Level, Level2LevelString, forEachLevel } from "./Level";
 import { ConfigItem } from "./ConfigItem";
 import { Logger } from "./Logger";
 import { LoggerFactory } from "./LoggerFactory";
@@ -7,6 +7,7 @@ import { PrefixGenerator } from "./PrefixGenerator";
 import { Utils } from "./utils";
 import { GlobalOptions } from "./GlobalOptions";
 import { PyroLogger } from "./PyroLogger";
+import { ColorRef, Colors, LevelStyles, StyleDef, TextStyle } from "./Styles";
 
 class PyroLog {
 
@@ -77,8 +78,24 @@ class PyroLog {
      * sets global options
      * @param o an object providing one or more global options
      */
-     setGlobalOptions(o: any): void {
+    setGlobalOptions(o: any): void {
         GlobalOptions.getInstance().setOptions(o);
+    }
+
+    /**
+     * creates a level style descriptor
+     * @param param0 
+     * @returns the level style descriptor
+     */
+    createLevelStyle({
+        color = Colors.NONE,
+        background = Colors.NONE,
+        bold = false,
+        italic = false,
+        underline = false,
+        linethrough = false
+    }): StyleDef {
+        return this._lf.createLevelStyle({ color, background, bold, italic, underline, linethrough });
     }
 
     /**
@@ -118,7 +135,7 @@ class PyroLog {
     }
 
     /**
-     * creates a configuration item
+     * creates a logger configuration item
      * @param name logger name
      * @param level logging level
      * @param wf flag whether to write the name of the calling function / method
@@ -134,6 +151,15 @@ class PyroLog {
      */
     applyConfiguration(config: ConfigItem[]): void {
         this._lf.applyConfiguration(config);
+    }
+
+    /**
+     * sets the global style definition for a logging level
+     * @param level the logging level
+     * @param style the global style definition
+     */
+    setLevelStyle(level: Level, style: StyleDef) {
+        GlobalOptions.getInstance().setLevelStyle(level, style);
     }
 
     /**
@@ -165,16 +191,23 @@ const JsLevel = Object.freeze({
 // export everything that should be exported
 export { 
     Appender, 
+    ColorRef,
+    Colors,
     ConfigItem, 
+    forEachLevel,
     Logger, 
     PyroLog, 
     Level, 
     PrefixGenerator, 
     LevelStrings, 
+    LevelStyles,
     Level2String, 
-    String2LevelString, 
-    String2Level, 
+    Level2LevelString,
     JsLevel, 
     PyroLogger,
+    String2LevelString, 
+    String2Level, 
+    StyleDef,
+    TextStyle,
     Utils as PyroLogUtils
 };

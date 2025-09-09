@@ -32,6 +32,7 @@
   "devDependencies": {
     "@pyrologic/rollup-plugin": "^1.1.2",
     "@rollup/plugin-typescript": "^12.1.4",
+    "@types/node": "^24.3.1",
     "rollup": "^4.46.2",
     "rollup-plugin-dts": "^6.2.1",
     "tslib": "^2.8.1",

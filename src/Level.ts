@@ -52,6 +52,15 @@ export function Level2String(level: Level): string {
 }
 
 /**
+ * converts a logging level into the matching level identifier
+ * @param level the logging level
+ * @returns the matching level identifier
+ */
+export function Level2LevelString(level: Level): LevelStrings {
+    return Level2String(level) as LevelStrings;
+}
+
+/**
  * converts an arbitrary string into a valid level identifier
  * @param s arbitrary string
  * @returns the corresponding level identifier
@@ -87,4 +96,14 @@ export function String2LevelString(s: string): LevelStrings {
 export function String2Level(s: string): Level {
     const level = Level[String2LevelString(s)];
     return level !== undefined ? level : Level.INFO;
+}
+
+/**
+ * executes a callback function for each logging level
+ * @param f the callback function
+ */
+export function forEachLevel( f: (level: Level) => void ): void {
+    for ( let l = Level.ALL ; l <= Level.OFF ; ++l ) {
+        f(l);
+    }
 }
