@@ -95,6 +95,11 @@ export class LoggerFactory implements StyleProvider {
         return this._loggers.get(path) as Logger;
     }
 
+    /**
+     * retrieves a logger configuration item
+     * @param name logger name
+     * @returns the matching configuration item or null if no matching configuration item was found
+     */
     private _getConfig(name: string): ConfigItem | null {
         if ( this._config !== null ) {
             return this._config?.findConfig(name);
@@ -103,6 +108,25 @@ export class LoggerFactory implements StyleProvider {
         }
     }
 
+    /**
+     * retrieves the parent configuration item of a configuration item 
+     * @param config configuration item
+     * @returns the parent configuration item of the given item or null if there's no parent item
+     */
+    private _getParentConfig(config: ConfigItem): ConfigItem | null {
+        const name = config.name;
+        const pos = name.lastIndexOf('.');
+        if ( pos > 0 ) {
+            return this._getConfig(name.substring(0, pos));
+        }
+        return null;
+    }
+
+    /**
+     * retrieves the effective "write function name" setting
+     * @param wf logger's "write function name" flag
+     * @returns the effective "write function name" setting
+     */
     private _getEffWriteFnc(wf: Boolean | null): boolean {
         return (wf !== null) ? wf.valueOf() : ((this._writeFnc !== null) ? this._writeFnc.valueOf() : false);
     }
@@ -134,7 +158,13 @@ export class LoggerFactory implements StyleProvider {
         const config = this._getConfig(name);
         let style: StyleDef | undefined = undefined;
         if ( config !== null ) {
-            style = config.levelStyles.get(Level2LevelString(level));
+            const ls = Level2LevelString(level);
+            style = config.levelStyles.get(ls);
+            let parent = this._getParentConfig(config);
+            while ( (style === undefined) && (parent !== null) ) {
+                style = parent.levelStyles.get(ls);
+                parent = this._getParentConfig(parent);
+            }
         }
         return style !== undefined ? style : GlobalOptions.getInstance().getLevelStyle(level);
     }
