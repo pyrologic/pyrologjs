@@ -300,6 +300,44 @@ If you want to use the "write function name" feature then your prefix generator 
 See above for an example.
 
 
+### Styling the Output
+
+**pyrologjs** provides an easy way to give the logger output some styling. You can specify
+
+* the text color
+* the background color
+* text attributes such as **bold**, *italic*, <ins>underlined</ins> and ~~line-through~~
+
+The implementation is based on the support of ANSI sequences by the `console` object. See https://developer.chrome.com/docs/devtools/console/format-style#style-ansi for a full description.
+
+Note: At the time of writing, Gecko based browsers such as Firefox do not support ANSI sequences to style the console output. If **pyrologjs** detects a Gecko based environment then it simply ignores style definitions when creating the console output.
+
+In order to use text styles you create one or more style definition objects. These style definitions can be used globally or specific to some loggers.
+Every style definition is assigned to a logging level.
+
+```ts
+const PL = PyroLog.getInstance();
+// ...
+// set global styles
+const style_normal = PL.createLevelStyle( { color: Colors.GREEN } );
+const style_warning = PL.createLevelStyle( { color: Colors.PINK, bold: true } );
+PL.setLevelStyle(Level.INFO, style_normal);
+PL.setLevelStyle(Level.WARN, style_warning);
+// ...
+// add a style to a configuration item
+const config_item = PL.createConfigItem('my-logger', 'DEBUG', true);
+config_item.addLevelStyle('DEBUG', PL.createLevelStyle( { color: Colors.DARKBLUE, background: Colors.ORANGE , italic: true } ));
+// ...
+// set logger specific style
+const logger = PL.getLogger('my-logger');
+logger.addStyle(Level.INFO, PL.createLevelStyle( { color: Colors.WHITE, background: Colors.DARKBLUE } ));
+
+```
+If you assign style definitions to configuration items, then the [same rules](#hierarchical-logger-configuration) apply as
+for the logging levels.
+If there's a style definition in a higher hierarchy level then this is applied unless a the logger has its own style definition for
+the given logging level.
+
 
 ## API Details
 
@@ -347,6 +385,20 @@ class PyroLog {
      * @param o an object providing one or more global options
      */
     setGlobalOptions(o: any): void;
+
+    /**
+     * creates a level style descriptor
+     * @param param0 
+     * @returns the level style descriptor
+     */
+    createLevelStyle({
+        color = Colors.NONE,
+        background = Colors.NONE,
+        bold = false,
+        italic = false,
+        underline = false,
+        linethrough = false
+    }): StyleDef;
 
     /**
      * creates a new callback appender
@@ -502,6 +554,13 @@ interface Logger {
      * @param suspended the "suspended" state for this logger
      */
     setSuspended(suspended: boolean): void;
+
+    /**
+     * adds a style definition for a logging level
+     * @param level the logging level
+     * @param style the style definition for this level
+     */
+    addStyle(level: Level, style: StyleDef): void;
 }
 ```
 
@@ -548,15 +607,91 @@ interface ConfigItem {
     readonly level: LevelStrings;
     /** flag whether to write the name of the calling function / method along with each output */
     readonly writeFnc: Boolean | null;
+    /** level styles */
+    readonly levelStyles: LevelStyles;
+
+    /**
+     * adds a level style definition or overrides an existing one
+     * @param level the level 
+     * @param style the style definition
+     */
+    addLevelStyle(level: LevelStrings, style: StyleDef): void;
 }
 ```
 
 Note, that `LevelStrings` is the string representation of the `Level` enumeration:
 ```ts
-LevelStrings = "ALL" | "TRACE" | "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL" | "OFF"
+LevelStrings = "ALL" | "TRACE" | "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL" | "OFF";
 ```
 
 The best way to create configuration items is by using `PyroLog.getInstance().createConfigItem()`.
 
+
+### The Style Definition Types, Constants and Interfaces
+
+The main interface to provide a style definition is the interface `StyleDef` - see below. It relies on other
+helper interfaces and constants:
+
+```ts
+
+/**
+ * color reference
+ */
+interface ColorRef {
+    /** foreground color reference */
+    readonly fgRef: number;
+    /** background color reference */
+    readonly bgRef: number;
+}
+
+/**
+ * all supported color values
+ */
+const Colors = {
+    BLACK:      { fgRef: 30, bgRef:  40 } as ColorRef,
+    RED:        { fgRef: 31, bgRef:  41 } as ColorRef,
+    GREEN:      { fgRef: 32, bgRef:  42 } as ColorRef,
+    ORANGE:     { fgRef: 33, bgRef:  43 } as ColorRef,
+    DARKBLUE:   { fgRef: 34, bgRef:  44 } as ColorRef,
+    PURPLE:     { fgRef: 35, bgRef:  45 } as ColorRef,
+    TURQUOISE:  { fgRef: 36, bgRef:  46 } as ColorRef,
+    GRAY:       { fgRef: 37, bgRef:  47 } as ColorRef,
+    DARKGRAY:   { fgRef: 90, bgRef: 100 } as ColorRef,
+    LIGHTRED:   { fgRef: 91, bgRef: 101 } as ColorRef,
+    LIGHTGREEN: { fgRef: 92, bgRef: 102 } as ColorRef,
+    YELLOW:     { fgRef: 93, bgRef: 103 } as ColorRef,
+    BLUE:       { fgRef: 94, bgRef: 104 } as ColorRef,
+    PINK:       { fgRef: 95, bgRef: 105 } as ColorRef,
+    CYAN:       { fgRef: 96, bgRef: 106 } as ColorRef,
+    WHITE:      { fgRef: 97, bgRef: 107 } as ColorRef,
+    NONE:       { fgRef:  0, bgRef:   0 } as ColorRef,
+} as const;
+
+/**
+ * supported text styles
+ */
+interface TextStyle {
+    readonly bold: boolean;
+    readonly italic: boolean;
+    readonly underline: boolean;
+    readonly linethrough: boolean;
+}
+
+/**
+ * a logging style definition
+ */
+interface StyleDef {
+    /** the foreground/text color */
+    readonly color: ColorRef;
+    /** the background color */
+    readonly background: ColorRef;
+    /** additional text style attributes */
+    readonly styles: TextStyle;
+}
+
+/** a map providing style definitions for logging levels */
+type LevelStyles = Map<LevelStrings, StyleDef>;
+
+```
 
 <sub>_End Of Document_</sub>
