@@ -11,15 +11,18 @@ export class Utils {
      */
     static canConsoleStyles(): boolean {
         if ( Utils._can_console_styles === undefined) {
-            let webkit: boolean = false;
+            let chromium: boolean = false;
             let nodejs: boolean = false;
             try {
-                // check for WebKit / Chromium based browser
-                webkit = typeof navigator !== "undefined" && !!(navigator.userAgent) && navigator.userAgent.includes("AppleWebKit");
+                // check for a Chromium based browser (Chrome, Edge, Opera, ...); these render ANSI sequences in the console.
+                // Safari is WebKit based as well but does NOT support ANSI sequences, so checking for "AppleWebKit" alone is not enough:
+                // every Chromium user agent contains "Chrome"/"Chromium" while Safari does not.
+                const ua = (typeof navigator !== "undefined" && navigator.userAgent) ? navigator.userAgent : "";
+                chromium = ua.includes("AppleWebKit") && (ua.includes("Chrome") || ua.includes("Chromium"));
             } catch ( e ) {
-                webkit = false;
+                chromium = false;
             }
-            if ( !webkit ) {
+            if ( !chromium ) {
                 // check for nodejs / deno
                 try {
                     nodejs = typeof process !== "undefined";
@@ -27,7 +30,7 @@ export class Utils {
                     nodejs = false;
                 }
             }
-            Utils._can_console_styles = nodejs || webkit;
+            Utils._can_console_styles = nodejs || chromium;
         }
         return Utils._can_console_styles;
     }

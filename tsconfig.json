@@ -2,8 +2,12 @@
     "include": ["src/**/*.ts"],
     "exclude": ["dist"],
     "compilerOptions": {
-        "target": "es2016",
+        "target": "es2020",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "rootDir": "src",
         "outDir": "dist",
+        "types": ["node"],
         "declaration": true,
         "declarationDir": "dist/dts",
         "noUnusedLocals": true,
