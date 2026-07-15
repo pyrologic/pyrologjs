@@ -344,7 +344,7 @@ See above for an example.
 
 The implementation is based on the support of ANSI sequences by the `console` object. See https://developer.chrome.com/docs/devtools/console/format-style#style-ansi for a full description.
 
-Note: At the time of writing, Gecko-based browsers such as Firefox do not support ANSI sequences to style the console output. If **pyrologjs** detects a Gecko-based environment then it simply ignores style definitions when creating the console output.
+Note: At the time of writing, only Chromium-based browsers (such as Chrome, Edge and Opera) render ANSI sequences in the console. Gecko-based browsers such as Firefox and WebKit-based browsers such as Safari do not support them. If **pyrologjs** detects an environment that does not support ANSI sequences then it simply ignores style definitions when creating the console output.
 
 In order to use text styles you create one or more style definition objects. These style definitions can be used globally or specifically for some loggers.
 Every style definition is assigned to a logging level.
