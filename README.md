@@ -4,10 +4,11 @@
 
 1. [About](#about)
 2. [Installation](#installation)
-3. [Usage](#usage)
-4. [Hierarchical Logger Configuration](#hierarchical-logger-configuration)
-5. [Advanced Features](#advanced-features)
-6. [API Details](#api-details)
+3. [Bundles](#bundles)
+4. [Usage](#usage)
+5. [Hierarchical Logger Configuration](#hierarchical-logger-configuration)
+6. [Advanced Features](#advanced-features)
+7. [API Details](#api-details)
 
 
 ## About
@@ -23,8 +24,9 @@ messages at level `INFO` or above to the console, while logging messages at leve
 - **pyrologjs** supports [dynamic logger configuration changes](#change-logger-configuration) at runtime. You can re-configure existing loggers and add new logger configurations at any time.
 
 - **pyrologjs** itself is written entirely in TypeScript and compiled and bundled using [rollup.js](https://rollupjs.org/guide/en/).
-The code provided by this package is neither minimized nor mangled nor compressed. This allows you to bundle the package along
-with your code using your preferred way how to minimize, mangle and compress your code distribution.
+The package ships two bundles (see [Bundles](#bundles)): a readable, non-minified default that you can bundle, minimize and
+compress together with your own code, and a ready-to-use minified variant. Both come with a source map that embeds the original
+TypeScript sources, so you can debug down to the source in either case.
 
 - **pyrologjs** has no other dependencies.
 
@@ -44,6 +46,31 @@ yarn example:
 ```
 yarn add @pyrologic/pyrologjs
 ```
+
+
+## Bundles
+
+The package provides two ES module bundles in the `dist` folder:
+
+| File                   | Description                                                                                       |
+| ---------------------- | ------------------------------------------------------------------------------------------------- |
+| `dist/pyrolog.js`      | the default entry point: readable, non-minified code that you can bundle, minimize and compress together with your own code |
+| `dist/pyrolog.min.js`  | a ready-to-use minified variant, handy for direct usage (e.g. via a `<script type="module">` tag or a CDN) |
+
+Both bundles ship a matching source map (`*.js.map`) that embeds the original TypeScript sources, so you can debug down to
+the source in either case. The type definitions (`dist/pyrolog.d.ts`) apply to both.
+
+When you import the package by name, the readable bundle is used:
+```js
+import { PyroLog } from "@pyrologic/pyrologjs";
+```
+To use the minified variant explicitly, import it via the `min` subpath:
+```js
+import { PyroLog } from "@pyrologic/pyrologjs/min";
+```
+Pick **one** of the two bundles per project. Both expose the same API, but each carries its own `PyroLog` singleton, so
+mixing imports from `@pyrologic/pyrologjs` and `@pyrologic/pyrologjs/min` in the same application would create two
+independent logger states.
 
 
 ## Usage

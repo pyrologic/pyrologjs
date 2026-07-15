@@ -25,12 +25,22 @@
     ".": {
       "types": "./dist/pyrolog.d.ts",
       "import": "./dist/pyrolog.js"
+    },
+    "./min": {
+      "types": "./dist/pyrolog.d.ts",
+      "import": "./dist/pyrolog.min.js"
+    },
+    "./dist/pyrolog.min.js": {
+      "types": "./dist/pyrolog.d.ts",
+      "import": "./dist/pyrolog.min.js"
     }
   },
   "files": [
     "dist/pyrolog.js",
     "dist/pyrolog.d.ts",
-    "dist/pyrolog.js.map"
+    "dist/pyrolog.js.map",
+    "dist/pyrolog.min.js",
+    "dist/pyrolog.min.js.map"
   ],
   "scripts": {
     "watch": "rollup --config rollup.config.mjs --watch --watch.buildDelay 25",
@@ -38,6 +48,7 @@
   },
   "devDependencies": {
     "@pyrologic/rollup-plugin": "^1.1.2",
+    "@rollup/plugin-terser": "^1.0.0",
     "@rollup/plugin-typescript": "^12.1.4",
     "@types/node": "^26.1.1",
     "rollup": "^4.62.2",
