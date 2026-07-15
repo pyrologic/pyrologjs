@@ -16,7 +16,7 @@
 - **pyrologjs** is a small, lightweight yet powerful logging facility for use in JavaScript and/or TypeScript modules.
 It can be used for web sites as well as in code for nodejs, deno or similar environments.
 
-- **pyrologjs** provides a [hierarchical logger model](#hierarchical-logger-configuration) with the possibility of individual logger configuration. This way, each logger has a configured [logging level](#the-logging-level-enumeration) that acts as threshold which decides whether an actual logging message is written to the console. Example: If a logger's level is set to `INFO`, then it will write logging
+- **pyrologjs** provides a [hierarchical logger model](#hierarchical-logger-configuration) with the possibility of individual logger configuration. This way, each logger has a configured [logging level](#the-logging-level-enumeration) that acts as a threshold which decides whether an actual logging message is written to the console. Example: If a logger's level is set to `INFO`, then it will write logging
 messages at level `INFO` or above to the console, while logging messages at level `DEBUG` or `TRACE` will be ignored.
 
 - **pyrologjs** provides an easy way to [style the logging output](#styling-the-output).
@@ -136,8 +136,8 @@ The example code would be the same as in the JavaScript example above with one e
 
 ## Hierarchical Logger Configuration
 
-**pyrologjs** supports a hierarchical logger configurations so one can easily apply some settings to a bunch of loggers. See the following
-example how to create such a logger configuration:
+**pyrologjs** supports hierarchical logger configuration so one can easily apply some settings to a bunch of loggers. See the following
+example of how to create such a logger configuration:
 ```ts
 /**
  * hierarchical logger configuration
@@ -196,7 +196,7 @@ with the new settings.
 
 Each logger has a property called `suspended`. If this property is set to `true` for a particular logger using the API method
 `Logger.setSuspended(boolean)` then only this logger is suspended, while all other loggers operate normally. See above how to suspend all
-logger at once.
+loggers at once.
 
 
 ### Logging Level Enumeration in JavaScript
@@ -222,7 +222,7 @@ const JsLevel = {
 
 ### Stack Traces
 
-For some diagnostic message it is helpful to get a full stack trace. **pyrologjs** provides an easy way to do so:
+For some diagnostic messages it is helpful to get a full stack trace. **pyrologjs** provides an easy way to do so:
 ```js
 const PL = PyroLog.getInstance();
 const logger = PL.getLogger('logger');
@@ -250,8 +250,8 @@ In order to deal with other approaches such as using your own utility methods fo
 logger.setFncOffset(1);
 ```
 
-The default behavior is specified at default logger. If a logger configuration does not set the "write function name" parameter at all, then the logger will take its
-setting from default logger.
+The default behavior is specified at the default logger. If a logger configuration does not set the "write function name" parameter at all, then the logger will take its
+setting from the default logger.
 ```ts
 const config = [
     PL.createConfigItem(PL.defaultName, 'INFO', true), // sets the default logging level to INFO and activates the "write function name"
@@ -265,7 +265,7 @@ const config = [
 
 ### Appenders
 
-If you want, you can specify a callback function that acts as special "appender". This function is called each time a log message is written to the console.
+If you want, you can specify a callback function that acts as a special "appender". This function is called each time a log message is written to the console.
 ```js
 const PL = PyroLog.getInstance();
 
@@ -298,12 +298,12 @@ The code looks like this:
 ```ts
 return ${(new Date()).toISOString()} ${logger.name} [${Level2String(level)}]` + (logger.writeFnc ? ` (${PyroLogUtils.getFunctionName(logger.fncOffset)})` : '') + ':';
 ```
-This will produce prefixes as shown bellow:
+This will produce prefixes as shown below:
 ```
 2022-08-29T15:35:52.073Z logger1 [TRACE] (MyClass#myMethod):
 ```
 
-You can set our own prefix creator instance and thus create the log prefix you want. All you need is to write a class that implements the interface `PrefixGenerator`.
+You can set your own prefix creator instance and thus create the log prefix you want. All you need to do is to write a class that implements the interface `PrefixGenerator`.
 ```ts
 import { PyroLog, Logger, Level, PrefixGenerator, Level2String, PyroLogUtils, String2Level } from "@pyrologic/pyrologjs";
 // ...
@@ -318,7 +318,7 @@ class MyPrefixGenerator implements PrefixGenerator {
 // set our prefix generator
 PL.setPrefixGenerator(new MyPrefixGenerator());
 ```
-It is possible tu use a callback function as prefix generator:
+It is also possible to use a callback function as prefix generator:
 ```ts
 const PL = PyroLog.getInstance();
 //...
@@ -330,7 +330,7 @@ PL.createPrefixGenerator((logger, level) => {
 
 The prefix generator is used for all loggers.
 
-If you want to use the "write function name" feature then your prefix generator must check logger's setting and retrieve the name of the calling function.
+If you want to use the "write function name" feature then your prefix generator must check the logger's setting and retrieve the name of the calling function.
 See above for an example.
 
 
@@ -344,9 +344,9 @@ See above for an example.
 
 The implementation is based on the support of ANSI sequences by the `console` object. See https://developer.chrome.com/docs/devtools/console/format-style#style-ansi for a full description.
 
-Note: At the time of writing, Gecko based browsers such as Firefox do not support ANSI sequences to style the console output. If **pyrologjs** detects a Gecko based environment then it simply ignores style definitions when creating the console output.
+Note: At the time of writing, Gecko-based browsers such as Firefox do not support ANSI sequences to style the console output. If **pyrologjs** detects a Gecko-based environment then it simply ignores style definitions when creating the console output.
 
-In order to use text styles you create one or more style definition objects. These style definitions can be used globally or specific to some loggers.
+In order to use text styles you create one or more style definition objects. These style definitions can be used globally or specifically for some loggers.
 Every style definition is assigned to a logging level.
 
 ```ts
@@ -369,7 +369,7 @@ logger.addStyle(Level.INFO, PL.createLevelStyle( { color: Colors.WHITE, backgrou
 ```
 If you assign style definitions to configuration items, then the [same rules](#hierarchical-logger-configuration) apply as
 for the logging levels.
-If there's a style definition in a higher hierarchy level then this is applied unless a the logger has its own style definition for
+If there's a style definition at a higher hierarchy level then this is applied unless the logger has its own style definition for
 the given logging level.
 
 See also the [Styling API](#the-style-definition-types-constants-and-interfaces) for further details.
@@ -655,7 +655,7 @@ interface ConfigItem {
 }
 ```
 
-Note, that `LevelStrings` is the string representation of the `Level` enumeration:
+Note that `LevelStrings` is the string representation of the `Level` enumeration:
 ```ts
 LevelStrings = "ALL" | "TRACE" | "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL" | "OFF";
 ```
