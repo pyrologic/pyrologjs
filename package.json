@@ -18,8 +18,15 @@
     "typescript",
     "pyrologic"
   ],
+  "type": "module",
   "main": "dist/pyrolog.js",
   "types": "dist/pyrolog.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/pyrolog.d.ts",
+      "import": "./dist/pyrolog.js"
+    }
+  },
   "files": [
     "dist/pyrolog.js",
     "dist/pyrolog.d.ts",
