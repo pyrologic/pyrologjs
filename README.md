@@ -16,7 +16,7 @@
 - **pyrologjs** is a small, lightweight yet powerful logging facility for use in JavaScript and/or TypeScript modules.
 It can be used for web sites as well as in code for nodejs, deno or similar environments.
 
-- **pyrologjs** provides a [hierarchical logger model](#hierarchical-logger-configuration) with the possibility of individual logger configuration. This way, each logger has a configured [logging level](#the-logging-level-enumeration) that acts as a threshold which decides whether an actual logging message is written to the console. Example: If a logger's level is set to `INFO`, then it will write logging
+- **pyrologjs** provides a [hierarchical logger model](#hierarchical-logger-configuration) with the possibility of individual logger configuration. This way, each logger has a configured [logging level](#the-logging-levels) that acts as a threshold which decides whether an actual logging message is written to the console. Example: If a logger's level is set to `INFO`, then it will write logging
 messages at level `INFO` or above to the console, while logging messages at level `DEBUG` or `TRACE` will be ignored.
 
 - **pyrologjs** provides an easy way to [style the logging output](#styling-the-output).
@@ -199,25 +199,18 @@ Each logger has a property called `suspended`. If this property is set to `true`
 loggers at once.
 
 
-### Logging Level Enumeration in JavaScript
+### Logging Levels in JavaScript
 
-The symbolic logging level values are not directly available in JavaScript, since the TypeScript enumeration `Level` is resolved by the TypeScript compiler. In order to deal with that, you can use the object `JsLevel` instead, which provides each logging level as a property:
+The symbolic logging level values are directly available in JavaScript. `Level` is no longer a TypeScript enumeration (which would be resolved away by the compiler) but a plain, frozen object, so you can import and use it from plain JavaScript just as well as from TypeScript:
 ```js
-import { JsLevel } from "@pyrologic/pyrologjs";
+import { Level } from "@pyrologic/pyrologjs";
+
+logger.writeLog(Level.WARN, 'Hello WARN logger!');
 ```
 
-The object `JsLevel` itself is defined like this:
+For backwards compatibility a `JsLevel` alias is still exported, but it is **deprecated** and simply points to `Level`. New code should import `Level` directly:
 ```js
-const JsLevel = {
-    ALL: Level.ALL,
-    TRACE: Level.TRACE,
-    DEBUG: Level.DEBUG,
-    INFO: Level.INFO,
-    WARN: Level.WARN,
-    ERROR: Level.ERROR,
-    FATAL: Level.FATAL,
-    OFF: Level.OFF
-};
+import { JsLevel } from "@pyrologic/pyrologjs"; // deprecated: use `Level` instead
 ```
 
 ### Stack Traces
@@ -601,32 +594,34 @@ interface Logger {
 ```
 
 
-### The Logging Level Enumeration
+### The Logging Levels
 
-All logging levels are elements of the `Level` enumeration:
+All logging levels are properties of the `Level` object. It is a plain, frozen object (not a TypeScript `enum`) so it can be used directly from plain JavaScript as well as from TypeScript. The numeric values reflect the ascending threshold order (`ALL` = 0 … `OFF` = 7): a message is written only if its level is greater than or equal to the logger's configured level.
 ```ts
 /**
  * logging levels
  */
-enum Level {
+const Level = Object.freeze({
     /** logs everything  */
-    ALL,
+    ALL: 0,
     /** TRACE level */
-    TRACE,
+    TRACE: 1,
     /** DEBUG level */
-    DEBUG,
+    DEBUG: 2,
     /** INFO level */
-    INFO,
+    INFO: 3,
     /** WARN level */
-    WARN,
+    WARN: 4,
     /** ERROR level */
-    ERROR,
+    ERROR: 5,
     /** FATAL level */
-    FATAL,
+    FATAL: 6,
     /** loggers at this level do not log at all */
-    OFF
-}
+    OFF: 7
+});
 ```
+
+The type `Level` denotes any of these level values.
 
 
 ### The ConfigItem Interface
@@ -655,7 +650,7 @@ interface ConfigItem {
 }
 ```
 
-Note that `LevelStrings` is the string representation of the `Level` enumeration:
+Note that `LevelStrings` is the string representation of the `Level` values:
 ```ts
 LevelStrings = "ALL" | "TRACE" | "DEBUG" | "INFO" | "WARN" | "ERROR" | "FATAL" | "OFF";
 ```
