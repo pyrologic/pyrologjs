@@ -5,7 +5,7 @@
 import { ConfigItem } from "./ConfigItem";
 import { Utils } from "./utils";
 import { DEFAULT_CONFIG, ROOT_NODE_NAME } from "./Const";
-import { Level } from "./Level";
+import { isLevelString } from "./Level";
 import { PyroConfigItem } from "./PyroConfigItem";
 
 
@@ -186,8 +186,7 @@ export class ConfigTree {
         let dci: ConfigItem|null = null;
         for ( let ci of config ) {
             const name = Utils.normalizePath(ci.name);
-            const level = Level[ci.level];
-            if ( typeof level === 'undefined' ) {
+            if ( !isLevelString(ci.level) ) {
                 throw new Error(`Invalid level "${ci.level}"!`);
             }
             if ( DEFAULT_CONFIG === name ) {
