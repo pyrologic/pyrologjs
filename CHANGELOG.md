@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-08-19
+
 ### Changed
-- Replaced the `Level` TypeScript `enum` with a plain, frozen const object of the
-  same numeric values (`ALL` = 0 … `OFF` = 7). `Level` is now directly usable from
-  plain JavaScript consumers, not just TypeScript.
+- **BREAKING** (released as a minor bump — see note below): Replaced the `Level`
+  TypeScript `enum` with a plain, frozen const object of the same numeric values
+  (`ALL` = 0 … `OFF` = 7). `Level` is now directly usable from plain JavaScript
+  consumers, not just TypeScript. Type-level uses that relied on `Level` being an
+  `enum` type may need adjusting; runtime member access (`Level.INFO`) is unchanged.
 - Consolidated the level helper functions (`Level2String`, `Level2LevelString`,
   `String2LevelString`, `String2Level`) to look level names up via a reverse map
   instead of `switch` statements; added the `isLevelString` type guard.
@@ -18,6 +22,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 - `JsLevel` is now merely an alias for `Level` and is kept only for backwards
   compatibility. New code should import and use `Level` directly.
+
+### Notes
+- Although the `Level` change is technically breaking, this is released as a minor
+  version because the package is consumed only by projects under our own control,
+  where upgrade timing is coordinated. If it is ever published for external
+  consumers, breaking changes should resume warranting a major bump.
 
 ## [2.1.0] - 2026-07-15
 
@@ -161,7 +171,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   level, appenders, stack-trace helpers, and the `JsLevel` JavaScript mirror of
   the `Level` enum. Built as an ES module for use in browsers, Node.js and Deno.
 
-[Unreleased]: https://github.com/pyrologic/pyrologjs/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/pyrologic/pyrologjs/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/pyrologic/pyrologjs/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/pyrologic/pyrologjs/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/pyrologic/pyrologjs/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/pyrologic/pyrologjs/compare/v1.4.0...v2.0.0
