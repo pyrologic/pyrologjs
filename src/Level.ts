@@ -1,24 +1,37 @@
 /**
  * logging levels
+ *
+ * Ascending threshold order: a message is written only if its level is
+ * numerically greater than or equal to the logger's configured level.
+ *
+ * This is a plain, frozen object (not a TS `enum`) so it is directly usable
+ * from plain JavaScript consumers while keeping the numeric values that the
+ * level gating relies on. The values are intentionally kept identical to the
+ * former `enum Level` (ALL = 0 … OFF = 7).
  */
-export enum Level {
+export const Level = Object.freeze({
     /** logs everything  */
-    ALL,
+    ALL: 0,
     /** TRACE level */
-    TRACE,
+    TRACE: 1,
     /** DEBUG level */
-    DEBUG,
+    DEBUG: 2,
     /** INFO level */
-    INFO,
+    INFO: 3,
     /** WARN level */
-    WARN,
+    WARN: 4,
     /** ERROR level */
-    ERROR,
+    ERROR: 5,
     /** FATAL level */
-    FATAL,
+    FATAL: 6,
     /** loggers at this level do not log at all */
-    OFF
-}
+    OFF: 7
+} as const);
+
+/**
+ * a logging level value (0…7); the ordinal is significant (see {@link Level})
+ */
+export type Level = typeof Level[keyof typeof Level];
 
 /**
  * a string collection of all supported logging levels
@@ -26,29 +39,21 @@ export enum Level {
 export type LevelStrings = keyof typeof Level;
 
 /**
+ * frozen mapping from level value back to its name (reverse of {@link Level})
+ */
+const LevelNames = Object.freeze(
+    Object.fromEntries(
+        Object.entries(Level).map(([name, value]) => [value, name])
+    ) as Record<Level, LevelStrings>
+);
+
+/**
  * retrieves the name of a logging level
  * @param level logging level
  * @returns the corresponding name (string)
  */
 export function Level2String(level: Level): string {
-    switch ( level ) {
-        case Level.ALL:
-            return "ALL";
-        case Level.TRACE:
-            return "TRACE";
-        case Level.DEBUG:
-            return "DEBUG";
-        case Level.INFO:
-            return "INFO";
-        case Level.WARN:
-            return "WARN";
-        case Level.ERROR:
-            return "ERROR";
-        case Level.FATAL:
-            return "FATAL";
-        case Level.OFF:
-            return "OFF";
-    }
+    return LevelNames[level];
 }
 
 /**
@@ -57,45 +62,34 @@ export function Level2String(level: Level): string {
  * @returns the matching level identifier
  */
 export function Level2LevelString(level: Level): LevelStrings {
-    return Level2String(level) as LevelStrings;
+    return LevelNames[level];
+}
+
+/**
+ * checks whether an arbitrary string is a valid level identifier
+ * @param s arbitrary string
+ * @returns true if `s` names a logging level; false otherwise
+ */
+export function isLevelString(s: string): s is LevelStrings {
+    return Object.prototype.hasOwnProperty.call(Level, s);
 }
 
 /**
  * converts an arbitrary string into a valid level identifier
  * @param s arbitrary string
- * @returns the corresponding level identifier
+ * @returns the corresponding level identifier, or "INFO" if `s` is not a level name
  */
 export function String2LevelString(s: string): LevelStrings {
-    switch ( s ) {
-        case "ALL":
-            return "ALL";
-        case "TRACE":
-            return "TRACE";
-        case "DEBUG":
-            return "DEBUG";
-        case "INFO":
-            return "INFO";
-        case "WARN":
-            return "WARN";
-        case "ERROR":
-            return "ERROR";
-        case "FATAL":
-            return "FATAL";
-        case "OFF":
-            return "OFF";
-        default:
-            return "INFO";
-    }
+    return isLevelString(s) ? s : "INFO";
 }
 
 /**
- * converts a string providing a level name into the corresponding Level enumeration value
+ * converts a string providing a level name into the corresponding Level value
  * @param s string providing a level name
- * @returns the corresponding Level enumeration value
+ * @returns the corresponding Level value, or Level.INFO if `s` is not a level name
  */
 export function String2Level(s: string): Level {
-    const level = Level[String2LevelString(s)];
-    return level !== undefined ? level : Level.INFO;
+    return Level[String2LevelString(s)];
 }
 
 /**
@@ -104,6 +98,6 @@ export function String2Level(s: string): Level {
  */
 export function forEachLevel( f: (level: Level) => void ): void {
     for ( let l = Level.ALL ; l <= Level.OFF ; ++l ) {
-        f(l);
+        f(l as Level);
     }
 }

@@ -1,3 +1,6 @@
 
 dist
 node_modules/
+
+# generated at build time from package.json (see rollup.config.mjs)
+src/version.ts

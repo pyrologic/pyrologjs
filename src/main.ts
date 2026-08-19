@@ -8,6 +8,7 @@ import { Utils } from "./utils";
 import { GlobalOptions } from "./GlobalOptions";
 import { PyroLogger } from "./PyroLogger";
 import { ColorRef, Colors, LevelStyles, StyleDef, TextStyle } from "./Styles";
+import { VERSION } from "./version";
 
 class PyroLog {
 
@@ -28,6 +29,13 @@ class PyroLog {
      */
     static getInstance(): PyroLog {
         return pyroLog;
+    }
+
+    /**
+     * the library version, burned in from package.json at build time
+     */
+    get version(): string {
+        return VERSION;
     }
 
     /**
@@ -176,17 +184,11 @@ class PyroLog {
 // create the singleton instance
 const pyroLog = PyroLog._create();
 
-// create Level enumeration as JS object
-const JsLevel = Object.freeze({
-    ALL: Level.ALL,
-    TRACE: Level.TRACE,
-    DEBUG: Level.DEBUG,
-    INFO: Level.INFO,
-    WARN: Level.WARN,
-    ERROR: Level.ERROR,
-    FATAL: Level.FATAL,
-    OFF: Level.OFF
-});
+/**
+ * @deprecated `Level` is now itself a plain frozen object and can be used
+ * directly from JavaScript; `JsLevel` is retained as an alias for compatibility.
+ */
+const JsLevel = Level;
 
 // export everything that should be exported
 export { 

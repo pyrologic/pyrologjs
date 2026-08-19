@@ -1,6 +1,6 @@
 {
   "name": "@pyrologic/pyrologjs",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "author": "Thomas Hendel",
   "homepage": "https://github.com/pyrologic/pyrologjs",
   "license": "MIT",
@@ -44,7 +44,8 @@
   ],
   "scripts": {
     "watch": "rollup --config rollup.config.mjs --watch --watch.buildDelay 25",
-    "build": "rollup --config rollup.config.mjs"
+    "build": "rollup --config rollup.config.mjs",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@pyrologic/rollup-plugin": "^1.1.2",
