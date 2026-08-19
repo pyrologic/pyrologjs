@@ -383,6 +383,11 @@ class PyroLog {
     static getInstance(): PyroLog;
 
     /**
+     * the library version, burned in from package.json at build time
+     */
+    get version(): string;
+
+    /**
      * the name of the default configuration item
      */
     get defaultName(): string;

@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.2.0] - 2026-08-19
 
+### Added
+- `PyroLog.version` accessor exposing the library version, burned in from
+  `package.json` at build time via a generated `src/version.ts` (git-ignored,
+  regenerated on every build).
+
 ### Changed
 - **BREAKING** (released as a minor bump — see note below): Replaced the `Level`
   TypeScript `enum` with a plain, frozen const object of the same numeric values

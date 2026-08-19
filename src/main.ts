@@ -8,6 +8,7 @@ import { Utils } from "./utils";
 import { GlobalOptions } from "./GlobalOptions";
 import { PyroLogger } from "./PyroLogger";
 import { ColorRef, Colors, LevelStyles, StyleDef, TextStyle } from "./Styles";
+import { VERSION } from "./version";
 
 class PyroLog {
 
@@ -28,6 +29,13 @@ class PyroLog {
      */
     static getInstance(): PyroLog {
         return pyroLog;
+    }
+
+    /**
+     * the library version, burned in from package.json at build time
+     */
+    get version(): string {
+        return VERSION;
     }
 
     /**
