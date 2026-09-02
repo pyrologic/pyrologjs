@@ -546,6 +546,12 @@ interface Logger {
     debug(...data: any[]): void;
 
     /**
+     * writes a log message at level DEBUG; alias for `debug()`
+     * @param data data to be logged
+     */
+    log(...data: any[]): void;
+
+    /**
      * writes a log message at level INFO
      * @param data data to be logged
      */
