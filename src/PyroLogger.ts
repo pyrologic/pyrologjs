@@ -323,6 +323,13 @@ export class PyroLogger implements Logger {
     /**
      * @override
      */
+    log(...data: any[]): void {
+        this.writeLog(Level.DEBUG, ...data);
+    }
+
+    /**
+     * @override
+     */
     info(...data: any[]): void {
         this.writeLog(Level.INFO, ...data);
     }
